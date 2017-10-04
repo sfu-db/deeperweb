@@ -1,0 +1,133 @@
+{% load staticfiles %}
+
+    <!-- footer-->
+    <footer style="background-image: url({% static 'deeperweb/pic/footer/footer-bg.jpg' %}); no-repeat" class="footer footer-fixed">
+      <div class="container">
+        <div class="row cws-multi-col">
+          <!-- widget footer-->
+          <div class="col-md-3 col-sm-6 mb-md-50">
+            <div class="widget-footer text">
+              <h3>Deeper</h3>
+              <div class="cws_divider with-plus short-2 mb-5 mt-10"></div>
+              <p>A web data integration tool, A novel framework to overcome limitations, Easy for configuration, Fully functional, Smooth interface.</p>
+              <div class="footer-cws-social mt-25">
+                  <a href="#" class="cws-social flaticon-social"></a>
+                  <a href="#" class="cws-social flaticon-social-1"></a>
+                  <a href="#" class="cws-social flaticon-social-3"></a>
+                  <a href="#" class="cws-social flaticon-social-4"></a>
+              </div>
+            </div>
+          </div>
+          <!-- end widget footer-->
+          <!-- widget footer-->
+          <div class="col-md-3 col-sm-6 mb-md-50">
+            <div class="widget-footer">
+              <h3>Useful Links</h3>
+              <div class="cws_divider with-plus short-2 mb-5 mt-10"></div>
+              <ul>
+                <li><a href="https://www.sfu.ca/admission.html">Admission</a> <a href="https://www.sfu.ca/campuses/maps-and-directions/burnaby-map.html">Maps</a></li>
+                <li><a href="https://www.sfu.ca/programs.html">Programs</a> <a href="http://www.lib.sfu.ca/">Library</a></li>
+                <li><a href="https://www.sfu.ca/learning.html">Learning</a> <a href="https://www.sfu.ca/students/calendar/">Calendar</a></li>
+                <li><a href="https://www.sfu.ca/research-at-sfu.html">Research</a> <a href="https://www.sfu.ca/about.html">About</a></li>
+                <li><a href="https://www.sfu.ca/sfu-community.html">Community</a> <a href="http://give.sfu.ca/">Give to SFU</a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- end widget footer-->
+          <!-- widget footer-->
+          <div class="col-md-3 col-sm-6 mb-sm-50">
+            <div class="widget-footer">
+              <h3>Latest News</h3>
+              <div class="cws_divider with-plus short-2 mb-5 mt-10"></div>
+              <div class="recent-item clearfix">
+                <img src="{% static 'deeperweb/pic/footer/django.png' %}" alt>
+                <h4 class="recent-title"><a href="https://github.com/sfu-db/deeperweb">deeperweb's birthday</a></h4>
+                <p>Oct 14, 2017 &nbsp;/&nbsp; By Yongjun He</p>
+              </div>
+              <div class="recent-item clearfix">
+                <img src="{% static 'deeperweb/pic/footer/python-logo@2x.png' %}" alt>
+                <h4 class="recent-title"><a href="https://github.com/sfu-db/deeperlib">deeperlib's birthday</a></h4>
+                <p>Sep 14, 2017 &nbsp;/&nbsp; By Yongjun He</p>
+              </div>
+            </div>
+          </div>
+          <!-- end widget footer-->
+          <!-- widget footer-->
+          <div class="col-md-3 col-sm-6">
+            <div class="widget-footer">
+              <h3>Newsletter</h3>
+              <div class="cws_divider with-plus short-2 mb-5 mt-10"></div>
+              <address>
+                <p>Enter your email here and we will send you newsletters about the deeper.</p>
+              </address>
+              <div class="footer-form-wrap">
+                <form method="get" action="#" class="newsletter contact-form">
+                  <div class="newsletter-footer-wrap">
+                    <input type="text" placeholder="Enter Your Email" value="" name="email" class="newsletter-field">
+                    <button type="submit" class="newsletter-submit cws-button alt">Send</button>
+                  </div>
+                </form>
+                <div id="footer-form" role="alert" class="alert alert-danger alt alert-dismissible fade in">
+                  <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span aria-hidden="true">×</span></button><i class="alert-icon border fa fa-exclamation-triangle"></i><strong>Error Message!</strong><br>
+                  <div class="message"></div>
+                </div>
+                <div class="email_server_responce"></div>
+              </div>
+            </div>
+          </div>
+          <!-- end widget footer-->
+        </div>
+      </div>
+      <!-- copyright-->
+      <div class="copyright">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-5">
+            	<p>Copyright &copy; 2017 SFU, DSL All rights reserved.</p>
+            </div>
+            <div class="col-sm-7 text-right">
+                <a href="{% url 'index' %}" class="footer-nav">Home</a>
+                <a href="{% url 'setting' %}" class="footer-nav">Setting</a>
+                <a href="{% url 'interactive' %}" class="footer-nav">Interactive</a>
+                <a href="{% url 'about' %}" class="footer-nav">About</a>
+                <a href="{% url 'contact' %}" class="footer-nav">Contact</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end copyright-->
+    </footer>
+    <!-- ! footer-->
+    <div id="scroll-top"><i class="fa fa-angle-up"></i></div>
+    <!-- scroll top-->
+    <script type="text/javascript" src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery-ui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/bootstrap.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/owl.carousel.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery.sticky.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/TweenMax.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/cws_parallax.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery.fancybox.pack.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery.fancybox-media.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/isotope.pkgd.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/imagesloaded.pkgd.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/masonry.pkgd.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/rs-plugin/js/jquery.themepunch.tools.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/rs-plugin/js/jquery.themepunch.revolution.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/rs-plugin/js/extensions/revolution.extension.slideanims.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/rs-plugin/js/extensions/revolution.extension.layeranimation.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/rs-plugin/js/extensions/revolution.extension.navigation.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/rs-plugin/js/extensions/revolution.extension.parallax.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/rs-plugin/js/extensions/revolution.extension.video.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/rs-plugin/js/extensions/revolution.extension.actions.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/rs-plugin/js/extensions/revolution.extension.kenburn.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/rs-plugin/js/extensions/revolution.extension.migration.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery.validate.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery.form.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/script.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/bg-video/cws_self_vimeo_bg.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/bg-video/jquery.vimeo.api.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/bg-video/cws_YT_bg.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery.tweet.js' %}"></script>
+  </body>
+</html>

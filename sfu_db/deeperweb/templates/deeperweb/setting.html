@@ -1,0 +1,299 @@
+﻿{% load staticfiles %}
+
+{% include "deeperweb/includes/header.html" %}
+<!-- breadcrumbs start-->
+<section style="background-image:url({% static 'deeperweb/pic/breadcrumbs/bg-1.jpg' %}); no-repeat" class="breadcrumbs">
+    <div class="container">
+        <div class="text-center breadcrumbs-item">
+            <h1>Parameters</h1>
+            <a href="{% url 'index' %}">home</a><i class="fa fa-angle-right"></i>
+            <a href="{% url 'contact' %}">settings</a><i class="fa fa-angle-right"></i>
+            <a href="#">Parameters</a>
+        </div>
+    </div>
+</section>
+<!-- ! breadcrumbs end-->
+<div class="content-body page">
+    <div class="container">
+        <div class="row">
+            <form action="{% url 'smartcrawl' %}" method="post" class="api_parameters">
+                {% csrf_token %}
+                <!-- sidebar-->
+                <div class="col-md-4 sidebar">
+                    <aside class="sb-right pb-0">
+                        <!-- widget api-->
+                        <div class="cws-widget">
+                            <div class="widget-categories alt">
+                                <h3 class="widget-title mt-0 mb-30">API</h3>
+                                <div class="accordion style-2">
+                                    <div class="content-title"><span>Yelp<i
+                                            class="accordion_angle fa fa-angle-down"></i></span></div>
+                                    <div class="content">
+                                        <ul>
+                                            <li>Search API</li>
+                                        </ul>
+                                    </div>
+                                    <div class="content-title"><span>Dblp<i
+                                            class="accordion_angle fa fa-angle-down"></i></span></div>
+                                    <div class="content">
+                                        <ul>
+                                            <li>Publ API</li>
+                                            <li>Venue API</li>
+                                            <li>Author API</li>
+                                        </ul>
+                                    </div>
+                                    <div class="content-title"><span>AMiner<i
+                                            class="accordion_angle fa fa-angle-down"></i></span></div>
+                                    <div class="content">
+                                        <ul>
+                                            <li>Publ API</li>
+                                            <li>Advanced Publ API</li>
+                                            <li>Search API</li>
+                                            <li>Advanced Search API</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ! widget api-->
+                        <!-- widget api parameters-->
+                        <div class="cws-widget">
+                            <h3 class="mt-0 mb-30">Required</h3>
+                            <p id="top_k_field" class="form-row form-row-wide validate-required">
+                                <label for="top_k">Top_K<abbr title="required" class="required">*</abbr></label>
+                                <input id="top_k" name="top_k" type="text" value="100" class="input-text">
+                            </p>
+                            <p id="delay_field" class="form-row form-row-wide validate-required">
+                                <label for="delay">Delay<abbr title="required" class="required">*</abbr></label>
+                                <input id="delay" name="delay" type="text" value="5" class="input-text">
+                            </p>
+                            <p id="search_term_field" class="form-row form-row-wide validate-required">
+                                <label for="search_term">Search Term<abbr title="required"
+                                                                          class="required">*</abbr></label>
+                                <input id="search_term" name="search_term" type="text" value="q" class="input-text">
+                            </p>
+                        </div>
+                        <div class="cws-widget">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <h3 class="mt-0">Optional</h3>
+                                </div>
+                                <div class="col-md-1">
+                                    <input id="optional_parameters_checkbox" type="checkbox" name="optional_parameters"
+                                           class="input-checkbox mt-0">
+                                </div>
+                            </div>
+                            <div class="row"></div>
+                            <div class="widget-categories optional_parameters alt">
+                                <p id="hits_field" class="form-row form-row-wide">
+                                    <label for="hits">Hits</label>
+                                    <input id="hits" name="hits" type="text" value="100" class="input-text">
+                                </p>
+                                <p id="first_hit_field" class="form-row form-row-wide">
+                                    <label for="first_hit">First Hit</label>
+                                    <input id="first_hit" name="first_hit" type="text" value="0" class="input-text">
+                                </p>
+                                <p id="completion_field" class="form-row form-row-wide">
+                                    <label for="completion">Completion Terms</label>
+                                    <input id="completion" name="completion" type="text" value="0" class="input-text">
+                                </p>
+                            </div>
+                        </div>
+                        <!-- ! widget api parameters-->
+                    </aside>
+                </div>
+                <!-- ! sidebar-->
+                <!-- content-->
+                <div class="col-md-8 mb-md-70">
+                    <div class="col2-set">
+                        <div class="col-1 mb-sm-50">
+                            <div class="file-wrapper">
+                                <h3 class="mt-0 mb-30">Sample File</h3>
+                                <div class="sample-file-fields">
+                                    <p id="sample_path_field"
+                                       class="form-row form-row-wide address-field update_totals_on_change validate-required">
+                                        <label for="sample_path">File Path<abbr title="required"
+                                                                                class="required">*</abbr></label>
+                                        <select id="sample_path" name="file_path"
+                                                class="country_to_state country_select">
+                                            <option value="">Select a file…</option>
+                                            <option value="AL">dblp_result\result_file.pkl</option>
+                                            <option value="DZ">dblp_result\result_file.csv</option>
+                                            <option value="AL">dblp_result\match_file.pkl</option>
+                                            <option value="DZ">dblp_result\match_file.csv</option>
+                                            <option value="AX">dblp_sample.csv</option>
+                                            <option value="AF">dblp_3881.csv</option>
+                                        </select>
+                                    </p>
+                                    <p id="sample_uniqueid_field"
+                                       class="form-row form-row-wide address-field update_totals_on_change validate-required">
+                                        <label for="sample_uniqueid">Unique ID<abbr title="required"
+                                                                                    class="required">*</abbr></label>
+                                        <select id="sample_uniqueid" name="sample_uniqueid"
+                                                class="country_to_state country_select">
+                                            <option value="">Select an attribute…</option>
+                                            <option value="key">key</option>
+                                            <option value="author">author</option>
+                                            <option value="title">title</option>
+                                            <option value="year">year</option>
+                                        </select>
+                                    </p>
+                                    <p id="sample_filetype_field" class="form-row form-row-first validate-required">
+                                        <label for="sample_filetype">File Type<abbr title="required"
+                                                                                    class="required">*</abbr></label>
+                                        <input id="sample_filetype" type="text" name="sample_filetype"
+                                               placeholder="" value="csv" class="input-text">
+                                    </p>
+                                    <p id="sample_ratio_field" class="form-row form-row-last validate-required">
+                                        <label for="sample_ratio">Sample Ratio<abbr title="required"
+                                                                                    class="required">*</abbr></label>
+                                        <input id="sample_ratio" type="text" name="sample_ratio"
+                                               placeholder="" value="0.5" class="input-text">
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="file-wrapper">
+                                <h3 class="mt-0 mb-30">Local File</h3>
+                                <div class="local-file-fields">
+                                    <p id="loacl_path_field"
+                                       class="form-row form-row-wide address-field update_totals_on_change validate-required">
+                                        <label for="loacl_path">File Path<abbr title="required"
+                                                                               class="required">*</abbr></label>
+                                        <select id="loacl_path" name="loacl_path"
+                                                class="country_to_state country_select">
+                                            <option value="">Select a file…</option>
+                                            <option value="AL">dblp_result\result_file.pkl</option>
+                                            <option value="DZ">dblp_result\result_file.csv</option>
+                                            <option value="AL">dblp_result\match_file.pkl</option>
+                                            <option value="DZ">dblp_result\match_file.csv</option>
+                                            <option value="AX">dblp_sample.csv</option>
+                                            <option value="AF">dblp_3881.csv</option>
+                                        </select>
+                                    </p>
+                                    <p id="local_uniqueid_field"
+                                       class="form-row form-row-wide address-field update_totals_on_change validate-required">
+                                        <label for="local_uniqueid">Unique ID<abbr title="required"
+                                                                                   class="required">*</abbr></label>
+                                        <select id="local_uniqueid" name="local_uniqueid"
+                                                class="country_to_state country_select">
+                                            <option value="">Select an attribute…</option>
+                                            <option value="key">key</option>
+                                            <option value="author">author</option>
+                                            <option value="title">title</option>
+                                            <option value="year">year</option>
+                                        </select>
+                                    </p>
+                                    <p id="local_matchlist_field"
+                                       class="form-row form-row-wide address-field update_totals_on_change validate-required">
+                                        <label for="local_matchlist">Match List<abbr title="required"
+                                                                                     class="required">*</abbr></label>
+                                        <select id="local_matchlist" name="local_matchlist"
+                                                class="country_to_state country_select">
+                                            <option value="">Select attributes…</option>
+                                            <option value="key">key</option>
+                                            <option value="author">author</option>
+                                            <option value="title">title</option>
+                                            <option value="year">year</option>
+                                        </select>
+                                    </p>
+                                    <p id="local_filetype_field" class="form-row form-row-first validate-required">
+                                        <label for="local_filetype">File Type<abbr title="required"
+                                                                                   class="required">*</abbr></label>
+                                        <input id="local_filetype" type="text" name="local_filetype"
+                                               placeholder="" value="csv" class="input-text">
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="file-wrapper">
+                                <h3 class="mt-0 mb-30">Hidden File</h3>
+                                <div class="hidden-file-fields">
+                                    <p id="hidden_path_field"
+                                       class="form-row form-row-wide address-field update_totals_on_change validate-required">
+                                        <label for="hidden_path">Result Dir<abbr title="required"
+                                                                                 class="required">*</abbr></label>
+                                        <select id="hidden_path" name="hidden_path"
+                                                class="country_to_state country_select">
+                                            <option value="">Select a dir…</option>
+                                            <option value="AL">dblp_result\</option>
+                                        </select>
+                                    </p>
+                                    <p id="hidden_uniqueid_field"
+                                       class="form-row form-row-wide address-field update_totals_on_change validate-required">
+                                        <label for="hidden_uniqueid">Unique ID<abbr title="required"
+                                                                                    class="required">*</abbr></label>
+                                        <select id="hidden_uniqueid" name="hidden_uniqueid"
+                                                class="country_to_state country_select">
+                                            <option value="">Select an attribute…</option>
+                                            <option value="key">key</option>
+                                            <option value="author">author</option>
+                                            <option value="title">title</option>
+                                            <option value="year">year</option>
+                                        </select>
+                                    </p>
+                                    <p id="hidden_matchlist_field"
+                                       class="form-row form-row-wide address-field update_totals_on_change validate-required">
+                                        <label for="hidden_matchlist">Match List<abbr title="required"
+                                                                                      class="required">*</abbr></label>
+                                        <select id="hidden_matchlist" name="hidden_matchlist"
+                                                class="country_to_state country_select">
+                                            <option value="">Select attributes…</option>
+                                            <option value="key">key</option>
+                                            <option value="author">author</option>
+                                            <option value="title">title</option>
+                                            <option value="year">year</option>
+                                        </select>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- widget deeper parameters-->
+                            <div class="cws-widget">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <h3 class="mt-0">Optional</h3>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <input id="optional_parameters_checkbox2" type="checkbox"
+                                               name="optional_parameters2"
+                                               class="input-checkbox mt-0">
+                                    </div>
+                                </div>
+                                <div class="row"></div>
+                                <div class="widget-categories optional_parameters2 alt">
+                                    <p id="budget_field" class="form-row form-row-wide">
+                                        <label for="budget">Budget</label>
+                                        <input id="budget" name="budget" type="text" value="100" class="input-text">
+                                    </p>
+                                    <p id="threads_field" class="form-row form-row-wide">
+                                        <label for="threads">Threads</label>
+                                        <input id="threads" name="first_hit" type="text" value="0" class="input-text">
+                                    </p>
+                                    <p id="pool_thre_field" class="form-row form-row-wide">
+                                        <label for="pool_thre">Pool Threshold</label>
+                                        <input id="pool_thre" name="pool_thre" type="text" value="0"
+                                               class="input-text">
+                                    </p>
+                                    <p id="jaccard_thre_field" class="form-row form-row-wide">
+                                        <label for="jaccard_thre">Jaccard Threshold</label>
+                                        <input id="jaccard_thre" name="jaccard_thre" type="text" value="0"
+                                               class="input-text">
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- ! widget deeper parameters-->
+                            <p>
+                                <button type="submit" class="cws-button full-width alt">Submit</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- ! content-->
+            </form>
+        </div>
+    </div>
+</div>
+
+{% include "deeperweb/includes/footer.html" %}

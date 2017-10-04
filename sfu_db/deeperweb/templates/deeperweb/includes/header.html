@@ -1,0 +1,108 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Deeper</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'deeperweb/img/favico.ico' %}">
+    <link rel="bookmark" href="{% static 'deeperweb/img/favico.ico' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/css/jquery.fancybox.css' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/fonts/fi/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/css/indent.css' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/rs-plugin/css/settings.css' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/rs-plugin/css/layers.css' %}">
+    <link rel="stylesheet" href="{% static 'deeperweb/rs-plugin/css/navigation.css' %}">
+  </head>
+  <body>
+    <!-- header page-->
+    <header>
+      <!-- site top panel-->
+      <div class="site-top-panel">
+        <div class="container p-relative">
+          <div class="row">
+            <div class="col-sm-6">
+              <!-- lang select wrapper-->
+              <div class="top-left-wrap">
+                <div class="lang-wrap">
+                  <div>
+                    <ul>
+                      <li><a href="#" class="lang-sel icl-en">En<i class="flaticon-internet"></i></a>
+                        <ul>
+                          <li class="icl-fr"><a href="#">Fr</a></li>
+                          <li class="icl-cn"><a href="#">Cn</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                </div><span>|</span>
+                <div class="social-wrap">
+                    <a href="https://www.yelp.com/fusion" title="Yelp" class="cws_social_link"><i class="share-icon fa fa-yelp"></i></a>
+                    <a href="http://dblp.uni-trier.de/" title="Dblp" class="cws_social_link"><i class="share-icon fa fa-database"></i></a>
+                    <a href="https://developers.google.com/apis-explorer/" title="Google" class="cws_social_link"><i class="share-icon fa fa-google"></i></a>
+                    <a href="https://github.com/sfu-db/deeperlib" title="Github" class="cws_social_link"><i class="share-icon fa fa-github"></i></a>
+                </div>
+              </div>
+              <!-- ! lang select wrapper-->
+            </div>
+            <div class="col-sm-6 text-right">
+              <div class="top-right-wrap">
+                <div><a href="/admin"><i class="flaticon-people-2"></i>Login</a></div><span>|</span>
+                <div><a href="/filebrowser/browse/?"><i class="flaticon-sheet"></i>File</a></div><span>|</span>
+                <div class="top-search"><i class="flaticon-interface"></i>Search</div>
+              </div>
+            </div>
+            <div class="search_menu_cont">
+              <form role="search" method="get" class="form">
+                <div class="search-wrap">
+                  <input type="text" placeholder="Search . . ." class="form-control search-field">
+                </div>
+              </form>
+              <div class="search_back_button"><i class="fa fa-close"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ! site top panel-->
+      <!-- Navigation panel-->
+      <nav class="main-nav js-stick">
+        <div class="full-wrapper relative clearfix container">
+          <!-- Logo ( * your text or image into link tag *)-->
+          <div class="nav-logo-wrap local-scroll"><a href="/" class="logo"><img src="{% static 'deeperweb/img/sfu-big-data.jpg' %}"><img src="{% static 'deeperweb/img/sfu-big-data.jpg' %}" alt class="sticky-logo"></a></div>
+          <!-- Main Menu-->
+          <div class="inner-nav desktop-nav switch-menu">
+            <ul class="clearlist">
+              <!-- Item With Sub-->
+				<li><a href="{% url 'index' %}">Home</a></li>
+				<li><a href="{% url 'setting' %}">Setting</a></li>
+				<li><a href="{% url 'interactive' %}">Interactive</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+				<li><a href="{% url 'contact' %}">Contact</a></li>
+            </ul>
+            <div class="menu-contacts">
+              <div class="menu-contacts-item"><i class="flaticon-technology-2 cws-icon"></i>
+                <p class="mb-0">Phone: 778.782.6930</p>
+                <p class="mb-0">Fax: 778.782.4969</p>
+              </div>
+              <div class="menu-contacts-item"><i class="flaticon-placeholder cws-icon"></i>
+                <p class="mb-0">8888 University Drive</p>
+                <p class="mb-0">Burnaby, B.C. Canada V5A 1S6</p>
+                <p class="mb-0">Simon Fraser University</p>
+              </div>
+              <div class="menu-contacts-item"><i class="flaticon-time cws-icon"></i>
+                <p class="mb-0">Mon - Thu: 8:00 - 18:00</p>
+                <p class="mb-0">Friday: 8:00 - 16:30</p>
+              </div>
+            </div><a href="#" class="menu-bar"><span class="ham"></span></a>
+          </div>
+          <!-- End Main Menu-->
+        </div>
+      </nav>
+      <!-- End Navigation panel-->
+    </header>
+    <!-- ! header page-->

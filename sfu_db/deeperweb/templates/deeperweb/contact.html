@@ -1,0 +1,78 @@
+﻿{% load staticfiles %}
+
+{% include "deeperweb/includes/header.html" %}
+<!-- breadcrumbs start-->
+<section style="background-image:url({% static 'deeperweb/pic/breadcrumbs/bg-1.jpg' %}); no-repeat" class="breadcrumbs">
+    <div class="container">
+        <div class="text-center breadcrumbs-item">
+            <h1>Contact Us</h1>
+            <a href="{% url 'index' %}">home</a><i class="fa fa-angle-right"></i>
+            <a href="{% url 'contact' %}">contact</a><i class="fa fa-angle-right"></i>
+            <a href="#">Contact Us</a>
+        </div>
+    </div>
+</section>
+<!-- ! breadcrumbs end-->
+<div class="content-body page">
+    <!-- content-->
+    <div class="container">
+        <!-- section title-->
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <!-- title section-->
+                <h2 class="title-section text-center mt-0 mb-0">Get in touch</h2>
+                <!-- ! title section-->
+                <div class="cws_divider with-plus short-3 center mb-20 mt-10"></div>
+                <p class="text-center mb-10">If you would like to work with us on big data research in the beautiful Greater Vancouver area,
+                    please email me your resume, a copy of undergraduate/graduate transcript, and a short statement of research interests,
+                    with the following subject: [PhD/Master/Visiting Application] Name+Major+School.</p>
+            </div>
+        </div>
+        <div class="row">
+            <!-- form section-->
+            <div class="col-md-8 mb-md-50">
+                <form action="#" method="post" class="form contact-form alt clearfix">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <textarea name="message" cols="40" rows="4" placeholder="Message" aria-required="true"
+                                      aria-invalid="false" style="height: 248px"></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" name="name" value="" size="40" placeholder="Name" aria-required="true"
+                                   aria-invalid="false" class="form-row form-row-first">
+                            <input type="text" name="email" value="" size="40" placeholder="Email" aria-required="true"
+                                   class="form-row form-row-last">
+                            <input type="text" name="subject" value="" size="40" placeholder="Subject"
+                                   aria-required="true" class="form-row form-row-last">
+                            <input type="submit" value="Submit now" class="cws-button alt full-width">
+                        </div>
+                    </div>
+                </form>
+                <div id="feedback-form-errors" role="alert" class="alert alert-danger alt alert-dismissible fade in">
+                    <button type="button" data-dismiss="alert" aria-label="Close" class="close"><span
+                            aria-hidden="true">×</span></button>
+                    <i class="alert-icon border fa fa-exclamation-triangle"></i>
+                    <strong>Error Message!</strong><br>
+                    <div class="message"></div>
+                </div>
+                <div class="email_server_responce"></div>
+            </div>
+            <!-- contact address-->
+            <div class="col-md-4">
+                <address class="contact-address">
+                    <div class="contact-icon-wrap"><a href="#" class="contact-icon flaticon-technology-2"> <span>Phone: 1-778-782-4288 </span></a>
+                    </div>
+                    <div class="contact-icon-wrap"><a href="#" class="contact-icon flaticon-note color-2"> <span>jnwang@sfu.ca</span></a>
+                    </div>
+                    <div class="contact-icon-wrap"><a href="#" class="contact-icon flaticon-placeholder"> <span>Burnaby, B.C. Canada V5A 1S6</span></a>
+                    </div>
+                    <div class="contact-icon-wrap"><a href="#" class="contact-icon flaticon-time color-2"> <span>Mon - Fri: 8:00 - 18:00</span></a>
+                    </div>
+                </address>
+            </div>
+        </div>
+    </div>
+    <!-- ! content-->
+</div>
+
+{% include "deeperweb/includes/footer.html" %}
