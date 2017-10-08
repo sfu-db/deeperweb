@@ -73,14 +73,14 @@
       <nav class="main-nav js-stick">
         <div class="full-wrapper relative clearfix container">
           <!-- Logo ( * your text or image into link tag *)-->
-          <div class="nav-logo-wrap local-scroll"><a href="/" class="logo"><img src="{% static 'deeperweb/img/sfu-big-data.jpg' %}"><img src="{% static 'deeperweb/img/sfu-big-data.jpg' %}" alt class="sticky-logo"></a></div>
+          <div class="nav-logo-wrap local-scroll"><a href="/index" class="logo"><img src="{% static 'deeperweb/img/sfu-big-data.jpg' %}"><img src="{% static 'deeperweb/img/sfu-big-data.jpg' %}" alt class="sticky-logo"></a></div>
           <!-- Main Menu-->
           <div class="inner-nav desktop-nav switch-menu">
             <ul class="clearlist">
               <!-- Item With Sub-->
 				<li><a href="{% url 'index' %}">Home</a></li>
-				<li><a href="{% url 'setting' %}">Setting</a></li>
-				<li><a href="{% url 'interactive' %}">Interactive</a></li>
+				<li><a href="{% url 'demo' %}">Demo</a></li>
+				<li><a href="{% url 'advance' %}">Advance</a></li>
                 <li><a href="{% url 'about' %}">About</a></li>
 				<li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>

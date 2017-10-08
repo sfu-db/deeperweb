@@ -19,7 +19,6 @@ class Json2csv:
         self.__getHeader(jsondata[random.randint(0, len(jsondata) - 1)])
 
         with open(csv_path, "wb") as csvfile:
-            csvfile = file(csv_path, 'wb')
             csvfile.write(codecs.BOM_UTF8)
             writer = csv.writer(csvfile)
             # write header

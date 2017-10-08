@@ -20,6 +20,7 @@ def smartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jacc
     :param pool_thre: threshold of queries' frequency
     :param jaccard_thre: jaccard threshold
     :param threads: numbers of queries issued at each iteration
+    :param save: save the result or not
     :return:
     """
     time_s = timeit.default_timer()

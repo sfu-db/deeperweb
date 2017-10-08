@@ -20,12 +20,13 @@ from deeperweb import views
 from filebrowser.sites import site
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^setting/$', views.setting, name='setting'),
-    url(r'^interactive/$', views.interactive, name='interactive'),
+    url(r'^index/$', views.index, name='index'),
+    url(r'^$', views.demo, name='demo'),
+    url(r'^advance/$', views.advance, name='advance'),
     url(r'^about/$', views.about, name='about'),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^smartcrawl/$', views.smartcrawl, name='smartcrawl'),
+    url(r'^testpage/$', views.testpage, name='testpage'),
     url(r'^admin/', admin.site.urls),
     url(r'^filebrowser/', include(site.urls)),
 ]

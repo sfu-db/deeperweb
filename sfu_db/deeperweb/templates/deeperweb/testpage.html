@@ -1,0 +1,132 @@
+{% load staticfiles %}
+
+{% include "deeperweb/includes/header.html" %}
+<section style="background-image:url({% static 'deeperweb/pic/breadcrumbs/bg-1.jpg' %}); no-repeat" class="breadcrumbs">
+    <div class="container">
+        <h2 class="widget-title text-center">Schema Matching</h2>
+        <div class="widget-tags" id="local_schema">
+            <a class="cws-button color-3" id="local_button">local schema</a>
+            <!-- item tags-->
+        </div>
+        <div class="widget-tags" id="hidden_schema">
+            <a class="cws-button color-3" id="hidden_button">hidden schema</a>
+            <!-- item tags-->
+            <a class='tag'>@score</a>
+            <a class='tag'>info.title</a>
+            <a class='tag'>info.url</a>
+            <a class='tag'>info.authors.author.*</a>
+            <a class='tag'>info.venue</a>
+            <a class='tag'>info.volume</a>
+            <a class='tag'>info.key</a>
+            <a class='tag'>info.year</a>
+            <a class='tag'>info.type</a>
+            <a class='tag'>@id</a>
+            <a class='tag'>url</a>
+        </div>
+        <div align="right">
+            <button type="button" class="btn btn-primary" id="try"><a href="#join_schema">Try it now</a></button>
+        </div>
+        <textarea name="message" cols="40" rows="4" aria-required="true"
+                  aria-invalid="false" placeholder="Copy your CSV here" style="height: 288px"></textarea>
+    </div>
+    <div class="container">
+        <h2 class="widget-title text-center">Schema Operation</h2>
+        <div class="widget-tags" id="join_schema">
+            <!-- item tags-->
+        </div>
+        <div align="right">
+            <button type="button" class="btn btn-primary" id="download">Download</button>
+        </div>
+        <div id='result' style="overflow:scroll; height: 488px">
+            <h1 class="widget-title text-center" style="height:300px; line-height:300px;">Processing</h1>
+        </div>
+    </div>
+</section>
+{% include "deeperweb/includes/footer.html" %}
+<script>
+    $(document).ready(function(){
+            $.ajaxSetup({
+                data:{csrfmiddlewaretoken:'{{ csrf_token }}'},
+            });
+            $("div#local_schema").delegate("a.tag","click",function(){
+                if(typeof($(this).attr("style"))=="undefined"){
+                    $(this).css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
+                    $("a#local_button").after($(this));
+                }else{
+                    $(this).removeAttr("style");
+                    $("div#local_schema").append($(this));
+                }
+            });
+            $("div#hidden_schema").delegate("a.tag","click",function(){
+                if(typeof($(this).attr("style"))=="undefined"){
+                    $(this).css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
+                    $("a#hidden_button").after($(this));
+                }else{
+                    $(this).removeAttr("style");
+                    $("div#hidden_schema").append($(this));
+                }
+            });
+            $("div#join_schema").delegate("a.tag","click",function(){
+                if(typeof($(this).attr("style"))=="undefined"){
+                    $(this).css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
+                    $('table tr').find('td:eq(' + $(this).index() + ')').hide();
+                    $('table tr').find('th:eq(' + $(this).index() + ')').hide();
+                }else{
+                    $(this).removeAttr("style");
+                    $('table tr').find('td:eq(' + $(this).index() + ')').show();
+                    $('table tr').find('th:eq(' + $(this).index() + ')').show();
+                }
+            });
+            $("textarea[name='message']").bind('input propertychange',function(){
+                var str=$(this).val();
+                var header = str.split("\n")[0];
+                var schema = header.split(",");
+                var local_keys = ""
+                for(var i=0;i<schema.length;i++){
+                    local_keys+="<a class='tag'>"+schema[i]+"</a>";
+                }
+                $("a#local_button").nextAll().remove();
+                $("div#local_schema").append(local_keys);
+            });
+            $("button#try").click(function(){
+                var original_data = $("textarea[name='message']").val();
+        $.ajax({
+                    url : "{% url 'smartcrawl' %}",
+					type : "POST",
+					dataType : "json",
+					data : { 'original_data': original_data },
+					success : function(response) {
+					    var join_csv="<table id='table_result1' class='table table-bordered table-hover'>";
+					    var join_keys = ""
+						$.each(response['join_csv'],function(index,element){
+						    join_csv+="<tr>";
+						    if(index==0){
+						        for (var i = 0; i < element.length; i++){
+						            join_csv+="<th>"+element[i]+"</th>";
+						            join_keys+="<a class='tag'>"+element[i]+"</a>";
+						        };
+						    }else{
+						        for (var i = 0; i < element.length; i++){
+						            join_csv+="<td>"+element[i]+"</td>";
+						        };
+						    }
+						    join_csv+="</tr>"; 
+                        });
+                        join_csv+="</table>"
+                        $("#result").children().remove();
+                        $("#result").html(join_csv);
+                        $("div#join_schema").append(join_keys)
+					},
+					error : function() {
+						alert("error");
+					}
+                });
+      });
+            $("button#download").click(function(){
+                var hidden_schema = $('div#hidden_schema').children('a.tag');
+                $(hidden_schema).each(function(){
+                    alert($(this).text());
+                });
+            });
+    });
+</script>
