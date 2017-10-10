@@ -26,7 +26,8 @@ urlpatterns = [
     url(r'^about/$', views.about, name='about'),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^smartcrawl/$', views.smartcrawl, name='smartcrawl'),
-    url(r'^testpage/$', views.testpage, name='testpage'),
+    url(r'^importTable/$', views.importTable, name='importTable'),
+    url(r'^exportCSV/$', views.exportCSV, name='exportCSV'),
     url(r'^admin/', admin.site.urls),
     url(r'^filebrowser/', include(site.urls)),
 ]

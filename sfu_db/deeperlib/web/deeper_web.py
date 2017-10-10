@@ -11,10 +11,11 @@ from hidden_data import HiddenData
 from json2csv import Json2csv
 
 
-def smartcrawl_web(budget, original_csv):
-    search_term = 'q'
-    parameters = {'h': 1000}
-    dblp = PublApi(top_k=1000, delay=4, search_term=search_term, **parameters)
+def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
+    if api_msg ==  'dblp Publ API':
+        search_term = 'q'
+        parameters = {'h': 1000}
+        api = PublApi(top_k=1000, delay=4, search_term=search_term, **parameters)
 
     sample_file = settings.BASE_DIR + '/netdisk/dblp_sample.csv'
     sampledata = SampleData(sample_ratio=0.5, samplepath=sample_file, filetype='csv', uniqueid="key",
@@ -22,10 +23,9 @@ def smartcrawl_web(budget, original_csv):
     localdata = LocalData(uniqueid="ID", querylist=['title'], matchlist=['title'], data_raw=original_csv)
     hiddendata = HiddenData(uniqueid="info.key", matchlist=["info.title"])
 
-    smartCrawl(budget, dblp, sampledata, localdata, hiddendata)
+    smartCrawl(budget, api, sampledata, localdata, hiddendata)
     localdata_csv = localdata.getRawData()
     crawldata_csv = Json2csv(hiddendata.getMergeResult()).getCsvdata()
-    print crawldata_csv['header']
     join_csv = []
     join_csv.append(localdata_csv['header'] + crawldata_csv['header'])
     matchpair = sorted(hiddendata.getMatchPair().items(), key=lambda item: int(item[0]), reverse=False)
