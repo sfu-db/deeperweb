@@ -83,3 +83,24 @@ def exportCSV(request):
     response['Content-Disposition'] = 'attachment; filename="extended_table.csv"'
     del request.session['original_data']
     return response
+
+
+from django.core.files.uploadedfile import UploadedFile
+from itertools import islice
+
+
+def uploadCSV(request):
+    file = request.FILES[u'files[]']
+    wrapped_file = UploadedFile(file)
+    csv_str = ""
+    header = []
+    for line in islice(wrapped_file, 0, 1):
+        if b'\xef\xbb\xbf' in line:
+            csv_str = line.replace(b'\xef\xbb\xbf', '')
+            header = csv_str.replace(b'\r', '').replace(b'\n', '').split(',')
+        else:
+            csv_str = line
+            header = csv_str.replace(b'\r', '').replace(b'\n', '').split(',')
+    for line in islice(wrapped_file, 1, None):
+        csv_str += line
+    return JsonResponse({'header': header, 'csv_str': csv_str})

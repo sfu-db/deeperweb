@@ -58,7 +58,8 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary" id="upload"><a href="#join_schema">Upload csv</a></button>
+            <input id="fileupload" type="file" name="files[]" style="display:none">
+            <button type="button" class="btn btn-primary" id="upload"><a>Upload csv</a></button>
             <button type="button" class="btn btn-primary" id="try"><a href="#join_schema">Try it now</a></button>
         </div>
         <textarea name="message" cols="40" rows="4" aria-required="true"
@@ -89,4 +90,7 @@
     </div>
 </section>
 {% include "deeperweb/includes/footer.html" %}
+<script type="text/javascript" src="{% static 'deeperweb/js/jquery.ui.widget.js' %}"></script>
+<script type="text/javascript" src="{% static 'deeperweb/js/jquery.iframe-transport.js' %}"></script>
+<script type="text/javascript" src="{% static 'deeperweb/js/jquery.fileupload.js' %}"></script>
 <script type="text/javascript" src="{% static 'deeperweb/js/demo.js' %}"></script>

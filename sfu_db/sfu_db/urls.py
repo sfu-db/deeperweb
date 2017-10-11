@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^advance/$', views.advance, name='advance'),
     url(r'^about/$', views.about, name='about'),
     url(r'^contact/$', views.contact, name='contact'),
+    url(r'^uploadCSV/$', views.uploadCSV, name='uploadCSV'),
     url(r'^smartcrawl/$', views.smartcrawl, name='smartcrawl'),
     url(r'^importTable/$', views.importTable, name='importTable'),
     url(r'^exportCSV/$', views.exportCSV, name='exportCSV'),

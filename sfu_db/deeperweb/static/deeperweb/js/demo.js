@@ -74,6 +74,40 @@ $(document).ready(function(){
             alert("Sorry, this api is not supported now.");
         }
     });
+    /*upload csv*/
+    $('#fileupload').fileupload({
+        url:"/uploadCSV/",
+        type : "POST",
+        autoUpload:false,
+        add:function (e, data) {
+            var name_list = data.files[0].name.split('.');
+            if(name_list[name_list.length-1]=='csv'){
+                if(data.files[0].size>=20*1024*1024){
+                    alert("Maximum file size is 20MB");
+                    data = undefined;
+                }else{
+                    $("button#upload").attr("disabled", true);
+                    data.submit();
+                }
+            }else{
+                alert("Only csv are allowed.");
+                data = undefined;
+            }
+        },
+        always:function (e, data) {
+            var local_keys = ""
+            $.each(data.result['header'],function(index,element){
+                local_keys+="<a class='tag'>"+element+"</a>";
+            });
+            $("a#local_button").nextAll().remove();
+            $("div#local_schema").append(local_keys);
+            $("textarea[name='message']").val(data.result['csv_str']);
+        },
+    });
+    /*simulate click*/
+    $("button#upload").click(function(){
+        $('#fileupload').click();
+    });
     /*call smartcrawl*/
     $("button#try").click(function(){
         $("h1#processing").show()
