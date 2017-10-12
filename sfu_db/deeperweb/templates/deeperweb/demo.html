@@ -3,67 +3,76 @@
 {% include "deeperweb/includes/header.html" %}
 <section style="background-image:url({% static 'deeperweb/pic/breadcrumbs/bg-1.jpg' %}); no-repeat" class="breadcrumbs">
     <div class="container">
-        <div class="text-center breadcrumbs-item">
+        <div class="text-center breadcrumbs-item row">
             <h1>Demo</h1>
             <a href="{% url 'index' %}">home</a><i class="fa fa-angle-right"></i>
             <a href="{% url 'demo' %}">demo</a><i class="fa fa-angle-right"></i>
             <a href="#">Schema Matching</a>
         </div>
-        <div class="col-md-9">
-            <div class="widget-tags" id="local_schema">
-                <a class="cws-button color-3" id="local_button">local schema</a>
-                <!-- item tags-->
-            </div>
-            <div class="widget-tags" id="hidden_schema">
-                <a class="cws-button color-3" id="hidden_button">hidden schema</a>
-                <!-- item tags-->
-                <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.key</a>
-                <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.title</a>
-                <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.authors.author.*</a>
-                <a class='tag'>@score</a>
-                <a class='tag'>info.url</a>
-                <a class='tag'>info.venue</a>
-                <a class='tag'>info.volume</a>
-                <a class='tag'>info.year</a>
-                <a class='tag'>info.type</a>
-                <a class='tag'>@id</a>
-                <a class='tag'>url</a>
-            </div>
-        </div>
-        <div class="col-md-3 cws-widget">
-            <div class="widget-categories alt">
-                <div class="accordion style-2" id="api">
-                    <div class="content-title"><span>Dblp<i class="accordion_angle fa fa-angle-down"></i></span></div>
-                    <div class="content">
-                        <ul id="dblp">
-                            <li class="active"><a>Publ API</a></li>
-                            <li><a>Venue API</a></li>
-                            <li><a>Author API</a></li>
-                        </ul>
-                    </div>
-                    <div class="content-title"><span>Yelp<i class="accordion_angle fa fa-angle-down"></i></span></div>
-                    <div class="content">
-                        <ul id="yelp">
-                            <li><a>Search API</a></li>
-                        </ul>
-                    </div>
-                    <div class="content-title"><span>AMiner<i class="accordion_angle fa fa-angle-down"></i></span></div>
-                    <div class="content">
-                        <ul id="aminer">
-                            <li><a>Publ API</a></li>
-                            <li><a>Advanced Publ API</a></li>
-                            <li><a>Search API</a></li>
-                            <li><a>Advanced Search API</a></li>
-                        </ul>
-                    </div>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="widget-tags" id="local_schema">
+                    <a class="cws-button color-3" id="local_button">Your schema</a>
+                    <!-- item tags-->
+                </div>
+                <div class="widget-tags" id="hidden_schema">
+                    <a class="cws-button color-3" id="hidden_button">Api schema</a>
+                    <!-- item tags-->
+                    <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.key</a>
+                    <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.title</a>
+                    <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.authors.author.*</a>
+                    <a class='tag'>@score</a>
+                    <a class='tag'>info.url</a>
+                    <a class='tag'>info.venue</a>
+                    <a class='tag'>info.volume</a>
+                    <a class='tag'>info.year</a>
+                    <a class='tag'>info.type</a>
+                    <a class='tag'>@id</a>
+                    <a class='tag'>url</a>
                 </div>
             </div>
-            <input id="fileupload" type="file" name="files[]" style="display:none">
-            <button type="button" class="btn btn-primary" id="upload"><a>Upload csv</a></button>
-            <button type="button" class="btn btn-primary" id="try"><a href="#join_schema">Try it now</a></button>
+            <div class="col-md-3 cws-widget">
+                <div class="widget-categories alt">
+                    <div class="accordion style-2" id="api">
+                        <div class="content-title"><span>Dblp<i class="accordion_angle fa fa-angle-down"></i></span></div>
+                        <div class="content">
+                            <ul id="dblp">
+                                <li class="active"><a>Publ API</a></li>
+                                <li><a>Venue API</a></li>
+                                <li><a>Author API</a></li>
+                            </ul>
+                        </div>
+                        <div class="content-title"><span>Yelp<i class="accordion_angle fa fa-angle-down"></i></span></div>
+                        <div class="content">
+                            <ul id="yelp">
+                                <li><a>Search API</a></li>
+                            </ul>
+                        </div>
+                        <div class="content-title"><span>AMiner<i class="accordion_angle fa fa-angle-down"></i></span></div>
+                        <div class="content">
+                            <ul id="aminer">
+                                <li><a>Publ API</a></li>
+                                <li><a>Advanced Publ API</a></li>
+                                <li><a>Search API</a></li>
+                                <li><a>Advanced Search API</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <input id="fileupload" type="file" name="files[]" style="display:none">
+                <button type="button" class="btn btn-primary" id="upload"><a>Upload csv</a></button>
+                <button type="button" class="btn btn-primary" id="try"><a href="#join_schema">Try it now</a></button>
+            </div>
         </div>
-        <textarea name="message" cols="40" rows="4" aria-required="true"
-                  aria-invalid="false" placeholder="Copy your CSV here" style="height: 288px"></textarea>
+        <div class="row" style="overflow:scroll; height: 488px">
+            <textarea name="message" placeholder="Copy your CSV here" style="height: 475px"></textarea>
+            <table class="table table-hover table-bordered" style="display: none;" id="table_input">
+                <thead>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="container">
         <div class="text-center breadcrumbs-item">

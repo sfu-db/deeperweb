@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 
 from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import render
+from django.core.files.uploadedfile import UploadedFile
+from itertools import islice
 import codecs
 import csv
 import ast
@@ -85,22 +87,11 @@ def exportCSV(request):
     return response
 
 
-from django.core.files.uploadedfile import UploadedFile
-from itertools import islice
-
-
 def uploadCSV(request):
     file = request.FILES[u'files[]']
     wrapped_file = UploadedFile(file)
-    csv_str = ""
-    header = []
-    for line in islice(wrapped_file, 0, 1):
-        if b'\xef\xbb\xbf' in line:
-            csv_str = line.replace(b'\xef\xbb\xbf', '')
-            header = csv_str.replace(b'\r', '').replace(b'\n', '').split(',')
-        else:
-            csv_str = line
-            header = csv_str.replace(b'\r', '').replace(b'\n', '').split(',')
-    for line in islice(wrapped_file, 1, None):
-        csv_str += line
-    return JsonResponse({'header': header, 'csv_str': csv_str})
+    csv_file = csv.reader(wrapped_file)
+    csv_input = [row for row in csv_file]
+    if len(csv_input) != 0:
+        csv_input[0][0] = csv_input[0][0].replace(b'\xef\xbb\xbf', '')
+    return JsonResponse({'csv_input': csv_input})

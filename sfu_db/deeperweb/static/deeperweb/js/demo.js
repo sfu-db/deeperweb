@@ -74,6 +74,17 @@ $(document).ready(function(){
             alert("Sorry, this api is not supported now.");
         }
     });
+    /*simulate click*/
+    $("button#upload").click(function(){
+        if($("button#upload a").text()=="Upload csv"){
+            $('#fileupload').click();
+        }else{
+            $("button#upload a").text("Upload csv");
+            $("a#local_button").nextAll().remove();
+            $("textarea[name='message']").show();
+            $("table#table_input").hide();
+        }
+    });
     /*upload csv*/
     $('#fileupload').fileupload({
         url:"/uploadCSV/",
@@ -82,12 +93,14 @@ $(document).ready(function(){
         add:function (e, data) {
             var name_list = data.files[0].name.split('.');
             if(name_list[name_list.length-1]=='csv'){
-                if(data.files[0].size>=20*1024*1024){
-                    alert("Maximum file size is 20MB");
+                if(data.files[0].size>=5*1024*1024){
+                    alert("Maximum file size is 5MB");
                     data = undefined;
                 }else{
                     $("button#upload").attr("disabled", true);
+                    $("button#upload a").text("Wait");
                     data.submit();
+                    data = undefined;
                 }
             }else{
                 alert("Only csv are allowed.");
@@ -95,18 +108,36 @@ $(document).ready(function(){
             }
         },
         always:function (e, data) {
-            var local_keys = ""
-            $.each(data.result['header'],function(index,element){
-                local_keys+="<a class='tag'>"+element+"</a>";
+            var local_thead="";
+	        var local_tbody=""
+	        var local_keys = ""
+	        $.each(data.result['csv_input'],function(index,element){
+			    if(index==0){
+			        local_thead+="<tr>";
+				    for (var i = 0; i < element.length; i++){
+				        local_thead+="<th>"+element[i]+"</th>";
+						local_keys+="<a class='tag'>"+element[i]+"</a>";
+					};
+					local_thead+="</tr>";
+			    }else{
+			        local_tbody+="<tr>";
+					for (var i = 0; i < element.length; i++){
+					    local_tbody+="<td>"+element[i]+"</td>";
+					};
+					local_tbody+="</tr>";
+				}
             });
             $("a#local_button").nextAll().remove();
             $("div#local_schema").append(local_keys);
-            $("textarea[name='message']").val(data.result['csv_str']);
+            $("textarea[name='message']").hide();
+            $("table#table_input thead").children().remove();
+            $("table#table_input thead").html(local_thead);
+            $("table#table_input tbody").children().remove();
+            $("table#table_input tbody").html(local_tbody);
+            $("table#table_input").show();
+            $("button#upload").attr("disabled", false);
+            $("button#upload a").text("Cancel");
         },
-    });
-    /*simulate click*/
-    $("button#upload").click(function(){
-        $('#fileupload').click();
     });
     /*call smartcrawl*/
     $("button#try").click(function(){
@@ -154,13 +185,14 @@ $(document).ready(function(){
 					    join_tbody+="</tr>";
 				    }
                 });
+                $("h1#processing").hide();
+                $("div#join_schema").children().remove();
+                $("div#join_schema").append(join_keys);
                 $("table#table_result thead").children().remove();
                 $("table#table_result thead").html(join_thead);
                 $("table#table_result tbody").children().remove();
                 $("table#table_result tbody").html(join_tbody);
-                $("h1#processing").hide();
                 $("table#table_result").show();
-                $("div#join_schema").append(join_keys);
 		    },
 		    error : function() {
 		        alert("Incorrect Format.");
