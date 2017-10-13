@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'deeperweb',
-    'filebrowser',
 ]
 
 MIDDLEWARE = [
@@ -115,6 +114,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 6291456
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -122,5 +122,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = ('deeperweb/static/',
-                    'filebrowser/static/',
                     os.path.join(BASE_DIR, 'common_static'),)

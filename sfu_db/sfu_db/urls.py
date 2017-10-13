@@ -15,9 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.conf.urls import include
 from deeperweb import views
-from filebrowser.sites import site
 
 urlpatterns = [
     url(r'^index/$', views.index, name='index'),
@@ -25,10 +23,9 @@ urlpatterns = [
     url(r'^advance/$', views.advance, name='advance'),
     url(r'^about/$', views.about, name='about'),
     url(r'^contact/$', views.contact, name='contact'),
-    url(r'^uploadCSV/$', views.uploadCSV, name='uploadCSV'),
     url(r'^smartcrawl/$', views.smartcrawl, name='smartcrawl'),
+    url(r'^uploadCSV/$', views.uploadCSV, name='uploadCSV'),
     url(r'^importTable/$', views.importTable, name='importTable'),
     url(r'^exportCSV/$', views.exportCSV, name='exportCSV'),
     url(r'^admin/', admin.site.urls),
-    url(r'^filebrowser/', include(site.urls)),
 ]

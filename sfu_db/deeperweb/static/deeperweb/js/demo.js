@@ -31,12 +31,12 @@ $(document).ready(function(){
     $("div#join_schema").delegate("a.tag","click",function(){
         if(typeof($(this).attr("style"))=="undefined"){
             $(this).css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
-            $('table thead tr').find('th:eq(' + $(this).index() + ')').hide();
-            $('table tbody tr').find('td:eq(' + $(this).index() + ')').hide();
-        }else{
-            $(this).removeAttr("style");
             $('table thead tr').find('th:eq(' + $(this).index() + ')').show();
             $('table tbody tr').find('td:eq(' + $(this).index() + ')').show();
+        }else{
+            $(this).removeAttr("style");
+            $('table thead tr').find('th:eq(' + $(this).index() + ')').hide();
+            $('table tbody tr').find('td:eq(' + $(this).index() + ')').hide();
         }
     });
     /*extract schema from csv*/
@@ -143,7 +143,30 @@ $(document).ready(function(){
     $("button#try").click(function(){
         $("h1#processing").show()
         $("table#table_result").hide();
-        var original_data = $("textarea[name='message']").val();
+        if($("textarea[name='message']").is(":visible")){
+            var original_data = $("textarea[name='message']").val();
+        }else{
+            var table_input = $('table#table_input').find('tr');
+            var original_data = new Array();
+            $(table_input).each(function(index,element){
+                if(index==0){
+                    var header = new Array();
+                    var table_header = $(element).children('th');
+                    for (var i = 0; i < table_header.length; i++){
+                        header.push(table_header.eq(i).text());
+                    }
+                    original_data[index] = header;
+                }else{
+                    var row = new Array();
+                    var table_row = $(element).children('td');
+                    for (var i = 0; i < table_row.length; i++){
+                        row.push(table_row.eq(i).text());
+                    }
+                    original_data[index] = row;
+                }
+            });
+            original_data = JSON.stringify(original_data)
+        }
         var local_schema = $('div#local_schema').children('a.tag');
         var local_match = new Array();
         $(local_schema).each(function(){
@@ -193,6 +216,28 @@ $(document).ready(function(){
                 $("table#table_result tbody").children().remove();
                 $("table#table_result tbody").html(join_tbody);
                 $("table#table_result").show();
+
+                $('table#table_result thead tr th').hide();
+                $('table#table_result tbody tr td').hide();
+                var join_schema = $('div#join_schema').children('a.tag');
+                $(hidden_match).each(function(index,element){
+                    $(join_schema).each(function(){
+                        if($(this).text()==element){
+                            $(this).css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
+                            $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
+                            $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
+                        }
+                    });
+                });
+                $(local_match).each(function(index,element){
+                    $(join_schema).each(function(){
+                        if($(this).text()==element){
+                            $(this).css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
+                            $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
+                            $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
+                        }
+                    });
+                });
 		    },
 		    error : function() {
 		        alert("Incorrect Format.");

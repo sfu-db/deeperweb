@@ -52,8 +52,15 @@
             </div>
             <div class="col-sm-6 text-right">
               <div class="top-right-wrap">
-                <div><a href="/admin"><i class="flaticon-people-2"></i>Login</a></div><span>|</span>
-                <div><a href="/filebrowser/browse/?"><i class="flaticon-sheet"></i>File</a></div><span>|</span>
+                <div><a href="/admin"><i class="flaticon-people-2"></i>
+                  {% if user.is_authenticated %}
+                  {{ user.username }}
+                  {% else %}
+                  Login
+                  {% endif %}
+                  </a>
+                </div>
+                <span>|</span>
                 <div class="top-search"><i class="flaticon-interface"></i>Search</div>
               </div>
             </div>
