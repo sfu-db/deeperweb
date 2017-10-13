@@ -5,6 +5,7 @@ from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import render
 from django.core.files.uploadedfile import UploadedFile
 from django.conf import settings
+from models import Subscriber
 import codecs
 import csv
 import ast
@@ -13,23 +14,31 @@ from deeperlib.web import deeper_web
 
 # Create your views here.
 def index(request):
-    return render(request, 'deeperweb/index.html', {'user' : request.user})
+    return render(request, 'deeperweb/index.html', {'user': request.user})
 
 
 def demo(request):
-    return render(request, 'deeperweb/demo.html', {'user' : request.user})
+    return render(request, 'deeperweb/demo.html', {'user': request.user})
 
 
 def advance(request):
-    return render(request, 'deeperweb/advance.html', {'user' : request.user})
+    return render(request, 'deeperweb/advance.html', {'user': request.user})
 
 
 def about(request):
-    return render(request, 'deeperweb/about.html', {'user' : request.user})
+    return render(request, 'deeperweb/about.html', {'user': request.user})
 
 
 def contact(request):
-    return render(request, 'deeperweb/contact.html', {'user' : request.user})
+    return render(request, 'deeperweb/contact.html', {'user': request.user})
+
+
+def subscribe(request):
+    name = request.POST.get('name')
+    email = request.POST.get('email')
+    if len(Subscriber.objects.filter(email=email))==0:
+        Subscriber.objects.get_or_create(name=name, email =email)
+    return JsonResponse({'user_num': Subscriber.objects.count()})
 
 
 def smartcrawl(request):

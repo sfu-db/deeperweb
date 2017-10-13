@@ -11484,7 +11484,7 @@ body.boxed .is-sticky .main-nav {
     -moz-transform: translate3d(-50%, -50%, 0);
     transform: translate3d(-50%, -50%, 0);
     width: 370px;
-    height: 400px;
+    height: 300px;
     background: #ffffff;
 }
 
@@ -11501,7 +11501,7 @@ body.boxed .is-sticky .main-nav {
     text-align: center;
     margin: 0;
     display: inline-block;
-    margin-left: 34px;
+    margin-left: 0px;
     vertical-align: middle;
 }
 
@@ -11517,7 +11517,7 @@ body.boxed .is-sticky .main-nav {
 }
 
 .login-popup .login-popup-wrap .login-content {
-    padding: 40px 25px;
+    padding: 35px 25px;
 }
 
 .login-popup .login-popup-wrap .login-content input.form-row {

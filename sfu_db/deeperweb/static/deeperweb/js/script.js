@@ -38,8 +38,6 @@ $(document).ready(function() {
     filter_init();
     gridList_init();
     popup_login_init();
-    popup_news_init();
-    close_shop_item();
     footer_height();
 
     // load functions
@@ -49,13 +47,6 @@ $(document).ready(function() {
     if($('.isotope-grid').length) {
       init_isotop ();
     }
-    setTimeout(function(){
-      if ( ( $(window).width()>767) ) {
-        if ($(".news-popup").hasClass("popup-on")) {
-          $(".news-popup").addClass("open");
-        }
-      }
-    } , 5000)
 })
 
 // resize functions
@@ -1485,29 +1476,34 @@ function gridList_init(){
 
 //Login popup
 function popup_login_init(){
-  $(".top-login").on("click", function (){
-    $(".login-popup").addClass("open");
+  $("#msg_submit").on("click", function (){
+    var name = $("input[name='name']").val().trim();
+    if(name==""){
+    alert("Name is required!");
+      return false;
+  }
+    var email = $("input[name='email']").val().trim();
+    if(email==""){
+    alert("Email is required!");
+      return false;
+  }else if(!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3})+)$/)){
+   alert("Incorrect Format！Please input your email again");
+   return false;
+  }
+    $.ajax({
+        url : "/subscribe/",
+	    type : "POST",
+		dataType : "json",
+	    data : {'email' : email, 'name' : name,},
+		success : function(response) {
+            $(".login-popup").removeClass("open");
+            alert("You are "+response['user_num']+" users");
+		},
+		error : function() {
+		    alert("Error, please submit your message again");
+		}
+    });
   })
-  $(".login-popup .close-button").on("click", function (){
-    $(".login-popup").removeClass("open");
-  })
-}
-
-// News popup
-function popup_news_init(){
-  $(".news-popup .close-button").on("click", function (){
-    $(".news-popup").removeClass("open");
-  })
-}
-
-// Shop popup close item
-function close_shop_item(){
-  $(".top-shop .shop-cart-menu .shop-close").on("click", function (){
-    $(this).closest(".item-top-sellers").remove().delay(100).fadeOut("fast");
-  });
-  $(".top-shop .shop-cart-menu .clear").on("click", function (){
-    $(this).parent(".total").siblings(".item-top-sellers").remove().delay(100).fadeOut("fast");
-  });
 }
 
 // footer fixed
