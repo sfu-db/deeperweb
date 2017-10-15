@@ -9,7 +9,7 @@ $(document).ready(function(){
                 $("a#local_button").after($(this));
             }
             $(this).css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
-            $(this).append("<span class='serial-badge'></span>");
+            $(this).append("<span class='badge'></span>");
         }else{
             $(this).removeAttr("style");
             $(this).children("span").remove();
@@ -28,7 +28,7 @@ $(document).ready(function(){
                 $("a#hidden_button").after($(this));
             }
             $(this).css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
-            $(this).append("<span class='serial-badge'></span>");
+            $(this).append("<span class='badge'></span>");
         }else{
             $(this).removeAttr("style");
             $(this).children("span").remove();
@@ -198,7 +198,7 @@ $(document).ready(function(){
         var hidden_match = new Array();
         $(hidden_schema).each(function(){
             if(typeof($(this).attr("style"))!="undefined"){
-                hidden_match.push($(this).text());
+                hidden_match.push($(this).text().substring(0,$(this).text().length-$(this).children('span').text().length));
             }
         });
         var api = $('div#api ul li.active');
@@ -230,6 +230,7 @@ $(document).ready(function(){
                 });
                 $("div#join_schema").children().remove();
                 $("div#join_schema").append(join_keys);
+
                 $("table#table_result thead").children().remove();
                 $("table#table_result thead").html(join_thead);
                 $("table#table_result tbody").children().remove();

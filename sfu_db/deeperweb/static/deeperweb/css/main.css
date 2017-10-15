@@ -71,7 +71,6 @@
 	-- Widget contact form
 -- CONTENT-PAGE
 	-- Admin info
-	-- Serial badge
 	-- Leave reply
 	-- Form subscribe
 	-- Cws parallax
@@ -8599,23 +8598,7 @@ td.ui-datepicker-today:before {
 .admin-about p:last-child {
     margin-bottom: 0;
 }
-/**/
-/* leave reply */
-/**/
-.serial-badge {
-  display: inline-block;
-  min-width: 10px;
-  padding: 3px 7px;
-  font-size: 12px;
-  font-weight: bold;
-  line-height: 1;
-  color: #337ab7;
-  background-color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  border-radius: 10px;
-}
+
 /**/
 /* leave reply */
 /**/
