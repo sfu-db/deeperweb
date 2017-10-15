@@ -1497,7 +1497,7 @@ function popup_login_init(){
 	    data : {'email' : email, 'name' : name,},
 		success : function(response) {
             $(".login-popup").removeClass("open");
-            alert("You are "+response['user_num']+" users");
+            alert("Welcome, You are "+response['user_num']+" users!");
 		},
 		error : function() {
 		    alert("Error, please submit your message again");

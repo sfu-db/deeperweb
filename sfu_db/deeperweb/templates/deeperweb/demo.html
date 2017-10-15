@@ -18,9 +18,9 @@
                 <div class="widget-tags" id="hidden_schema">
                     <a class="cws-button color-3" id="hidden_button">Api schema</a>
                     <!-- item tags-->
-                    <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.key</a>
-                    <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.title</a>
-                    <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.authors.author.*</a>
+                    <a class='tag ' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.key<span class="serial-badge">0</span></a>
+                    <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.title<span class="serial-badge">1</span></a>
+                    <a class='tag' style="background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);">info.authors.author.*<span class="serial-badge">2</span></a>
                     <a class='tag'>@score</a>
                     <a class='tag'>info.url</a>
                     <a class='tag'>info.venue</a>
@@ -61,7 +61,7 @@
                 </div>
                 <input id="fileupload" type="file" name="files[]" style="display:none">
                 <button type="button" class="btn btn-primary" id="upload"><a>Upload csv</a></button>
-                <button type="button" class="btn btn-primary" id="try"><a href="#join_schema">Try it now</a></button>
+                <button type="button" class="btn btn-primary" id="try"><a href="#topLoader">Try it now</a></button>
             </div>
         </div>
         <div class="row" style="overflow:scroll; height: 488px">
@@ -88,7 +88,8 @@
             <button type="button" class="btn btn-primary" id="download"><a>Download</a></button>
         </div>
         <div style="overflow:scroll; height: 488px">
-            <h1 class="widget-title text-center" style="height:300px; line-height:300px;" id="processing">Processing</h1>
+            <div id="topLoader" style="position:absolute;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);}">
+            </div>
             <table class="table table-hover table-bordered" style="display: none;" id="table_result">
                 <thead>
                 </thead>
@@ -98,7 +99,7 @@
         </div>
     </div>
 </section>
-<div class="login-popup open">
+<div class="login-popup">
     <div class="login-popup-wrap">
         <div class="title-wrap">
           <h2>Subscribe For Free</h2>
@@ -114,4 +115,5 @@
 <script type="text/javascript" src="{% static 'deeperweb/js/jquery.ui.widget.js' %}"></script>
 <script type="text/javascript" src="{% static 'deeperweb/js/jquery.iframe-transport.js' %}"></script>
 <script type="text/javascript" src="{% static 'deeperweb/js/jquery.fileupload.js' %}"></script>
+<script type="text/javascript" src="{% static 'deeperweb/js/jquery.percentageloader-0.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'deeperweb/js/demo.js' %}"></script>

@@ -9,10 +9,16 @@ $(document).ready(function(){
                 $("a#local_button").after($(this));
             }
             $(this).css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
+            $(this).append("<span class='serial-badge'></span>");
         }else{
             $(this).removeAttr("style");
+            $(this).children("span").remove();
             $("div#local_schema").append($(this));
         }
+        var active_tags = $("div#local_schema a[style]");
+        for(var i=0; i<active_tags.length; i++){
+            active_tags.eq(i).find("span").text(i);
+        };
     });
     $("div#hidden_schema").delegate("a.tag","click",function(){
         if(typeof($(this).attr("style"))=="undefined"){
@@ -22,10 +28,16 @@ $(document).ready(function(){
                 $("a#hidden_button").after($(this));
             }
             $(this).css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
+            $(this).append("<span class='serial-badge'></span>");
         }else{
             $(this).removeAttr("style");
+            $(this).children("span").remove();
             $("div#hidden_schema").append($(this));
         }
+        var active_tags = $("div#hidden_schema a[style]");
+        for(var i=0; i<active_tags.length; i++){
+            active_tags.eq(i).find("span").text(i);
+        };
     });
     /*schema operation*/
     $("div#join_schema").delegate("a.tag","click",function(){
@@ -141,10 +153,18 @@ $(document).ready(function(){
     });
     /*call smartcrawl*/
     $("button#try").click(function(){
-        $("h1#processing").show()
+        $("div#topLoader").show()
         $("table#table_result").hide();
         if($("textarea[name='message']").is(":visible")){
             var original_data = $("textarea[name='message']").val();
+            if (original_data.length>5242880){
+                alert("Maximum file size is 5MB");
+                return false;
+            }
+            if (original_data.split('\n').length>20000){
+                alert("Maximum number of rows for file is 20000");
+                return false;
+            }
         }else{
             var table_input = $('table#table_input').find('tr');
             var original_data = new Array();
@@ -181,7 +201,7 @@ $(document).ready(function(){
                 hidden_match.push($(this).text());
             }
         });
-        var api = $('div#api ul li.active')
+        var api = $('div#api ul li.active');
         var api_msg = api.parent().attr('id')+' '+api.text();
         $.ajax({
             url : "/smartcrawl/",
@@ -208,14 +228,12 @@ $(document).ready(function(){
 					    join_tbody+="</tr>";
 				    }
                 });
-                $("h1#processing").hide();
                 $("div#join_schema").children().remove();
                 $("div#join_schema").append(join_keys);
                 $("table#table_result thead").children().remove();
                 $("table#table_result thead").html(join_thead);
                 $("table#table_result tbody").children().remove();
                 $("table#table_result tbody").html(join_tbody);
-                $("table#table_result").show();
 
                 $('table#table_result thead tr th').hide();
                 $('table#table_result tbody tr td').hide();
@@ -238,6 +256,8 @@ $(document).ready(function(){
                         }
                     });
                 });
+                $("div#topLoader").hide();
+                $("table#table_result").show();
 		    },
 		    error : function() {
 		        alert("Incorrect Format.");
@@ -281,6 +301,32 @@ $(document).ready(function(){
         }else{
             alert("Empty Table.");
         }
+    });
+
+    var $topLoader = $("#topLoader").percentageLoader({width: 356, height: 356, controllable : true, progress : 0.0,
+        onProgressUpdate : function(val) {$topLoader.setValue(Math.round(val * 100.0));}});
+    var topLoaderRunning = false;
+    $("button#try").click(function() {
+        if (topLoaderRunning) {
+            return;
+        }
+        topLoaderRunning = true;
+        $topLoader.setProgress(0);
+        $topLoader.setValue('0ms');
+        var ms = 0;
+        var totalMs = 20000;
+
+        var animateFunc = function() {
+            ms += 25;
+            $topLoader.setProgress(ms / totalMs);
+            $topLoader.setValue(ms.toString() + 'ms');
+            if (ms < totalMs) {
+                setTimeout(animateFunc, 25);
+            } else {
+                topLoaderRunning = false;
+            }
+        }
+        setTimeout(animateFunc, 25);
     });
 });
 /*====================demo ajax end======*/

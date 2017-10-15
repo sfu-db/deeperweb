@@ -12,7 +12,7 @@ from json2csv import Json2csv
 
 
 def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
-    if api_msg ==  'dblp Publ API':
+    if api_msg == 'dblp Publ API':
         search_term = 'q'
         parameters = {'h': 1000}
         api = PublApi(top_k=1000, delay=4, search_term=search_term, **parameters)
@@ -28,7 +28,7 @@ def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
     crawldata_csv = Json2csv(hiddendata.getMergeResult()).getCsvdata()
     join_csv = []
     join_csv.append(localdata_csv['header'] + crawldata_csv['header'])
-    matchpair = sorted(hiddendata.getMatchPair().items(), key=lambda item: int(item[0]), reverse=False)
+    matchpair = sorted(hiddendata.getMatchPair().items(), key=lambda item: item[0], reverse=False)
     for m in matchpair:
         local_id = m[0]
         for hidden_id in m[1]:

@@ -21,10 +21,6 @@ def demo(request):
     return render(request, 'deeperweb/demo.html', {'user': request.user})
 
 
-def advance(request):
-    return render(request, 'deeperweb/advance.html', {'user': request.user})
-
-
 def about(request):
     return render(request, 'deeperweb/about.html', {'user': request.user})
 
@@ -36,8 +32,8 @@ def contact(request):
 def subscribe(request):
     name = request.POST.get('name')
     email = request.POST.get('email')
-    if len(Subscriber.objects.filter(email=email))==0:
-        Subscriber.objects.get_or_create(name=name, email =email)
+    if len(Subscriber.objects.filter(email=email)) == 0:
+        Subscriber.objects.get_or_create(name=name, email=email)
     return JsonResponse({'user_num': Subscriber.objects.count()})
 
 

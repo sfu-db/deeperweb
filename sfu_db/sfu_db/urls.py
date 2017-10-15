@@ -20,7 +20,6 @@ from deeperweb import views
 urlpatterns = [
     url(r'^index/$', views.index, name='index'),
     url(r'^$', views.demo, name='demo'),
-    url(r'^advance/$', views.advance, name='advance'),
     url(r'^about/$', views.about, name='about'),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^subscribe/$', views.subscribe, name='subscribe'),
