@@ -153,6 +153,45 @@ $(document).ready(function(){
     });
     /*call smartcrawl*/
     $("button#try").click(function(){
+        /*get the message of schema and api*/
+        var local_schema = $('div#local_schema').children('a.tag');
+        var local_match = new Array();
+        $(local_schema).each(function(){
+            if(typeof($(this).attr("style"))!="undefined"){
+                local_match.push($(this).text().substring(0,$(this).text().length-$(this).children('span').text().length));
+            }
+        });
+        var hidden_schema = $('div#hidden_schema').children('a.tag');
+        var hidden_match = new Array();
+        $(hidden_schema).each(function(){
+            if(typeof($(this).attr("style"))!="undefined"){
+                hidden_match.push($(this).text().substring(0,$(this).text().length-$(this).children('span').text().length));
+            }
+        });
+        var api = $('div#api ul li.active');
+        var api_msg = api.parent().attr('id')+' '+api.text();
+        /*judge the correctness of schema and api*/
+        if (local_match.length != hidden_match.length){
+            alert("Please match the schema correctly.");
+            return false;
+        }
+        if (api_msg=="dblp Publ API"){
+            var judge = true;
+            var active_hidden_schema = $("div#hidden_schema a[style]");
+            $(active_hidden_schema).each(function(){
+                if($(this).text().substring(0,$(this).text().length-$(this).children('span').text().length)=="info.title"){
+                    judge = false;
+                }
+            });
+            if (judge){
+                alert("info.title is necessary.");
+                return false;
+            }
+        } else {
+            alert("Sorry, this api is not supported now.");
+            return false;
+        }
+        /*pre-process the local record*/
         $("div#topLoader").show()
         $("table#table_result").hide();
         if($("textarea[name='message']").is(":visible")){
@@ -187,22 +226,6 @@ $(document).ready(function(){
             });
             original_data = JSON.stringify(original_data)
         }
-        var local_schema = $('div#local_schema').children('a.tag');
-        var local_match = new Array();
-        $(local_schema).each(function(){
-            if(typeof($(this).attr("style"))!="undefined"){
-                local_match.push($(this).text());
-            }
-        });
-        var hidden_schema = $('div#hidden_schema').children('a.tag');
-        var hidden_match = new Array();
-        $(hidden_schema).each(function(){
-            if(typeof($(this).attr("style"))!="undefined"){
-                hidden_match.push($(this).text().substring(0,$(this).text().length-$(this).children('span').text().length));
-            }
-        });
-        var api = $('div#api ul li.active');
-        var api_msg = api.parent().attr('id')+' '+api.text();
         $.ajax({
             url : "/smartcrawl/",
 	        type : "POST",

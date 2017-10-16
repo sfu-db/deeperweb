@@ -16,12 +16,13 @@ def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
         search_term = 'q'
         parameters = {'h': 1000}
         api = PublApi(top_k=1000, delay=4, search_term=search_term, **parameters)
-
-    sample_file = settings.BASE_DIR + '/netdisk/dblp_sample.csv'
-    sampledata = SampleData(sample_ratio=0.5, samplepath=sample_file, filetype='csv', uniqueid="key",
-                            querylist=["title"])
-    localdata = LocalData(uniqueid="ID", querylist=['title'], matchlist=['title'], data_raw=original_csv)
-    hiddendata = HiddenData(uniqueid="info.key", matchlist=["info.title"])
+        sample_file = settings.BASE_DIR + '/netdisk/dblp_sample.csv'
+        sampledata = SampleData(sample_ratio=0.5, samplepath=sample_file, filetype='csv', uniqueid="key",
+                                querylist=["title"])
+        localdata = LocalData(uniqueid=local_match[hidden_match.index("info.key")],
+                              querylist=[local_match[hidden_match.index("info.title")]],
+                              matchlist=[local_match[hidden_match.index("info.title")]], data_raw=original_csv)
+        hiddendata = HiddenData(uniqueid="info.key", matchlist=["info.title"])
 
     smartCrawl(budget, api, sampledata, localdata, hiddendata)
     localdata_csv = localdata.getRawData()

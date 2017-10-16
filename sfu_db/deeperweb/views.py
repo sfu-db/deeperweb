@@ -47,8 +47,14 @@ def smartcrawl(request):
     except SyntaxError:
         original_csv = []
         lines = original_data.splitlines()
-        for i in lines:
-            original_csv.append(i.split(','))
+        for line in lines:
+            row = []
+            for i in line.split(','):
+                if len(row) and len(i) and i[0].isspace():
+                    row[-1] += i
+                else:
+                    row.append(i)
+            original_csv.append(row)
     join_csv = deeper_web.smartcrawl_web(16, api_msg, original_csv, local_match, hidden_match)
     return JsonResponse({'join_csv': join_csv})
 
