@@ -3,6 +3,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 from django.conf import settings
+import time
 from deeperlib.api.dblp.publapi import PublApi
 from deeperlib.data_processing.sample_data import SampleData
 from smartcrawl import smartCrawl
@@ -19,10 +20,20 @@ def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
         sample_file = settings.BASE_DIR + '/netdisk/dblp_sample.csv'
         sampledata = SampleData(sample_ratio=0.5, samplepath=sample_file, filetype='csv', uniqueid="key",
                                 querylist=["title"])
-        localdata = LocalData(uniqueid=local_match[hidden_match.index("info.key")],
-                              querylist=[local_match[hidden_match.index("info.title")]],
-                              matchlist=[local_match[hidden_match.index("info.title")]], data_raw=original_csv)
         hiddendata = HiddenData(uniqueid="info.key", matchlist=["info.title"])
+
+        if "info.key" in hidden_match:
+            localdata = LocalData(uniqueid=local_match[hidden_match.index("info.key")],
+                                  querylist=[local_match[hidden_match.index("info.title")]],
+                                  matchlist=[local_match[hidden_match.index("info.title")]], data_raw=original_csv)
+        else:
+            uniqueID = 'ID' + str(int(time.time()))
+            original_csv[0].append(uniqueID)
+            for i in range(1, len(original_csv)):
+                original_csv[i].append(i)
+            localdata = LocalData(uniqueid=uniqueID,
+                                  querylist=[local_match[hidden_match.index("info.title")]],
+                                  matchlist=[local_match[hidden_match.index("info.title")]], data_raw=original_csv)
 
     smartCrawl(budget, api, sampledata, localdata, hiddendata)
     localdata_csv = localdata.getRawData()
