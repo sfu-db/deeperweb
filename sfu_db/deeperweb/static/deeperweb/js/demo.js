@@ -1,5 +1,30 @@
 /*====================demo ajax======*/
 $(document).ready(function(){
+    /*initialize*/
+    var dblp_publ_schema = ['info.key','info.title','info.authors.author.*','@score','info.url','info.venue','info.volume','info.year','info.type','@id','url'];
+    $.each(dblp_publ_schema,function(index,element){
+        $("div#hidden_schema").append("<a class='tag'>"+element+"</a>");
+        if (index<3){
+            $("div#hidden_schema a:last").css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
+            $("div#hidden_schema a:last").append("<span class='badge'>"+index+"</span>");
+        }
+    });
+    var text_example = "ID,title,author\n"+
+    "1,Data abstraction and program development using Pascal,Reinhold F. Hille\n"+
+    "2,Using Global Optimization for a Microparticle Identification Problem with Noisy Data,Mike C. Bartholomew Biggs and Z. J. Ulanowski and S. Zakovic\n"+
+    "3,Hyperlinks as a data source for science mapping,Gareth Harries and David Wilkinson and Liz Price and Ruth Fairclough and Mike Thelwall\n"+
+    "4,Improving rule processing in Postgres database management system,Kejongsok Kim\n"+
+    "5,VisBench: A Framework for Remote Data Visualization and Analysis,Randy W. Heiland and M. Pauline Baker and Danesh K. Tafti\n"+
+    "6,The life sciences Global Image Database (GID),Eduardo Gonzalez-Couto and Brian Hayes and Anne Danckaert\n"+
+    "7,Quality Threshold Clustering,Xin Jin and Jiawei Han\n"+
+    "8,CoGenT++: an extensive and extensible data environment for computational genomics,Leon Goldovsky and Paul Janssen\n"+
+    "9,Foundations of semantic databases,Bert O. de Brock\n"+
+    "10,Using Artificial Intelligence Planning to Automate Science Data Analysis for Large Image Databases,Steve A. Chien and Forest Fisher and Helen Mortensen and Edisanter Lo and Ronald Greeley\n";
+    $("textarea[name='message']").html(text_example);
+    textarea_detection();
+    var $topLoader = $("#topLoader").percentageLoader({width: 356, height: 356, controllable : true, progress : 0.0,
+        onProgressUpdate : function(val) {$topLoader.setValue(Math.round(val * 100.0));}});
+    var topLoaderRunning = false;
     /*schema matching*/
     $("div#local_schema").delegate("a.tag","click",function(){
         if(typeof($(this).attr("style"))=="undefined"){
@@ -53,15 +78,7 @@ $(document).ready(function(){
     });
     /*extract schema from csv*/
     $("textarea[name='message']").bind('input propertychange',function(){
-        var str=$(this).val();
-        var header = str.split("\n")[0];
-        var schema = header.split(",");
-        var local_keys = ""
-        for(var i=0;i<schema.length;i++){
-            local_keys+="<a class='tag'>"+schema[i]+"</a>";
-            }
-        $("a#local_button").nextAll().remove();
-        $("div#local_schema").append(local_keys);
+        textarea_detection();
     });
     /*choose api*/
     $("div#api ul li").click(function(){
@@ -327,9 +344,6 @@ $(document).ready(function(){
         }
     });
 
-    var $topLoader = $("#topLoader").percentageLoader({width: 356, height: 356, controllable : true, progress : 0.0,
-        onProgressUpdate : function(val) {$topLoader.setValue(Math.round(val * 100.0));}});
-    var topLoaderRunning = false;
     $("button#try").click(function() {
         if (topLoaderRunning) {
             return;
@@ -352,5 +366,17 @@ $(document).ready(function(){
         }
         setTimeout(animateFunc, 25);
     });
+
 });
 /*====================demo ajax end======*/
+function textarea_detection(){
+    var str= $("textarea[name='message']").val();
+    var header = str.split("\n")[0];
+    var schema = header.split(",");
+    var local_keys = ""
+    for(var i=0;i<schema.length;i++){
+        local_keys+="<a class='tag'>"+schema[i]+"</a>";
+    }
+    $("a#local_button").nextAll().remove();
+    $("div#local_schema").append(local_keys);
+}
