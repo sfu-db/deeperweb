@@ -4,53 +4,63 @@
 <section style="background-image:url({% static 'deeperweb/pic/breadcrumbs/bg-1.jpg' %}); no-repeat" class="breadcrumbs">
     <div class="container">
         <div class="text-center breadcrumbs-item row">
-            <h1>Demo</h1>
+            <h1>Setup</h1>
             <a href="{% url 'index' %}">home</a><i class="fa fa-angle-right"></i>
             <a href="{% url 'demo' %}">demo</a><i class="fa fa-angle-right"></i>
-            <a href="#">Schema Matching</a>
+            <a href="#">Setup</a>
         </div>
-        <div class="row">
-            <div class="col-md-9">
-                <div class="widget-tags" id="local_schema">
-                    <a class="cws-button color-3" id="local_button">Your schema</a>
-                    <!-- item tags-->
-                </div>
-                <div class="widget-tags" id="hidden_schema">
-                    <a class="cws-button color-3" id="hidden_button">Api schema</a>
-                    <!-- item tags-->
-                </div>
-            </div>
+    </div>
+</section>
+<div class="content-body" style="background-image:url({% static 'deeperweb/pic/breadcrumbs/bg-3.jpg' %}); no-repeat">
+    <div class="container">
+        <br/>
+        <div class="row" id="api">
             <div class="col-md-3 cws-widget">
                 <div class="widget-categories alt">
-                    <div class="accordion style-2" id="api">
-                        <div class="content-title"><span>Dblp<i class="accordion_angle fa fa-angle-down"></i></span></div>
+                    <div class="accordion style-1">
+                        <div class="content-title"><span>Dblp<i class="accordion_angle fa fa-angle-down"></i></span>
+                        </div>
                         <div class="content">
                             <ul id="dblp">
-                                <li class="active"><a>Publ API</a></li>
+                                <li><a>Publ API</a></li>
                                 <li><a>Venue API</a></li>
                                 <li><a>Author API</a></li>
                             </ul>
                         </div>
-                        <div class="content-title"><span>Yelp<i class="accordion_angle fa fa-angle-down"></i></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 cws-widget">
+                <div class="widget-categories alt">
+                    <div class="accordion style-1">
+                        <div class="content-title"><span>Yelp<i class="accordion_angle fa fa-angle-down"></i></span>
+                        </div>
                         <div class="content">
                             <ul id="yelp">
                                 <li><a>Search API</a></li>
                             </ul>
                         </div>
-                        <div class="content-title"><span>AMiner<i class="accordion_angle fa fa-angle-down"></i></span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 cws-widget">
+                <div class="widget-categories alt">
+                    <div class="accordion style-1">
+                        <div class="content-title"><span>AMiner<i
+                                class="accordion_angle fa fa-angle-down"></i></span></div>
                         <div class="content">
                             <ul id="aminer">
                                 <li><a>Publ API</a></li>
-                                <li><a>Advanced Publ API</a></li>
                                 <li><a>Search API</a></li>
-                                <li><a>Advanced Search API</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-3 cws-widget">
                 <input id="fileupload" type="file" name="files[]" style="display:none">
                 <button type="button" class="btn btn-primary" id="upload"><a>Upload csv</a></button>
-                <button type="button" class="btn btn-primary" id="try"><a href="#topLoader">Try it now</a></button>
+                <button type="button" class="btn btn-primary" id="try"><a>Try it now</a></button>
             </div>
         </div>
         <div class="row" style="overflow:scroll; height: 488px">
@@ -63,13 +73,20 @@
             </table>
         </div>
     </div>
+</div>
+<section style="background-image:url({% static 'deeperweb/pic/breadcrumbs/bg-1.jpg' %}); no-repeat" class="breadcrumbs">
     <div class="container">
         <div class="text-center breadcrumbs-item">
-            <br>
+            <h1>Result</h1>
             <a href="{% url 'index' %}">home</a><i class="fa fa-angle-right"></i>
             <a href="{% url 'demo' %}">demo</a><i class="fa fa-angle-right"></i>
-            <a href="#">Schema Operation</a>
+            <a href="#">Result</a>
         </div>
+    </div>
+</section>
+<div class="content-body" style="background-image:url({% static 'deeperweb/pic/breadcrumbs/bg-3.jpg' %}); no-repeat">
+    <div class="container">
+        <br/>
         <div class="widget-tags" id="join_schema">
             <!-- item tags-->
         </div>
@@ -77,8 +94,8 @@
             <button type="button" class="btn btn-primary" id="download"><a>Download</a></button>
         </div>
         <div style="overflow:scroll; height: 488px">
-            <div id="topLoader" style="position:absolute;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);}">
-            </div>
+            <div id="topLoader"
+                 style="position:absolute;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);}"></div>
             <table class="table table-hover table-bordered" style="display: none;" id="table_result">
                 <thead>
                 </thead>
@@ -87,17 +104,41 @@
             </table>
         </div>
     </div>
-</section>
-<div class="login-popup">
+</div>
+<div class="login-popup open">
     <div class="login-popup-wrap">
         <div class="title-wrap">
-          <h2>Subscribe For Free</h2>
+            <h2>Subscribe For Free</h2><i class="close-button flaticon-cross"></i>
         </div>
         <div class="login-content">
-            <input type="text" name="name" value="" placeholder="Enter Your Name ..." aria-required="true" class="form-row">
-            <input type="text" name="email" value="" placeholder="Enter Your Email ..." aria-required="true" class="form-row">
+            <input type="text" name="name" value="" placeholder="Enter Your Name ..." aria-required="true"
+                   class="form-row">
+            <input type="text" name="email" value="" placeholder="Enter Your Email ..." aria-required="true"
+                   class="form-row">
         </div>
         <div class="cws-button gray alt full-width" id="msg_submit">Submit</div>
+    </div>
+</div>
+<div class="news-popup">
+    <div class="news-popup-wrap">
+        <div class="news-content">
+            <div class="news-title">
+                <h2>Schema Matching</h2><i class="close-button flaticon-cross"></i>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="widget-tags" id="local_schema">
+                        <a class="cws-button color-3" id="local_button">Your schema</a>
+                        <!-- item tags-->
+                    </div>
+                    <div class="widget-tags" id="hidden_schema">
+                        <a class="cws-button color-3" id="hidden_button">Api schema</a>
+                        <!-- item tags-->
+                    </div>
+                </div>
+            </div>
+            <div class="cws-button gray alt full-width" id="schema_submit"><a href="#topLoader">Submit</a></div>
+        </div>
     </div>
 </div>
 {% include "deeperweb/includes/footer.html" %}

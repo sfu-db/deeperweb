@@ -7800,6 +7800,10 @@ aside:last-child {
     color: #666666;
 }
 
+.widget-categories.alt .accordion.style-1 .content ul li.active a {
+    color: #237dc8;
+}
+
 .widget-categories.alt .accordion.style-2 .content ul li a:after {
     display: none;
 }
@@ -11601,9 +11605,9 @@ body.boxed .is-sticky .main-nav {
     -webkit-transform: translate3d(-50%, -50%, 0);
     -moz-transform: translate3d(-50%, -50%, 0);
     transform: translate3d(-50%, -50%, 0);
-    width: 770px;
-    height: 400px;
-    background: #ffffff;
+    width: 750px;
+    height: 450px;
+    background: #fafafa;
     padding: 20px;
 }
 

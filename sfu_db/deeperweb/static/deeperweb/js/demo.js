@@ -22,9 +22,7 @@ $(document).ready(function(){
     "10,Using Artificial Intelligence Planning to Automate Science Data Analysis for Large Image Databases,Steve A. Chien and Forest Fisher and Helen Mortensen and Edisanter Lo and Ronald Greeley\n";
     $("textarea[name='message']").html(text_example);
     textarea_detection();
-    var $topLoader = $("#topLoader").percentageLoader({width: 356, height: 356, controllable : true, progress : 0.0,
-        onProgressUpdate : function(val) {$topLoader.setValue(Math.round(val * 100.0));}});
-    var topLoaderRunning = false;
+
     /*schema matching*/
     $("div#local_schema").delegate("a.tag","click",function(){
         if(typeof($(this).attr("style"))=="undefined"){
@@ -87,15 +85,14 @@ $(document).ready(function(){
         $(this).addClass("active");
         if($(this).parent().attr('id')=='dblp'){
             if($(this).text()=='Publ API'){
-                $('a#hidden_button').after(
-                     "<a class='tag' style='background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);'>info.key</a>"
-                    +"<a class='tag' style='background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);'>info.title</a>"
-                    +"<a class='tag' style='background: rgb(35, 125, 200); border-color: rgb(35, 125, 200); color: rgb(255, 255, 255);'>info.authors.author.*</a>"
-                    +"<a class='tag'>@score</a>"+"<a class='tag'>info.url</a>"
-                    +"<a class='tag'>info.venue</a>"+"<a class='tag'>info.volume</a>"
-                    +"<a class='tag'>info.year</a>"
-                    +"<a class='tag'>info.type</a>"+"<a class='tag'>@id</a>"
-                    +"<a class='tag'>url</a>");
+                var dblp_publ_schema = ['info.key','info.title','info.authors.author.*','@score','info.url','info.venue','info.volume','info.year','info.type','@id','url'];
+                $.each(dblp_publ_schema,function(index,element){
+                    $("div#hidden_schema").append("<a class='tag'>"+element+"</a>");
+                    if (index<3){
+                        $("div#hidden_schema a:last").css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
+                        $("div#hidden_schema a:last").append("<span class='badge'>"+index+"</span>");
+                    }
+                });
                 }else{
                     alert("Sorry, this api is not supported now.");
                 }
@@ -169,7 +166,7 @@ $(document).ready(function(){
         },
     });
     /*call smartcrawl*/
-    $("button#try").click(function(){
+    $("#schema_submit").click(function(){
         /*get the message of schema and api*/
         var local_schema = $('div#local_schema').children('a.tag');
         var local_match = new Array();
@@ -243,6 +240,10 @@ $(document).ready(function(){
             });
             original_data = JSON.stringify(original_data)
         }
+
+        $(".news-popup").removeClass("open");
+        timing();
+
         $.ajax({
             url : "/smartcrawl/",
 	        type : "POST",
@@ -344,7 +345,10 @@ $(document).ready(function(){
         }
     });
 
-    $("button#try").click(function() {
+    var $topLoader = $("#topLoader").percentageLoader({width: 356, height: 356, controllable : true, progress : 0.0,
+        onProgressUpdate : function(val) {$topLoader.setValue(Math.round(val * 100.0));}});
+    var topLoaderRunning = false;
+    function timing() {
         if (topLoaderRunning) {
             return;
         }
@@ -365,8 +369,7 @@ $(document).ready(function(){
             }
         }
         setTimeout(animateFunc, 25);
-    });
-
+    }
 });
 /*====================demo ajax end======*/
 function textarea_detection(){
