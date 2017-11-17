@@ -39,6 +39,7 @@ $(document).ready(function() {
     gridList_init();
     popup_login_init();
     popup_news_init();
+    popup_alert_init();
     footer_height();
 
     // load functions
@@ -1477,7 +1478,7 @@ function popup_login_init(){
   $(".login-popup .login-popup-wrap .close-button").on("click", function (){
     $(".login-popup").removeClass("open");
   })
-  $("#msg_submit").on("click", function (){
+  $(".login-popup .login-popup-wrap .cws-button").on("click", function (){
     var name = $("input[name='name']").val().trim();
     if(name==""){
     alert("Name is required!");
@@ -1516,6 +1517,17 @@ function popup_news_init(){
     $(".news-popup").removeClass("open");
   })
 }
+
+//Alert popup
+function popup_alert_init(){
+  $(".alert-popup .close-button").on("click", function (){
+    $(".alert-popup").removeClass("open");
+  })
+  $(".alert-popup .cws-button").on("click", function (){
+    $(".alert-popup").removeClass("open");
+  })
+}
+
 // footer fixed
 function footer_height(){
   var fh = $('.footer').outerHeight();

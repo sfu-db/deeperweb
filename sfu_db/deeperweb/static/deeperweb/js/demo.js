@@ -1,28 +1,48 @@
 /*====================demo ajax======*/
 $(document).ready(function(){
-    /*initialize*/
-    var dblp_publ_schema = ['info.key','info.title','info.authors.author.*','@score','info.url','info.venue','info.volume','info.year','info.type','@id','url'];
-    $.each(dblp_publ_schema,function(index,element){
-        $("div#hidden_schema").append("<a class='tag'>"+element+"</a>");
-        if (index<3){
-            $("div#hidden_schema a:last").css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
-            $("div#hidden_schema a:last").append("<span class='badge'>"+index+"</span>");
+    /*choose api*/
+    $("div#api ul li").click(function(){
+        $('div#api ul li').removeClass();
+        $(this).addClass("active");
+        $("a#hidden_button").nextAll().remove();
+
+        $("button#upload a").text("Upload csv");
+        $("textarea[name='message']").show();
+        $("table#table_input").hide();
+
+        if($(this).parent().attr('id')=='dblp'){
+            if($(this).text()=='Publ API'){
+                var dblp_publ_schema = ['info.key','info.title','info.authors.author.*','@score','info.url','info.venue','info.volume','info.year','info.type','@id','url'];
+                $.each(dblp_publ_schema,function(index,element){
+                    $("div#hidden_schema").append("<a class='tag'>"+element+"</a>");
+                    if (index<3){
+                        $("div#hidden_schema a:last").css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
+                        $("div#hidden_schema a:last").append("<span class='badge'>"+index+"</span>");
+                    }
+                });
+
+                var text_example = "ID,title,author\n"+
+                "1,Data abstraction and program development using Pascal,Reinhold F. Hille\n"+
+                "2,Using Global Optimization for a Microparticle Identification Problem with Noisy Data,Mike C. Bartholomew Biggs and Z. J. Ulanowski and S. Zakovic\n"+
+                "3,Hyperlinks as a data source for science mapping,Gareth Harries and David Wilkinson and Liz Price and Ruth Fairclough and Mike Thelwall\n"+
+                "4,Improving rule processing in Postgres database management system,Kejongsok Kim\n"+
+                "5,VisBench: A Framework for Remote Data Visualization and Analysis,Randy W. Heiland and M. Pauline Baker and Danesh K. Tafti\n"+
+                "6,The life sciences Global Image Database (GID),Eduardo Gonzalez-Couto and Brian Hayes and Anne Danckaert\n"+
+                "7,Quality Threshold Clustering,Xin Jin and Jiawei Han\n"+
+                "8,CoGenT++: an extensive and extensible data environment for computational genomics,Leon Goldovsky and Paul Janssen\n"+
+                "9,Foundations of semantic databases,Bert O. de Brock\n"+
+                "10,Using Artificial Intelligence Planning to Automate Science Data Analysis for Large Image Databases,Steve A. Chien and Forest Fisher and Helen Mortensen and Edisanter Lo and Ronald Greeley\n";
+                $("textarea[name='message']").html(text_example);
+                textarea_detection();
+            }else{
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p").html("Sorry, this api is not supported now.");
+            }
+        }else{
+            $(".alert-popup").addClass("open");
+            $(".alert-popup p").html("Sorry, this api is not supported now.");
         }
     });
-    var text_example = "ID,title,author\n"+
-    "1,Data abstraction and program development using Pascal,Reinhold F. Hille\n"+
-    "2,Using Global Optimization for a Microparticle Identification Problem with Noisy Data,Mike C. Bartholomew Biggs and Z. J. Ulanowski and S. Zakovic\n"+
-    "3,Hyperlinks as a data source for science mapping,Gareth Harries and David Wilkinson and Liz Price and Ruth Fairclough and Mike Thelwall\n"+
-    "4,Improving rule processing in Postgres database management system,Kejongsok Kim\n"+
-    "5,VisBench: A Framework for Remote Data Visualization and Analysis,Randy W. Heiland and M. Pauline Baker and Danesh K. Tafti\n"+
-    "6,The life sciences Global Image Database (GID),Eduardo Gonzalez-Couto and Brian Hayes and Anne Danckaert\n"+
-    "7,Quality Threshold Clustering,Xin Jin and Jiawei Han\n"+
-    "8,CoGenT++: an extensive and extensible data environment for computational genomics,Leon Goldovsky and Paul Janssen\n"+
-    "9,Foundations of semantic databases,Bert O. de Brock\n"+
-    "10,Using Artificial Intelligence Planning to Automate Science Data Analysis for Large Image Databases,Steve A. Chien and Forest Fisher and Helen Mortensen and Edisanter Lo and Ronald Greeley\n";
-    $("textarea[name='message']").html(text_example);
-    textarea_detection();
-
     /*schema matching*/
     $("div#local_schema").delegate("a.tag","click",function(){
         if(typeof($(this).attr("style"))=="undefined"){
@@ -77,28 +97,6 @@ $(document).ready(function(){
     /*extract schema from csv*/
     $("textarea[name='message']").bind('input propertychange',function(){
         textarea_detection();
-    });
-    /*choose api*/
-    $("div#api ul li").click(function(){
-        $('div#api ul li').removeClass();
-        $("a#hidden_button").nextAll().remove();
-        $(this).addClass("active");
-        if($(this).parent().attr('id')=='dblp'){
-            if($(this).text()=='Publ API'){
-                var dblp_publ_schema = ['info.key','info.title','info.authors.author.*','@score','info.url','info.venue','info.volume','info.year','info.type','@id','url'];
-                $.each(dblp_publ_schema,function(index,element){
-                    $("div#hidden_schema").append("<a class='tag'>"+element+"</a>");
-                    if (index<3){
-                        $("div#hidden_schema a:last").css({'color':'#ffffff', 'background':'#237dc8', 'border-color':'#237dc8'});
-                        $("div#hidden_schema a:last").append("<span class='badge'>"+index+"</span>");
-                    }
-                });
-                }else{
-                    alert("Sorry, this api is not supported now.");
-                }
-        }else{
-            alert("Sorry, this api is not supported now.");
-        }
     });
     /*simulate click*/
     $("button#upload").click(function(){
@@ -166,7 +164,7 @@ $(document).ready(function(){
         },
     });
     /*call smartcrawl*/
-    $("#schema_submit").click(function(){
+    $("#msg_submit").click(function(){
         /*get the message of schema and api*/
         var local_schema = $('div#local_schema').children('a.tag');
         var local_match = new Array();
@@ -198,24 +196,26 @@ $(document).ready(function(){
                 }
             });
             if (judge){
-                alert("info.title is necessary.");
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p").html("info.title is necessary.");
                 return false;
             }
         } else {
-            alert("Sorry, this api is not supported now.");
+            $(".alert-popup").addClass("open");
+            $(".alert-popup p").html("Sorry, this api is not supported now.");
             return false;
         }
         /*pre-process the local record*/
-        $("div#topLoader").show()
-        $("table#table_result").hide();
         if($("textarea[name='message']").is(":visible")){
             var original_data = $("textarea[name='message']").val();
             if (original_data.length>5242880){
-                alert("Maximum file size is 5MB");
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p").html("Maximum file size is 5MB");
                 return false;
             }
             if (original_data.split('\n').length>20000){
-                alert("Maximum number of rows for file is 20000");
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p").html("Maximum number of rows for file is 20000");
                 return false;
             }
         }else{
@@ -242,6 +242,8 @@ $(document).ready(function(){
         }
 
         $(".news-popup").removeClass("open");
+        $("table#table_result").hide();
+        $("div#topLoader").show()
         timing();
 
         $.ajax({
@@ -300,9 +302,13 @@ $(document).ready(function(){
                 });
                 $("div#topLoader").hide();
                 $("table#table_result").show();
+
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p").html("Success.");
 		    },
 		    error : function() {
-		        alert("Incorrect Format.");
+		        $(".alert-popup").addClass("open");
+                $(".alert-popup p").html("Incorrect Format.");
 		    }
         });
     });
@@ -337,11 +343,13 @@ $(document).ready(function(){
                     window.location.href = "/exportCSV/"
 				},
 				error : function() {
-				    alert("Download Error.");
+				    $(".alert-popup").addClass("open");
+                    $(".alert-popup p").html("Download Error.");
 				}
             });
         }else{
-            alert("Empty Table.");
+            $(".alert-popup").addClass("open");
+            $(".alert-popup p").html("Empty Table.");
         }
     });
 

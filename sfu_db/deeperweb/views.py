@@ -56,7 +56,7 @@ def smartcrawl(request):
                     row.append(i)
             original_csv.append(row)
     if len(original_csv) > 1:
-        join_csv = deeper_web.smartcrawl_web(16, api_msg, original_csv, local_match, hidden_match)
+        join_csv = deeper_web.smartcrawl_web(4, api_msg, original_csv, local_match, hidden_match)
     else:
         join_csv = []
     return JsonResponse({'join_csv': join_csv})
