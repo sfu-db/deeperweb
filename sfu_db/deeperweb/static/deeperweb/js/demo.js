@@ -243,7 +243,8 @@ $(document).ready(function(){
 
         $(".news-popup").removeClass("open");
         $("table#table_result").hide();
-        $("div#topLoader").show()
+        $("div#topLoader").show();
+        location.hash = "#topLoader";
         timing();
 
         $.ajax({
@@ -304,7 +305,8 @@ $(document).ready(function(){
                 $("table#table_result").show();
 
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("Success.");
+                $(".alert-popup p").html("DeepER enriches "+ (response['join_csv'].length - 1) +
+                " records within 4 queries, while traditional methods need " + (response['join_csv'].length - 1) + " queries");
 		    },
 		    error : function() {
 		        $(".alert-popup").addClass("open");
