@@ -1,9 +1,11 @@
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 from django.conf import settings
 import time
 from deeperlib.api.dblp.publapi import PublApi
+from deeperlib.api.yelp.searchapi import SearchApi
 from deeperlib.data_processing.sample_data import SampleData
 from smartcrawl import smartCrawl
 from local_data import LocalData
@@ -33,15 +35,45 @@ def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
             localdata = LocalData(uniqueid=uniqueID,
                                   querylist=[local_match[hidden_match.index("info.title")]],
                                   matchlist=[local_match[hidden_match.index("info.title")]], data_raw=original_csv)
-
+    elif api_msg == 'yelp Search API':
+        client_id = "kCe2YbZePXsPnC204ZrXoQ"
+        client_secret = "s9KnvEEQW7jaA2wlrBi4X2fnDQ0F7asdklXVvJUidWp8i50ov24E8EjkHX2AUhoL"
+        search_term = 'term'
+        parameters = {'limit': 50, 'location': 'AZ'}
+        api = SearchApi(client_id=client_id, client_secret=client_secret, top_k=300, delay=5, search_term=search_term,
+                        **parameters)
+        sample_file = settings.BASE_DIR + '/netdisk/yelp_sample.pkl'
+        sampledata = SampleData(sample_ratio=0.5, samplepath=sample_file, filetype='pkl', uniqueid="id",
+                                querylist=["name"])
+        hiddendata = HiddenData(uniqueid="id", matchlist=["name", "location.display_address.*"])
+        if "info.key" in hidden_match:
+            localdata = LocalData(uniqueid=local_match[hidden_match.index("id")],
+                                  querylist=[local_match[hidden_match.index("name")]],
+                                  matchlist=[local_match[hidden_match.index("name")],
+                                             local_match[hidden_match.index("location.display_address.*")]],
+                                  data_raw=original_csv)
+        else:
+            uniqueID = 'ID' + str(int(time.time()))
+            original_csv[0].append(uniqueID)
+            for i in range(1, len(original_csv)):
+                original_csv[i].append(i)
+            localdata = LocalData(uniqueid=uniqueID,
+                                  querylist=[local_match[hidden_match.index("name")]],
+                                  matchlist=[local_match[hidden_match.index("name")],
+                                             local_match[hidden_match.index("location.display_address.*")]],
+                                  data_raw=original_csv)
     smartCrawl(budget, api, sampledata, localdata, hiddendata)
     localdata_csv = localdata.getRawData()
     crawldata_csv = Json2csv(hiddendata.getMergeResult()).getCsvdata()
+
     join_csv = []
-    join_csv.append(localdata_csv['header'] + crawldata_csv['header'])
-    matchpair = sorted(hiddendata.getMatchPair().items(), key=lambda item: item[0], reverse=False)
-    for m in matchpair:
-        local_id = m[0]
-        for hidden_id in m[1]:
-            join_csv.append(localdata_csv[local_id] + crawldata_csv[hidden_id])
+    if 'header' in crawldata_csv:
+        join_csv.append(localdata_csv['header'] + crawldata_csv['header'])
+        matchpair = sorted(hiddendata.getMatchPair().items(), key=lambda item: item[0], reverse=False)
+        for m in matchpair:
+            local_id = m[0]
+            for hidden_id in m[1]:
+                join_csv.append(localdata_csv[local_id] + crawldata_csv[hidden_id])
+    else:
+        join_csv.append(localdata_csv['header'])
     return join_csv

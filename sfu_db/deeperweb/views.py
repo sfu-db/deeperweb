@@ -42,6 +42,7 @@ def smartcrawl(request):
     local_match = request.POST.getlist('local_match[]')
     hidden_match = request.POST.getlist('hidden_match[]')
     api_msg = request.POST.get('api_msg')
+
     try:
         original_csv = ast.literal_eval(original_data)
     except SyntaxError:
