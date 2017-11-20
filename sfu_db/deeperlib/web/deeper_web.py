@@ -42,7 +42,7 @@ def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
         parameters = {'limit': 50, 'location': 'AZ'}
         api = SearchApi(client_id=client_id, client_secret=client_secret, top_k=300, delay=5, search_term=search_term,
                         **parameters)
-        sample_file = settings.BASE_DIR + '/netdisk/yelp_sample.pkl'
+        sample_file = settings.BASE_DIR + '/netdisk/yelp_sample_Arizona.pkl'
         sampledata = SampleData(sample_ratio=0.5, samplepath=sample_file, filetype='pkl', uniqueid="id",
                                 querylist=["name"])
         hiddendata = HiddenData(uniqueid="id", matchlist=["name", "location.display_address.*"])

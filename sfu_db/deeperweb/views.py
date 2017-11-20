@@ -18,7 +18,12 @@ def index(request):
 
 
 def demo(request):
-    return render(request, 'deeperweb/demo.html', {'user': request.user})
+    cookies_expired = False
+    if request.COOKIES.get('email') is None:
+        cookies_expired = True
+    elif len(Subscriber.objects.filter(email=request.COOKIES.get('email'))) == 0:
+        cookies_expired = True
+    return render(request, 'deeperweb/demo.html', {'user': request.user, 'cookies_expired': cookies_expired})
 
 
 def about(request):
@@ -34,7 +39,10 @@ def subscribe(request):
     email = request.POST.get('email')
     if len(Subscriber.objects.filter(email=email)) == 0:
         Subscriber.objects.get_or_create(name=name, email=email)
-    return JsonResponse({'user_num': Subscriber.objects.count()})
+    jsonresponse = JsonResponse({'user_num': Subscriber.objects.count()})
+    jsonresponse.set_cookie('name', name, 2*24*3600)
+    jsonresponse.set_cookie('email', email, 2*24*3600)
+    return jsonresponse
 
 
 def smartcrawl(request):

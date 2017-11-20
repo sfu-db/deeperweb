@@ -997,4 +997,74 @@ var dblp_publ_text = "ID,title,author\n"+
                 "580,First-Order Predicate Calculus,\n";
 
 var yelp_search_text= "business_id,name,full_address\n"+
-                "580,First-Order Predicate Calculus,\n";
+                "C59Gr3A35GMqKs593mfxVA,Grand Canyon University,3300 W Camelback Rd Phoenix, AZ 85017\n"+
+                "z9RjkAPe-00LGoBJjQadOw,Princess Pro Nail,13216 N 7th St Phoenix, AZ 85022\n"+
+                "BMjggIgOghBMEXPo8q7q3w,LaBella Pizzeria and Restaurant,6505 N 7th St Phoenix, AZ 85014\n"+
+                "BPi1Q5wX0_o5VlO_XRyYuQ,Pizzeria Bianco,4743 N 20th St Phoenix, AZ 85016\n"+
+                "DmuvQmligwF6sJc81DoioA,Mindy Nails,18413 N Cave Creek Rd Phoenix, AZ 85032\n"+
+                "zDBSgJJIGKKS8XDaE6Ycfw,Automatic Transmission Experts,4422 N 7th Ave Phoenix, AZ 85013\n"+
+                "Fj73x68afXtA388ajOe3qw,US Egg,2957 W Bell Rd Phoenix, AZ 85053\n"+
+                "4kV8BO6FHQTrxf9txJBt-Q,D & W Auto Service,3039 E Thomas Rd Phoenix, AZ 85008\n"+
+                "7R8De0e3-pv6D-HhWlLRFA,Polished Nail Spa,10243 N Scottsdale Rd Ste 1 Scottsdale, AZ 85253\n"+
+                "xI_iG7X6BcdLtj57bkUOqQ,Sun Valley Stereo,2809 E Thomas Rd Phoenix, AZ 85016\n"+
+                "dSQh1Hx2BiSrYog4ad740A,Starbucks,3110 N Central Ave Ste 185 Phoenix, AZ 85012\n"+
+                "VsgKeTyebDemed6V2N28GQ,Network Alignment & Brakes,12639 N Cave Creek Rd Phoenix, AZ 85022\n"+
+                "sBgB9OLYOOewtw2RdHitzQ,Johnston's Automotive,3445 N 24th St Phoenix, AZ 85016\n"+
+                "6-O63QoQA7mCVVAH-MMtuA,Wild Tuna Sushi and Spirits,805 E Thunderbird Rd Phoenix, AZ 85022\n"+
+                "y24OBeSMK8MwOrpGtIJWpg,602 Auto Sports,331 N 16th St Phoenix, AZ 85006\n"+
+                "NR_8LIX-oG50jUQpziBnWQ,Steak 44,5101 N 44th St Phoenix, AZ 85018\n"+
+                "3DMvGD8ZmlMQmhwV66hdSA,China Village,2710 E Indian School Rd Phoenix, AZ 85016\n"+
+                "LrPG6AgIomIrSNTcwJU5Hw,World Class Car Wash,3232 E McDowell Rd Phoenix, AZ 85008\n"+
+                "DOx9ahD39IA8blUwF1fEhQ,Base Pizzeria,3115 E Lincoln Dr Phoenix, AZ 85016\n"+
+                "RyUIcbNgIjzTE01rguyXUg,Chic Nails,4290 E Indian School Rd Phoenix, AZ 85018\n"+
+                "BM0-dgPJMBMmcmO9PVCJfQ,Los Compadres Mexican Food,4414 N 7th Ave Phoenix, AZ 85013\n"+
+                "IvLEvpC0oZHj7E0XHhxWMQ,Nails Trend,515 N 35th Ave Ste 127 Phoenix, AZ 85009\n"+
+                "iJPG0GPcIirjOMlmzZWxBQ,Casa Filipina Bakeshop & Restaurant,3531 W Thunderbird Rd Phoenix, AZ 85053\n"+
+                "eYwTptN9P3D_qagXxTOv-A,Sole Serenity,7024 E Osborn Rd Ste C-5 Scottsdale, AZ 85251\n"+
+                "vvMR0jgDoBA-g1XgZy8sEg,Tryst Cafe,21050 N Tatum Blvd Phoenix, AZ 85050\n"+
+                "DOGkXmX-okozRen6p2gURg,Superior Nails,2620 83rd Ave Ste 106 Phoenix, AZ 85043\n"+
+                "8o-NLKy_XfbJtqljX9XLCA,Mrs White's Golden Rule Cafe,808 E Jefferson St Phoenix, AZ 85034\n"+
+                "e9QRvkzssPNRmBLlDem9ZQ,Zookz Sandwiches,100 E Camelback Rd Phoenix, AZ 85012\n"+
+                "dMLMz_lTNNFwCLzAl8j7WQ,Starbucks,125 N 2nd St Phoenix, AZ 85004\n"+
+                "-HK-Lh9UIHjCnKAAePr7GQ,3D Nails and Spa,9620 N Metro Pkwy W Ste 25 Phoenix, AZ 85051\n"+
+                "5jqqVt-A8bwwJDj7Ii7tvw,Mad Hatter Mufflers & Brakes,525 E Dunlap Ave Phoenix, AZ 85020\n"+
+                "1Atqla4KsuE-YpaCKaSS_g,Tammy's La Nails,731 E Union Hills Dr Phoenix, AZ 85024\n"+
+                "e1OD-zIxBjJXPlnYQvhdpw,Jack's Auto Alignment & Brakes,2902 E Thomas Rd Phoenix, AZ 85016\n"+
+                "fFPJHOV1pTGoK-Gqf5QBSQ,WY Market,1819 W Buckeye Rd Phoenix, AZ 85007\n"+
+                "QdcVJJhIG8MX6I4tIqpzgQ,Exclusive Nails,8808 N Central Ave Ste 258 Phoenix, AZ 85020\n"+
+                "DkSFrA_iU97PmBdjLnIwqA,Kona 13 Coffee & Tea,1845 E University Dr Tempe, AZ 85281\n"+
+                "UimUu5Q1m2mYEmAvreZQig,Welcome Chicken + Donuts,1535 E Buckeye Rd Phoenix, AZ 85034\n"+
+                "T-AAN0CizEBOTtHinTuvrQ,Dunkin' Donuts,4130 E Thomas Rd Phoenix, AZ 85018\n"+
+                "VapdXuC8X-Q3T_wgA6yCAg,Pizza People Pub,1326 N Central Ave Phoenix, AZ 85004\n"+
+                "b9Cx4-vn8S8-OnYTfFcMzQ,US Nails,5243 W Indian School Rd Phoenix, AZ 85031\n"+
+                "bOWm_Du7AN2j1Mdti38lcg,Above and Beyond Nails,4707 E Bell Rd Ste 2 Phoenix, AZ 85032\n"+
+                "0IZjvddcvjEG09doKiFYAQ,Donut Parlor,1245 W Elliot Rd Ste 103 Tempe, AZ 85284\n"+
+                "pcoaUpxsgtMuiGzNm2Ashw,Munich Motors,4809 N 7th Ave Phoenix, AZ 85013\n"+
+                "Ax11wyp-FudujeU9nejQbw,Phoenix Public Market,14 E Pierce St Phoenix, AZ 85004\n"+
+                "IoFggnoj1P4EcmNEP2K6Ng,Xtreme Bean Coffee,1707 E Southern Ave Tempe, AZ 85282\n"+
+                "9SBU0aZbR2Tr3QTklUbbyg,Sweet Sunshine Nails,6990 E Shea Blvd Scottsdale, AZ 85254\n"+
+                "SfVsLCVap7VlF3GLUI8PlQ,RBG Bar & Grill,427 N 44th St Phoenix, AZ 85008\n"+
+                "QVMpwcjWzC01q_wZDI07cw,Smooth Brew Coffee,1447 E Mcdowell Rd Phoenix, AZ 85006\n"+
+                "7WDzDGiWeAN9CdsC1nIGeA,Capitol Collision,5154 N 27th Ave Phoenix, AZ 85017\n"+
+                "qJVECj6MCPaioYUae1a9gA,The Auto Shop,901 N Central Ave Phoenix, AZ 85004\n"+
+                "MiajUnwoG7RGoaolO1rPaw,Ranch House Grille,5618 E Thomas Rd Phoenix, AZ 85018\n"+
+                "iHpkhFcy7MwbDLB_joqPPQ,Kream Coffee,5102 N Central Ave Phoenix, AZ 85012\n"+
+                "bA_5N0pODfQr1gnpO8RqQg,Elevens' Paint & Fiber,4131 E University Dr Phoenix, AZ 85034\n"+
+                "TgxDGx7L_JICWbuBUCGVqw,Fajitas A Sizzlin Celebration,9841 N Black Canyon Hwy Phoenix, AZ 85021\n"+
+                "_5HeuYqf2pEYFkjEI_dvKQ,Community Tire Pros & Auto Repair,123 E Durango St Phoenix, AZ 85004\n"+
+                "PmPOuRvuN3CoNOi1nBj_TQ,Pappadeaux Seafood Kitchen,11051 N Black Canyon Hwy Phoenix, AZ 85029\n"+
+                "zj0BkAi54BGU_AK6AyvJDQ,Rusconi's American Kitchen,10637 N Tatum Blvd Phoenix, AZ 85028\n"+
+                "33zsO72VkYVnW2l5ZA16Cg,Mine Nails,7827 N 19th Ave Phoenix, AZ 85021\n"+
+                "CCInhPbQLOBRHOYfFAZ4GA,Tag The Auto Guy,1401 E Camelback Rd Phoenix, AZ 85014\n"+
+                "-_jLCD1NWODEXfgEAKfUAg,La Pi帽ata,5521 N 7th Ave Phoenix, AZ 85013\n"+
+                "4zitC1IPRLvHfQVinRSKew,Johnnie's Chicago Style Pizza,15443 N Cave Creek Rd Phoenix, AZ 85034\n"+
+                "lnX2gaGdO0fNtykyFrp1AA,Mel's Diner,1747 Grand Ave Phoenix, AZ 85007\n"+
+                "4YjDL9M47wdfBWzSOrR1Vg,Independent Automotive Services,3800 N 7th St Phoenix, AZ 85014\n"+
+                "qXQ3ZBdwI3GlbR5-eYWqNA,Saba's Mediterranean Kitchen,4747 E Bell Rd Phoenix, AZ 85032\n"+
+                "e2oXHln1dux2ACR0QQGoeQ,Ingo's Tasty Food,4502 N 40th St Phoenix, AZ 85018\n"+
+                "Hgbxen9iKGL4AH6kKgC8YQ,Cartel Coffee Lab,7124 E 5th Ave Scottsdale, AZ 85251\n"+
+                "ZRJwVLyzEJq1VAihDhYiow,Spinato's Pizzeria,4848 E Chandler Blvd Phoenix, AZ 85044\n"+
+                "bzDs0u8I-z231QVdIQWkrA,Los Reyes De La Torta,9230 N 7th St Phoenix, AZ 85020\n"+
+                "A1_MJ2Z7yBGG2vHYw7fphw,We Buy Cars For Cash,2942 N 24th St Ste 114 Phoenix, AZ 85016\n"+
+                "1vl4-5il_LGtDRxUCy9ldw,Vovomeena,1515 N 7th Ave Ste 170 Phoenix, AZ 85003\n"+
+                "WfW8DbPRfd0bzjBDCfXEqw,Kt's Nails & Spa,7607 E Mcdowell Rd Ste 104 Scottsdale, AZ 85257\n";
