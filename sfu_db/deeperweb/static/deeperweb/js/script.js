@@ -28,7 +28,7 @@ $(document).ready(function() {
     menu_bar ();
     if ($(".price_slider_wrapper").length) {
       woocommerce_price_slider( $ )
-    };
+    }
     sticky_set ();
     video_img();
     cws_touch_events_fix ();
@@ -38,7 +38,6 @@ $(document).ready(function() {
     filter_init();
     gridList_init();
     popup_login_init();
-    popup_news_init();
     popup_alert_init();
     footer_height();
 
@@ -59,7 +58,7 @@ $(window).resize(function() {
   sticky_set ();
   masonry_init();
   footer_height();
-})
+});
 
 
 function cws_touch_events_fix (){
@@ -83,10 +82,10 @@ function search_open () {
     $('.site-top-panel .top-search').on('click', function (){
       $('.site-top-panel').addClass('open-search');
       return false;
-    })
+    });
     $('.site-top-panel .search_menu_cont .search_back_button').on('click', function() {
       $('.site-top-panel').removeClass('open-search');
-    })
+    });
 }
 
 function menu_bar () {
@@ -211,7 +210,7 @@ function init_classic_menu() {
     
     $(window).resize(function(){
       nav_hover();
-    })
+    });
     nav_hover();
     function nav_hover() {
       if( !($('.inner-nav').hasClass('.mobile_nav')) ) {
@@ -255,15 +254,14 @@ function init_accordion () {
     $(".accordion").each(function() {
         $(this).children('.content').hide();
         $(this).children('.content-title').on('click', function(){
-            $(".accordion").each(function() {
-                $(this).children('.content').slideUp("easeInExpo");
-                $(this).children('.content-title').removeClass("active");
-            });
-            $(this).addClass("active");
-            $(this).next().slideDown("easeOutExpo");
-
+            if($(this).hasClass("active")){
+                $(this).removeClass("active");
+                $(this).next().slideUp("easeInExpo");
+            }else{
+                $(this).addClass("active");
+                $(this).next().slideDown("easeOutExpo");
+            }
             return false;
-
         });
     })
     
@@ -276,7 +274,7 @@ function init_toggle () {
     $(".toggle > .content-title").on('click', function(){
 
         if ($(this).hasClass("active")) {
-        
+
             $(this).next().slideUp("easeOutExpo");
             $(this).removeClass("active");
             
@@ -1508,24 +1506,15 @@ function popup_login_init(){
   })
 }
 
-//News popup
-function popup_news_init(){
-  $("button#try").on("click", function (){
-    $(".news-popup").addClass("open");
-  })
-  $(".news-popup .close-button").on("click", function (){
-    $(".news-popup").removeClass("open");
-  })
-}
 
 //Alert popup
 function popup_alert_init(){
   $(".alert-popup .close-button").on("click", function (){
     $(".alert-popup").removeClass("open");
-  })
+  });
   $(".alert-popup .cws-button").on("click", function (){
     $(".alert-popup").removeClass("open");
-  })
+  });
 }
 
 // footer fixed

@@ -67,8 +67,16 @@
                 <button type="button" class="btn btn-primary" id="try"><a>Try it now</a></button>
             </div>
         </div>
+        <div class="row">
+            <div class="bootstrap-switch" id="format">
+                <input type="checkbox" checked />
+            </div>
+            <div class="bootstrap-switch" id="typos">
+                <input type="checkbox" checked />
+            </div>
+        </div>
         <div class="row" style="overflow:scroll; height: 488px">
-            <textarea name="message" placeholder="Copy your CSV here" style="height: 475px"></textarea>
+            <textarea id="text_input" placeholder="Copy your CSV here" style="height: 475px"></textarea>
             <table class="table table-hover table-bordered" style="display: none;" id="table_input">
                 <thead>
                 </thead>
@@ -120,9 +128,9 @@
         </div>
         <div class="login-content">
             <input type="text" name="name" value="" placeholder="Enter Your Name ..." aria-required="true"
-                   class="form-row">
+                       class="form-row">
             <input type="text" name="email" value="" placeholder="Enter Your Email ..." aria-required="true"
-                   class="form-row">
+                       class="form-row">
         </div>
         <div class="cws-button gray alt full-width">Submit</div>
     </div>
@@ -166,4 +174,5 @@
 <script type="text/javascript" src="{% static 'deeperweb/js/jquery.iframe-transport.js' %}"></script>
 <script type="text/javascript" src="{% static 'deeperweb/js/jquery.fileupload.js' %}"></script>
 <script type="text/javascript" src="{% static 'deeperweb/js/jquery.percentageloader-0.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'deeperweb/js/bootstrap-switch.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'deeperweb/js/demo.js' %}"></script>
