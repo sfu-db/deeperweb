@@ -585,7 +585,7 @@ jQuery(owl_pag).each(function (){
       [479, 1],
       [738, 1],
       [980, 1],
-      [1170, 1], 
+      [1170, 1],
     ],
       navigation: false,
       pagination: true,

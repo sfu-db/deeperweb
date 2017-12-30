@@ -46,7 +46,7 @@ def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
         sampledata = SampleData(sample_ratio=0.5, samplepath=sample_file, filetype='pkl', uniqueid="id",
                                 querylist=["name"])
         hiddendata = HiddenData(uniqueid="id", matchlist=["name", "location.display_address.*"])
-        if "info.key" in hidden_match:
+        if "id" in hidden_match:
             localdata = LocalData(uniqueid=local_match[hidden_match.index("id")],
                                   querylist=[local_match[hidden_match.index("name")]],
                                   matchlist=[local_match[hidden_match.index("name")],

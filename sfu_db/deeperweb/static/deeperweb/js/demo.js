@@ -5,32 +5,39 @@ $(document).ready(function () {
     upload_csv();
     popup_news_init();
     smart_crawl();
+    continue_enrichment();
     download_csv();
     timer();
-    textarea_detection();
-    table_detection();
 });
 
 /*switch button*/
 function switch_button_init() {
     $('.bootstrap-switch#format input').bootstrapSwitch({
-        onText:'Table',
-        offText:'Text',
+        onText: 'Table',
+        offText: 'Text',
         onColor: 'primary',
         offColor: 'info',
         labelText: 'Format',
-        onSwitchChange: function(event, data) {
-            console.log(data);
+        onSwitchChange: function (event, data) {
+            var switch_typos = $('.bootstrap-switch#typos input');
+            if (data) {
+                text2table();
+            } else {
+                switch_typos.bootstrapSwitch('state', false);
+                table2text();
+            }
+            switch_typos.bootstrapSwitch('toggleDisabled');
         }
     });
+
     $('.bootstrap-switch#typos input').bootstrapSwitch({
-        onText:'On',
-        offText:'Off',
+        onText: 'On',
+        offText: 'Off',
         onColor: 'primary',
         offColor: 'warning',
         labelText: 'Typos',
-        onSwitchChange: function(event, data) {
-            console.log(data);
+        onSwitchChange: function (event, data) {
+
         }
     });
 }
@@ -43,24 +50,26 @@ function api_choose() {
         $("a#hidden_button").nextAll().remove();
 
         $("button#upload a").text("Upload csv");
-        $("textarea#text_input").show();
-        $("table#table_input").hide();
+        $("div#text_input").show();
+        $("div#table_input").hide();
+
+        var hidden_schema = $("div#hidden_schema");
 
         if ($(this).parent().is($("ul#dblp"))) {
             if ($(this).text() === 'Publ API') {
                 var dblp_publ_schema = ['info.key', 'info.title', 'info.authors.author.*', '@score', 'info.url', 'info.venue', 'info.volume', 'info.year', 'info.type', '@id', 'url'];
                 $.each(dblp_publ_schema, function (index, element) {
-                    $("div#hidden_schema").append("<a class='tag'>" + element + "</a>");
+                    hidden_schema.append("<a class='tag'>" + element + "</a>");
                     if (index < 3) {
-                        $("div#hidden_schema a:last").css({
+                        hidden_schema.find("a:last").css({
                             'color': '#ffffff',
                             'background': '#237dc8',
                             'border-color': '#237dc8'
                         });
-                        $("div#hidden_schema a:last").append("<span class='badge'>" + index + "</span>");
+                        hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
                     }
                 });
-                $("textarea#text_input").html(dblp_publ_text);
+                $("div#text_input textarea").html(dblp_publ_text);
             } else {
                 $(".alert-popup").addClass("open");
                 $(".alert-popup p").html("Sorry, this api is not supported now.");
@@ -69,17 +78,17 @@ function api_choose() {
             if ($(this).text() === 'Search API') {
                 var yelp_search_schema = ['id', 'name', 'location.display_address.*', 'rating', 'review_count', 'transactions.*', 'url', 'price', 'distance', 'coordinates.latitude', 'coordinates.longitude', 'phone', 'image_url', 'categories.*.alias', 'categories.*.title', 'display_phone', 'is_closed', 'location.city', 'location.country', 'location.address2', 'location.address3', 'location.state', 'location.address1', 'location.zip_code'];
                 $.each(yelp_search_schema, function (index, element) {
-                    $("div#hidden_schema").append("<a class='tag'>" + element + "</a>");
+                    hidden_schema.append("<a class='tag'>" + element + "</a>");
                     if (index < 3) {
-                        $("div#hidden_schema a:last").css({
+                        hidden_schema.find("a:last").css({
                             'color': '#ffffff',
                             'background': '#237dc8',
                             'border-color': '#237dc8'
                         });
-                        $("div#hidden_schema a:last").append("<span class='badge'>" + index + "</span>");
+                        hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
                     }
                 });
-                $("textarea#text_input").html(yelp_search_text);
+                $("div#text_input textarea").val(yelp_search_text);
             } else {
                 $(".alert-popup").addClass("open");
                 $(".alert-popup p").html("Sorry, this api is not supported now.");
@@ -88,6 +97,9 @@ function api_choose() {
             $(".alert-popup").addClass("open");
             $(".alert-popup p").html("Sorry, this api is not supported now.");
         }
+        if ($('.bootstrap-switch#format input').bootstrapSwitch('state')) {
+            text2table();
+        }
     });
 }
 
@@ -95,7 +107,11 @@ function api_choose() {
 function schema_matching() {
     /*local schema*/
     $("div#local_schema").delegate("a.tag", "click", function () {
-        if (typeof($(this).attr("style")) == "undefined") {
+        if ($(this).attr("style")) {
+            $(this).removeAttr("style");
+            $(this).children("span").remove();
+        } else {
+            $("div#local_schema").append($(this));
             if ($("div#local_schema a[style]").length) {
                 $("div#local_schema a[style]:last").after($(this));
             } else {
@@ -103,10 +119,6 @@ function schema_matching() {
             }
             $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
             $(this).append("<span class='badge'></span>");
-        } else {
-            $(this).removeAttr("style");
-            $(this).children("span").remove();
-            $("div#local_schema").append($(this));
         }
         var active_tags = $("div#local_schema a[style]");
         for (var i = 0; i < active_tags.length; i++) {
@@ -116,7 +128,11 @@ function schema_matching() {
 
     /*hidden schema*/
     $("div#hidden_schema").delegate("a.tag", "click", function () {
-        if (typeof($(this).attr("style")) == "undefined") {
+        if ($(this).attr("style")) {
+            $(this).removeAttr("style");
+            $(this).children("span").remove();
+            $("div#hidden_schema").append($(this));
+        } else {
             if ($("div#hidden_schema a[style]").length) {
                 $("div#hidden_schema a[style]:last").after($(this));
             } else {
@@ -124,10 +140,6 @@ function schema_matching() {
             }
             $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
             $(this).append("<span class='badge'></span>");
-        } else {
-            $(this).removeAttr("style");
-            $(this).children("span").remove();
-            $("div#hidden_schema").append($(this));
         }
         var active_tags = $("div#hidden_schema a[style]");
         for (var i = 0; i < active_tags.length; i++) {
@@ -137,14 +149,14 @@ function schema_matching() {
 
     /*join schema*/
     $("div#join_schema").delegate("a.tag", "click", function () {
-        if (typeof($(this).attr("style")) == "undefined") {
-            $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
-            $('table thead tr').find('th:eq(' + $(this).index() + ')').show();
-            $('table tbody tr').find('td:eq(' + $(this).index() + ')').show();
-        } else {
+        if ($(this).attr("style")) {
             $(this).removeAttr("style");
             $('table thead tr').find('th:eq(' + $(this).index() + ')').hide();
             $('table tbody tr').find('td:eq(' + $(this).index() + ')').hide();
+        } else {
+            $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
+            $('table thead tr').find('th:eq(' + $(this).index() + ')').show();
+            $('table tbody tr').find('td:eq(' + $(this).index() + ')').show();
         }
     });
 }
@@ -153,14 +165,7 @@ function schema_matching() {
 function upload_csv() {
     /*simulate click*/
     $("button#upload").click(function () {
-        if ($("button#upload a").text() == "Upload csv") {
-            $('#fileupload').click();
-        } else {
-            $("button#upload a").text("Upload csv");
-            $("a#local_button").nextAll().remove();
-            $("textarea#text_input").show();
-            $("table#table_input").hide();
-        }
+        $('#fileupload').click();
     });
     /*upload csv*/
     $('#fileupload').fileupload({
@@ -169,7 +174,7 @@ function upload_csv() {
         autoUpload: false,
         add: function (e, data) {
             var name_list = data.files[0].name.split('.');
-            if (name_list[name_list.length - 1] == 'csv') {
+            if (name_list[name_list.length - 1] === 'csv') {
                 if (data.files[0].size >= 5 * 1024 * 1024) {
                     alert("Maximum file size is 5MB");
                     data = undefined;
@@ -188,7 +193,7 @@ function upload_csv() {
             var local_thead = "";
             var local_tbody = "";
             $.each(data.result['csv_input'], function (index, element) {
-                if (index == 0) {
+                if (index === 0) {
                     local_thead += "<tr>";
                     for (var i = 0; i < element.length; i++) {
                         local_thead += "<th>" + element[i] + "</th>";
@@ -202,14 +207,13 @@ function upload_csv() {
                     local_tbody += "</tr>";
                 }
             });
-            $("textarea#text_input").hide();
-            $("table#table_input thead").children().remove();
-            $("table#table_input thead").html(local_thead);
-            $("table#table_input tbody").children().remove();
-            $("table#table_input tbody").html(local_tbody);
-            $("table#table_input").show();
+            $("div#text_input").hide();
+            $("div#table_input table thead").html(local_thead);
+            $("div#table_input table tbody").html(local_tbody);
+            $("div#table_input").show();
             $("button#upload").attr("disabled", false);
-            $("button#upload a").text("Cancel");
+            $("button#upload a").text("Upload csv");
+            $('.bootstrap-switch#format input').bootstrapSwitch('state', true);
         }
     });
 }
@@ -218,9 +222,9 @@ function upload_csv() {
 function popup_news_init() {
     $("button#try").on("click", function () {
         $(".news-popup").addClass("open");
-        if($("#text_input").is(':visible')){
+        if ($("div#text_input").is(':visible')) {
             textarea_detection();
-        }else if($("#table_input").is(':visible')){
+        } else if ($("div#table_input").is(':visible')) {
             table_detection();
         }
     });
@@ -234,54 +238,36 @@ function smart_crawl() {
     $("#msg_submit").click(function () {
         /*get the message of schema and api*/
         var local_schema = $('div#local_schema').children('a.tag');
-        var local_match = new Array();
+        var local_match = [];
         $(local_schema).each(function () {
-            if (typeof($(this).attr("style")) != "undefined") {
+            if ($(this).attr("style")) {
                 local_match.push($(this).text().substring(0, $(this).text().length - $(this).children('span').text().length));
             }
         });
         var hidden_schema = $('div#hidden_schema').children('a.tag');
-        var hidden_match = new Array();
+        var hidden_match = [];
         $(hidden_schema).each(function () {
-            if (typeof($(this).attr("style")) != "undefined") {
+            if ($(this).attr("style")) {
                 hidden_match.push($(this).text().substring(0, $(this).text().length - $(this).children('span').text().length));
             }
         });
         var api = $('div#api ul li.active');
         var api_msg = api.parent().attr('id') + ' ' + api.text();
         /*judge the correctness of schema and api*/
-        if (local_match.length != hidden_match.length) {
+        if (local_match.length !== hidden_match.length) {
             alert("Please match the schema correctly.");
             return false;
         }
-        if (api_msg == "dblp Publ API") {
-            var judge_title = false;
-            var active_hidden_schema = $("div#hidden_schema a[style]");
-            $(active_hidden_schema).each(function () {
-                if ($(this).text().substring(0, $(this).text().length - $(this).children('span').text().length) == "info.title") {
-                    judge_title = true;
-                }
-            });
-            if (!judge_title) {
+        if (api_msg === "dblp Publ API") {
+            if ($.inArray("info.title", hidden_match) === -1) {
                 $(".alert-popup").addClass("open");
                 $(".alert-popup p").html("info.title is necessary.");
                 return false;
             }
-        } else if (api_msg == "yelp Search API") {
-            var judge_name = false;
-            var judge_location = false;
-            var active_hidden_schema = $("div#hidden_schema a[style]");
-            $(active_hidden_schema).each(function () {
-                if ($(this).text().substring(0, $(this).text().length - $(this).children('span').text().length) == "name") {
-                    judge_name = true;
-                }
-                if ($(this).text().substring(0, $(this).text().length - $(this).children('span').text().length) == "location.display_address.*") {
-                    judge_location = true;
-                }
-            });
-            if (!(judge_name && judge_location)) {
+        } else if (api_msg === "yelp Search API") {
+            if ($.inArray("name", hidden_match) === -1 || $.inArray("location.display_address.*", hidden_match) === -1) {
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("name or location.display_address.* is necessary.");
+                $(".alert-popup p").html("name and location.display_address.* is necessary.");
                 return false;
             }
         } else {
@@ -290,8 +276,8 @@ function smart_crawl() {
             return false;
         }
         /*pre-process the local record*/
-        if ($("textarea#text_input").is(":visible")) {
-            var original_data = $("textarea#text_input").val();
+        if ($("div#text_input").is(":visible")) {
+            var original_data = $("div#text_input textarea").val();
             if (original_data.length > 5242880) {
                 $(".alert-popup").addClass("open");
                 $(".alert-popup p").html("Maximum file size is 5MB");
@@ -303,18 +289,18 @@ function smart_crawl() {
                 return false;
             }
         } else {
-            var table_input = $('table#table_input').find('tr');
-            var original_data = new Array();
+            var table_input = $('div#table_input table').find('tr');
+            var original_data = [];
             $(table_input).each(function (index, element) {
-                if (index == 0) {
-                    var header = new Array();
+                if (index === 0) {
+                    var header = [];
                     var table_header = $(element).children('th');
                     for (var i = 0; i < table_header.length; i++) {
                         header.push(table_header.eq(i).text());
                     }
                     original_data[index] = header;
                 } else {
-                    var row = new Array();
+                    var row = [];
                     var table_row = $(element).children('td');
                     for (var i = 0; i < table_row.length; i++) {
                         row.push(table_row.eq(i).text());
@@ -346,7 +332,7 @@ function smart_crawl() {
                 var join_tbody = "";
                 var join_keys = "";
                 $.each(response['join_csv'], function (index, element) {
-                    if (index == 0) {
+                    if (index === 0) {
                         join_thead += "<tr>";
                         for (var i = 0; i < element.length; i++) {
                             join_thead += "<th>" + element[i] + "</th>";
@@ -361,20 +347,19 @@ function smart_crawl() {
                         join_tbody += "</tr>";
                     }
                 });
-                $("div#join_schema").children().remove();
-                $("div#join_schema").append(join_keys);
+                var join_schema = $("div#join_schema");
+                join_schema.children().remove();
+                join_schema.append(join_keys);
 
-                $("table#table_result thead").children().remove();
                 $("table#table_result thead").html(join_thead);
-                $("table#table_result tbody").children().remove();
                 $("table#table_result tbody").html(join_tbody);
 
                 $('table#table_result thead tr th').hide();
                 $('table#table_result tbody tr td').hide();
-                var join_schema = $('div#join_schema').children('a.tag');
+
                 $(hidden_match).each(function (index, element) {
-                    $(join_schema).each(function () {
-                        if ($(this).text() == element) {
+                    $(join_schema.children('a.tag')).each(function () {
+                        if ($(this).text() === element) {
                             $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
                             $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
                             $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
@@ -382,8 +367,8 @@ function smart_crawl() {
                     });
                 });
                 $(local_match).each(function (index, element) {
-                    $(join_schema).each(function () {
-                        if ($(this).text() == element) {
+                    $(join_schema.children('a.tag')).each(function () {
+                        if ($(this).text() === element) {
                             $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
                             $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
                             $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
@@ -405,22 +390,43 @@ function smart_crawl() {
     });
 }
 
+/*continue enrichment*/
+function continue_enrichment() {
+    $("button#continue").click(function () {
+        var table_input = $('div#table_input table');
+        table_input.find('thead tr').remove();
+        table_input.find('tbody tr').remove();
+        var join_schema = $("div#join_schema");
+        $(join_schema.children('a.tag')).each(function () {
+            if (!$(this).attr("style")) {
+                $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').remove();
+                $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').remove();
+                $(this).remove();
+            }
+        });
+        table_input.find('thead').append($('table#table_result thead tr'));
+        table_input.find('tbody').append($('table#table_result tbody tr'));
+        location.hash = "#api";
+        join_schema.children().remove();
+    });
+}
+
 /*export csv from html table*/
 function download_csv() {
     $("button#download").click(function () {
         if ($('table#table_result tbody tr').length > 0) {
             var table_result = $('table#table_result').find('tr');
-            var original_data = new Array();
+            var original_data = [];
             $(table_result).each(function (index, element) {
-                if (index == 0) {
-                    var header = new Array();
+                if (index === 0) {
+                    var header = [];
                     var table_header = $(element).children('th');
                     for (var i = 0; i < table_header.length; i++) {
                         header.push(table_header.eq(i).text());
                     }
                     original_data[index] = header;
                 } else {
-                    var row = new Array();
+                    var row = [];
                     var table_row = $(element).children('td');
                     for (var i = 0; i < table_row.length; i++) {
                         row.push(table_row.eq(i).text());
@@ -432,7 +438,7 @@ function download_csv() {
                 url: "/importTable/",
                 type: "POST",
                 dataType: "json",
-                data: {'original_data': JSON.stringify(original_data),},
+                data: {'original_data': JSON.stringify(original_data)},
                 success: function (response) {
                     window.location.href = "/exportCSV/"
                 },
@@ -450,6 +456,7 @@ function download_csv() {
 
 /*timer*/
 var countdown;
+
 function timer() {
     var $topLoader = $("#topLoader").percentageLoader({
         width: 356, height: 356, controllable: true, progress: 0.0,
@@ -484,7 +491,7 @@ function timer() {
 }
 
 function textarea_detection() {
-    var str = $("textarea#text_input").val();
+    var str = $("div#text_input textarea").val();
     var header = str.split("\n")[0];
     var schema = header.split(",");
     var local_keys = "";
@@ -497,12 +504,65 @@ function textarea_detection() {
 
 function table_detection() {
     var local_keys = "";
-    $("table#table_input thead tr th").each(function (index, element) {
+    $("div#table_input table thead tr th").each(function (index, element) {
         local_keys += "<a class='tag'>" + $(element).text() + "</a>";
     });
     $("a#local_button").nextAll().remove();
     $("div#local_schema").append(local_keys);
 }
+
+function text2table() {
+    var text_input = $("div#text_input");
+    var rows = text_input.find("textarea").val().split("\n");
+    var local_thead = "";
+    var local_tbody = "";
+    var element = null;
+    var reg = new RegExp(",\\s", "g");
+
+    for (var i = 0; i < rows.length; i++) {
+        if (!rows[i].length)
+            continue;
+        element = rows[i].replace(reg, " ").split(",");
+        if (i === 0) {
+            local_thead += "<tr>";
+            for (var jh = 0; jh < element.length; jh++) {
+                local_thead += "<th>" + element[jh] + "</th>";
+            }
+            local_thead += "</tr>";
+        } else {
+            local_tbody += "<tr>";
+            for (var jb = 0; jb < element.length; jb++) {
+                local_tbody += "<td>" + element[jb] + "</td>";
+            }
+            local_tbody += "</tr>";
+        }
+    }
+
+    text_input.hide();
+    $("div#table_input table thead").html(local_thead);
+    $("div#table_input table tbody").html(local_tbody);
+    $("div#table_input").show();
+}
+
+function table2text() {
+    var text_input = $("div#text_input");
+    var local_text = "";
+    $("div#table_input table thead tr th").each(function (index, element) {
+        local_text += $(element).text() + ",";
+    });
+    local_text = local_text.substring(0, local_text.length - 1) + "\n";
+
+    $("div#table_input table tbody tr").each(function () {
+        $(this).find("td").each(function (index, element) {
+            local_text += $(element).text().replace("\n", " ") + ",";
+        });
+        local_text = local_text.substring(0, local_text.length - 1) + "\n";
+    });
+    $("div#table_input").hide();
+    text_input.find("textarea").val(local_text);
+    text_input.show();
+}
+
 var dblp_publ_text = "ID,title,author\n" +
     "1,First-Order Predicate Logic,\n" +
     "2,Cumulative Learning,Pietro Michelucci and Daniel Oblinger\n" +

@@ -69,15 +69,17 @@
         </div>
         <div class="row">
             <div class="bootstrap-switch" id="format">
-                <input type="checkbox" checked />
+                <input type="checkbox" checked/>
             </div>
             <div class="bootstrap-switch" id="typos">
-                <input type="checkbox" checked />
+                <input type="checkbox" checked/>
             </div>
         </div>
-        <div class="row" style="overflow:scroll; height: 488px">
-            <textarea id="text_input" placeholder="Copy your CSV here" style="height: 475px"></textarea>
-            <table class="table table-hover table-bordered" style="display: none;" id="table_input">
+        <div class="row" id="text_input">
+            <textarea placeholder="Copy your CSV here" style="height: 488px"></textarea>
+        </div>
+        <div class="row" style="display: none; overflow:scroll; height: 488px" id="table_input">
+            <table class="table table-hover table-bordered">
                 <thead>
                 </thead>
                 <tbody>
@@ -102,7 +104,8 @@
         <div class="widget-tags" id="join_schema">
             <!-- item tags-->
         </div>
-        <div align="right">
+        <div align="right" class="cws-widget">
+            <button type="button" class="btn btn-primary" id="continue"><a>Continue</a></button>
             <button type="button" class="btn btn-primary" id="download"><a>Download</a></button>
         </div>
         <div style="overflow:scroll; height: 488px">
@@ -119,60 +122,60 @@
 </div>
 {% if cookies_expired %}
 <div class="login-popup open">
-{% else %}
-<div class="login-popup">
-{% endif %}
-    <div class="login-popup-wrap">
-        <div class="title-wrap">
-            <h2>Subscribe For Free</h2><i class="close-button flaticon-cross"></i>
-        </div>
-        <div class="login-content">
-            <input type="text" name="name" value="" placeholder="Enter Your Name ..." aria-required="true"
-                       class="form-row">
-            <input type="text" name="email" value="" placeholder="Enter Your Email ..." aria-required="true"
-                       class="form-row">
-        </div>
-        <div class="cws-button gray alt full-width">Submit</div>
-    </div>
-</div>
-<div class="news-popup">
-    <div class="news-popup-wrap">
-        <div class="news-content">
-            <div class="news-title">
-                <h2>Schema Matching</h2><i class="close-button flaticon-cross"></i>
+    {% else %}
+    <div class="login-popup">
+        {% endif %}
+        <div class="login-popup-wrap">
+            <div class="title-wrap">
+                <h2>Subscribe For Free</h2><i class="close-button flaticon-cross"></i>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="widget-tags" id="local_schema">
-                        <a class="cws-button color-3" id="local_button">Your schema</a>
-                        <!-- item tags-->
-                    </div>
-                    <div class="widget-tags" id="hidden_schema">
-                        <a class="cws-button color-3" id="hidden_button">Api schema</a>
-                        <!-- item tags-->
+            <div class="login-content">
+                <input type="text" name="name" value="" placeholder="Enter Your Name ..." aria-required="true"
+                       class="form-row">
+                <input type="text" name="email" value="" placeholder="Enter Your Email ..." aria-required="true"
+                       class="form-row">
+            </div>
+            <div class="cws-button gray alt full-width">Submit</div>
+        </div>
+    </div>
+    <div class="news-popup">
+        <div class="news-popup-wrap">
+            <div class="news-content">
+                <div class="news-title">
+                    <h2>Schema Matching</h2><i class="close-button flaticon-cross"></i>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget-tags" id="local_schema">
+                            <a class="cws-button color-3" id="local_button">Your schema</a>
+                            <!-- item tags-->
+                        </div>
+                        <div class="widget-tags" id="hidden_schema">
+                            <a class="cws-button color-3" id="hidden_button">Api schema</a>
+                            <!-- item tags-->
+                        </div>
                     </div>
                 </div>
+                <div class="cws-button gray alt full-width" id="msg_submit"><a>Submit</a></div>
             </div>
-            <div class="cws-button gray alt full-width" id="msg_submit"><a>Submit</a></div>
         </div>
     </div>
-</div>
-<div class="alert-popup">
-    <div class="alert-popup-wrap">
-        <div class="title-wrap">
-            <h2>Notification</h2><i class="close-button flaticon-cross"></i>
+    <div class="alert-popup">
+        <div class="alert-popup-wrap">
+            <div class="title-wrap">
+                <h2>Notification</h2><i class="close-button flaticon-cross"></i>
+            </div>
+            <div class="alert-content">
+                <p></p>
+            </div>
+            <div class="cws-button gray alt full-width">OK</div>
         </div>
-        <div class="alert-content">
-            <p></p>
-        </div>
-        <div class="cws-button gray alt full-width">OK</div>
     </div>
-</div>
 
-{% include "deeperweb/includes/footer.html" %}
-<script type="text/javascript" src="{% static 'deeperweb/js/jquery.ui.widget.js' %}"></script>
-<script type="text/javascript" src="{% static 'deeperweb/js/jquery.iframe-transport.js' %}"></script>
-<script type="text/javascript" src="{% static 'deeperweb/js/jquery.fileupload.js' %}"></script>
-<script type="text/javascript" src="{% static 'deeperweb/js/jquery.percentageloader-0.1.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'deeperweb/js/bootstrap-switch.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'deeperweb/js/demo.js' %}"></script>
+    {% include "deeperweb/includes/footer.html" %}
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery.ui.widget.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery.iframe-transport.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery.fileupload.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/jquery.percentageloader-0.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/bootstrap-switch.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'deeperweb/js/demo.js' %}"></script>
