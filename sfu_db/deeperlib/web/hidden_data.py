@@ -1,6 +1,4 @@
-import os
 from deeperlib.data_processing.data_process import wordset, getElement
-from json2csv import Json2csv
 
 
 class HiddenData:

@@ -40,8 +40,8 @@ def subscribe(request):
     if len(Subscriber.objects.filter(email=email)) == 0:
         Subscriber.objects.get_or_create(name=name, email=email)
     jsonresponse = JsonResponse({'user_num': Subscriber.objects.count()})
-    jsonresponse.set_cookie('name', name, 2*24*3600)
-    jsonresponse.set_cookie('email', email, 2*24*3600)
+    jsonresponse.set_cookie('name', name, 2 * 24 * 3600)
+    jsonresponse.set_cookie('email', email, 2 * 24 * 3600)
     return jsonresponse
 
 
@@ -65,10 +65,10 @@ def smartcrawl(request):
                     row.append(i)
             original_csv.append(row)
     if len(original_csv) > 1:
-        join_csv = deeper_web.smartcrawl_web(4, api_msg, original_csv, local_match, hidden_match)
+        result = deeper_web.smartcrawl_web(4, api_msg, original_csv, local_match, hidden_match)
     else:
-        join_csv = []
-    return JsonResponse({'join_csv': join_csv})
+        result = {}
+    return JsonResponse(result)
 
 
 def uploadCSV(request):

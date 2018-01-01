@@ -5,9 +5,10 @@ $(document).ready(function () {
     upload_csv();
     popup_news_init();
     smart_crawl();
-    continue_enrichment();
+    init_table();
+    re_enrich();
     download_csv();
-    timer();
+    record_replace();
 });
 
 /*switch button*/
@@ -18,6 +19,7 @@ function switch_button_init() {
         onColor: 'primary',
         offColor: 'info',
         labelText: 'Format',
+        state: false,
         onSwitchChange: function (event, data) {
             var switch_typos = $('.bootstrap-switch#typos input');
             if (data) {
@@ -36,9 +38,23 @@ function switch_button_init() {
         onColor: 'primary',
         offColor: 'warning',
         labelText: 'Typos',
+        state: false,
+        disabled: true,
         onSwitchChange: function (event, data) {
-
+            if (data) {
+                add_typos();
+            } else {
+                remove_typos();
+            }
         }
+    });
+
+    $('.bootstrap-switch#example input').bootstrapSwitch({
+        onText: 'On',
+        offText: 'Off',
+        onColor: 'primary',
+        offColor: 'warning',
+        labelText: 'Example'
     });
 }
 
@@ -48,10 +64,7 @@ function api_choose() {
         $('div#api ul li').removeClass();
         $(this).addClass("active");
         $("a#hidden_button").nextAll().remove();
-
         $("button#upload a").text("Upload csv");
-        $("div#text_input").show();
-        $("div#table_input").hide();
 
         var hidden_schema = $("div#hidden_schema");
 
@@ -69,7 +82,9 @@ function api_choose() {
                         hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
                     }
                 });
-                $("div#text_input textarea").html(dblp_publ_text);
+                if ($('.bootstrap-switch#example input').bootstrapSwitch('state')) {
+                    $("div#text_input textarea").val(dblp_publ_text);
+                }
             } else {
                 $(".alert-popup").addClass("open");
                 $(".alert-popup p").html("Sorry, this api is not supported now.");
@@ -88,7 +103,9 @@ function api_choose() {
                         hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
                     }
                 });
-                $("div#text_input textarea").val(yelp_search_text);
+                if ($('.bootstrap-switch#example input').bootstrapSwitch('state')) {
+                    $("div#text_input textarea").val(yelp_search_text);
+                }
             } else {
                 $(".alert-popup").addClass("open");
                 $(".alert-popup p").html("Sorry, this api is not supported now.");
@@ -97,8 +114,63 @@ function api_choose() {
             $(".alert-popup").addClass("open");
             $(".alert-popup p").html("Sorry, this api is not supported now.");
         }
+
+        $('.bootstrap-switch#typos input').bootstrapSwitch('state', false);
         if ($('.bootstrap-switch#format input').bootstrapSwitch('state')) {
-            text2table();
+            if ($('.bootstrap-switch#example input').bootstrapSwitch('state')) {
+                text2table();
+            } else {
+                $("div#text_input").hide();
+                $("div#table_input").show();
+            }
+        } else {
+            $("div#text_input").show();
+            $("div#table_input").hide();
+        }
+    });
+}
+
+/*typos operation*/
+function add_typos() {
+    var table_input = $('div#table_input table');
+    var header_num = $('div#table_input table thead tr th').length;
+    var typos = ["&*^%#", "SIGMOD", "VLDB", "ICDE", "2018", "Database", "Journal", "Conference", "Vancouver", "Seattle"];
+    var temp;
+    var temp_array;
+    $.each(table_input.find('tbody tr'), function (index, element) {
+        temp = $(element).find('td:eq(' + Math.floor(Math.random() * header_num) + ')');
+        typo = "<span style=\"color:Red\">" + typos[Math.floor(Math.random() * typos.length)] + "</span>";
+        if (temp.text().indexOf(' ') !== -1) {
+            temp_array = temp.text().split(' ');
+            temp_array.splice(Math.floor(Math.random() * (temp_array.length + 1)), 0, typo);
+            temp.html(temp_array.join(' '));
+        } else if (temp.text().indexOf('/') !== -1) {
+            temp_array = temp.text().split('/');
+            temp_array.splice(Math.floor(Math.random() * (temp_array.length + 1)), 0, typo);
+            temp.html(temp_array.join('/'));
+        }
+    });
+}
+
+function remove_typos() {
+    $('div#table_input table tbody tr td span').remove();
+    $.each($('div#table_input table tbody tr td'), function (index, element) {
+        if ($(element).text().indexOf(' ') !== -1) {
+            temp_array = $(element).text().split(' ');
+            for (var i = 0; i < temp_array.length; i++) {
+                if (temp_array[i].length === 0) {
+                    temp_array.splice(i, 1);
+                }
+            }
+            $(element).html(temp_array.join(' '));
+        } else if ($(element).text().indexOf('/') !== -1) {
+            temp_array = $(element).text().split('/');
+            for (var i = 0; i < temp_array.length; i++) {
+                if (temp_array[i].length === 0) {
+                    temp_array.splice(i, 1);
+                }
+            }
+            $(element).html(temp_array.join('/'));
         }
     });
 }
@@ -314,8 +386,10 @@ function smart_crawl() {
         $(".news-popup").removeClass("open");
         $("table#table_result").hide();
         $("div#topLoader").show();
+        location.hash = "#";
         location.hash = "#topLoader";
-        countdown();
+        $("#topLoader").children().remove();
+        timer();
 
         $.ajax({
             url: "/smartcrawl/",
@@ -328,23 +402,41 @@ function smart_crawl() {
                 'api_msg': api_msg
             },
             success: function (response) {
-                var join_thead = "";
-                var join_tbody = "";
                 var join_keys = "";
-                $.each(response['join_csv'], function (index, element) {
-                    if (index === 0) {
-                        join_thead += "<tr>";
-                        for (var i = 0; i < element.length; i++) {
-                            join_thead += "<th>" + element[i] + "</th>";
-                            join_keys += "<a class='tag'>" + element[i] + "</a>";
+                var join_tbody = "";
+                var join_thead = "<tr>";
+                $.each(response['local_header'], function (index, element) {
+                    join_thead += "<th>" + element + "</th>";
+                    join_keys += "<a class='tag'>" + element + "</a>";
+                });
+                $.each(response['hidden_header'], function (index, element) {
+                    join_thead += "<th>" + element + "</th>";
+                    join_keys += "<a class='tag'>" + element + "</a>";
+                });
+                join_thead += "</tr>";
+
+                $.each(response['record'], function (index, element) {
+                    var local_record = "";
+                    for (var i = 0; i < element[0].length; i++) {
+                        local_record += "<td>" + element[0][i] + "</td>";
+                    }
+
+                    join_tbody += "<tr>" + local_record;
+                    for (var j = 0; j < element[1].length; j++) {
+                        join_tbody += "<td>" + element[1][j] + "</td>";
+                    }
+
+                    if (element.length > 2) {
+                        join_tbody += "<td style='cursor: pointer;'><div class='table-expandable-arrow'></div></td></tr>";
+                        for (var m = 2; m < element.length; m++) {
+                            join_tbody += "<tr style='display: none'>" + local_record;
+                            for (var n = 0; n < element[m].length; n++) {
+                                join_tbody += "<td>" + element[m][n] + "</td>";
+                            }
+                            join_tbody += "<td style='cursor: pointer;'><span class=\"glyphicon glyphicon-retweet\"></span></td></tr>";
                         }
-                        join_thead += "</tr>";
                     } else {
-                        join_tbody += "<tr>";
-                        for (var i = 0; i < element.length; i++) {
-                            join_tbody += "<td>" + element[i] + "</td>";
-                        }
-                        join_tbody += "</tr>";
+                        join_tbody += "<td><div></div></td></tr>";
                     }
                 });
                 var join_schema = $("div#join_schema");
@@ -375,12 +467,13 @@ function smart_crawl() {
                         }
                     });
                 });
+                $('table#table_result tbody tr').find('td:last').show();
                 $("div#topLoader").hide();
                 $("table#table_result").show();
 
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("DeepER enriches " + (response['join_csv'].length - 1) +
-                    " records within 4 queries, while traditional methods need " + (response['join_csv'].length - 1) + " queries");
+                $(".alert-popup p:first").html("SmartCrawl   Queries: 4   Cover: " + response['record'].length);
+                $(".alert-popup p:last").html("NaiveCrawl   Queries: 4   Cover: 4");
             },
             error: function () {
                 $(".alert-popup").addClass("open");
@@ -390,9 +483,22 @@ function smart_crawl() {
     });
 }
 
-/*continue enrichment*/
-function continue_enrichment() {
-    $("button#continue").click(function () {
+/*init table*/
+function init_table() {
+    $("table#table_result tbody").delegate("tr td div.table-expandable-arrow", "click", function () {
+        var element = $(this).closest('tr');
+        element.find(".table-expandable-arrow").toggleClass("up");
+        temp = element.next('tr');
+        while (!temp.find("td:last div").length) {
+            temp.toggle('fast');
+            temp = temp.next('tr');
+        }
+    });
+}
+
+/*re-enrich*/
+function re_enrich() {
+    $("button#re-enrich").click(function () {
         var table_input = $('div#table_input table');
         table_input.find('thead tr').remove();
         table_input.find('tbody tr').remove();
@@ -408,6 +514,7 @@ function continue_enrichment() {
         table_input.find('tbody').append($('table#table_result tbody tr'));
         location.hash = "#api";
         join_schema.children().remove();
+        $('.bootstrap-switch#example input').bootstrapSwitch('state', false);
     });
 }
 
@@ -455,8 +562,6 @@ function download_csv() {
 }
 
 /*timer*/
-var countdown;
-
 function timer() {
     var $topLoader = $("#topLoader").percentageLoader({
         width: 356, height: 356, controllable: true, progress: 0.0,
@@ -488,6 +593,8 @@ function timer() {
         };
         setTimeout(animateFunc, 25);
     };
+
+    countdown();
 }
 
 function textarea_detection() {
@@ -563,587 +670,237 @@ function table2text() {
     text_input.show();
 }
 
+function record_replace() {
+    $("table#table_result tbody").delegate("tr td span.glyphicon", "click", function () {
+        var alter_row = $(this.closest('tr'));
+        var current_row = alter_row.prev('tr');
+        while (!current_row.find("td:last div").length) {
+            current_row = current_row.prev('tr');
+        }
+        alter_row.find("td:last").html("<div class='table-expandable-arrow'></div>");
+        current_row.find("td:last").html("<span class=\"glyphicon glyphicon-retweet\"></span>");
+        current_row.before(alter_row);
+        alter_row.find(".table-expandable-arrow").toggleClass("up");
+    });
+}
+
 var dblp_publ_text = "ID,title,author\n" +
-    "1,First-Order Predicate Logic,\n" +
-    "2,Cumulative Learning,Pietro Michelucci and Daniel Oblinger\n" +
-    "3,GreenSim: A Network Simulator for Comprehensively Validating and Evaluating New Machine Learning Techniques for Network Structural Inference,Christopher Fogelberg and Vasile Palade\n" +
-    "4,Induction,James Cussens\n" +
-    "5,A Comparison of three machine learning techniques for encrypted network traffic analysis,Daniel J. Arndt and A. Nur Zincir-Heywood\n" +
-    "6,Particle Swarm Optimization,James Kennedy\n" +
-    "7,Use of Machine Learning Classification Techniques to Detect Atypical Behavior in Medical Applications,Terrence Ziemniak\n" +
-    "8,Predicting Postgraduate Students' Performance Using Machine Learning Techniques,Maria Koutina and Katia Lida Kermanidis\n" +
-    "9,Radial Basis Function Networks,Martin D. Buhmann\n" +
-    "10,Generative and Discriminative Learning,Bin Liu and Geoffrey I. Webb\n" +
-    "11,Biomedical Informatics,C. David Page Jr. and Sriraam Natarajan\n" +
-    "12,Simple Recurrent Network,Risto Miikkulainen\n" +
-    "13,Semi-Naive Bayesian Learning,Fei Zheng and Geoffrey I. Webb\n" +
-    "14,Statistical Relational Learning,Luc De Raedt and Kristian Kersting\n" +
-    "15,Markov Decision Processes,William T. B. Uther\n" +
-    "16,Certainty Equivalence Principle,\n" +
-    "17,The GEO VIEW design A relational data base approach to geographical data handling,Thomas C. Waugh and R. G. Healey\n" +
-    "18,Latent Factor Models and Matrix Factorizations,\n" +
-    "19,L1-Distance,\n" +
-    "20,Labeled Data,\n" +
-    "21,Learning Bias,\n" +
-    "22,Document Classification,Dunja Mladenic and Janez Brank and Marko Grobelnik\n" +
-    "23,Learning By Demonstration,\n" +
-    "24,Is More Specific Than,\n" +
-    "25,Is More General Than,\n" +
-    "26,Iterative Classification,\n" +
-    "27,Inverse Entailment,\n" +
-    "28,Inverse Resolution,\n" +
-    "29,Inverse Optimal Control,\n" +
-    "30,Kernels,\n" +
-    "31,Kernel Density Estimation,\n" +
-    "32,Junk Email Filtering,\n" +
-    "33,Kernel Matrix,\n" +
-    "34,Directed Graphs,\n" +
-    "35,Dimensionality Reduction on Text via Feature Selection,\n" +
-    "36,Deductive Learning,\n" +
-    "37,Decision Trees For Regression,\n" +
-    "38,Digraphs,\n" +
-    "39,Classifier Systems,Pier Luca Lanzi\n" +
-    "40,Classifier Systems,Pier Luca Lanzi\n" +
-    "41,Data Set,\n" +
-    "42,Data Mining On Text,\n" +
-    "43,Decision Stump,\n" +
-    "44,Decision Rule,\n" +
-    "45,Decision Epoch,\n" +
-    "46,Covering Algorithm,\n" +
-    "47,Cost-to-Go Function Approximation,\n" +
-    "48,Missing Attribute Values,Ivan Bruha\n" +
-    "49,Cross-Validation,\n" +
-    "50,Cross-Language Question Answering,\n" +
-    "51,Cross-Language Document Categorization,\n" +
-    "52,Constraint-Based Mining,Siegfried Nijssen\n" +
-    "53,Instance,\n" +
-    "54,Using machine learning techniques to enhance the performance of an automatic backup and recovery system,Dan Pelleg and Eran Raichstein and Amir Ronen\n" +
-    "55,Connections Between Inductive Inference and Machine Learning,John Case and Sanjay Jain\n" +
-    "56,Posterior Probability,Geoffrey I. Webb\n" +
-    "57,Deduplication,\n" +
-    "58,Data Integration: The Relational Logic Approach,Michael R. Genesereth\n" +
-    "59,Minimum Description Length Principle,Jorma Rissanen\n" +
-    "60,Reservoir Computing,Risto Miikkulainen\n" +
-    "61,Optimal Learning,\n" +
-    "62,Bayesian Reinforcement Learning,Pascal Poupart\n" +
-    "63,Nogood Learning,\n" +
-    "64,Cost-Sensitive Learning,Charles X. Ling and Victor S. Sheng\n" +
-    "65,Sequence Data,\n" +
-    "66,Sequential Data,\n" +
-    "67,Intelligent Data Engineering and Automated Learning - {IDEAL} 2000, Data Mining, Financial Engineering, and Intelligent Agents, Second International Conference, Shatin, {N.T.} Hong Kong, China, December 13-15, 2000, Proceedings,\n" +
-    "68,Functional classification of ornamental stone using machine learning techniques,M. F. Lopez and Jose M. Martinez and Jose M. Matias and Javier Taboada and Jose A. Vilan\n" +
-    "69,Graph Kernels,S. V. N. Vishwanathan and Nicol N. Schraudolph and Risi Kondor and Karsten M. Borgwardt\n" +
-    "70,Object-Oriented Database Mining: Use of Object Oriented Concepts for Improving Data Classification Technique,Kitsana Waiyamai and Chidchanok Songsiri and Thanawin Rakthanmanon\n" +
-    "71,High Classification Rates for Continuous Cow Activity Recognition Using Low-Cost {GPS} Positioning Sensors and Standard Machine Learning Techniques,Torben Godsk and Mikkel Baun Kjaergaard\n" +
-    "72,Nearest Neighbor,Eamonn J. Keogh\n" +
-    "73,Evolutionary Feature Selection and Construction,Krzysztof Krawiec\n" +
-    "74,Deductive and Object-Oriented Databases, Proceedings of the First International Conference on Deductive and Object-Oriented Databases (DOOD'89), Kyoto Research Park, Kyoto, Japan, 4-6 December, 1989,\n" +
-    "75,Discovering Data Structures Using Meta-learning, Visualization and Constructive Neural Networks,Tomasz Maszczyk and Marek Grochowski and Wlodzislaw Duch\n" +
-    "76,Multi-Instance Learning,Soumya Ray and Stephen Scott and Hendrik Blockeel\n" +
-    "77,Credit rating by hybrid machine learning techniques,Chih-Fong Tsai and Ming{-}Lun Chen\n" +
-    "78,Stochastic Finite Learning,Thomas Zeugmann\n" +
-    "79,Kernel Shaping,\n" +
-    "80,Phase Transitions in Machine Learning,Lorenza Saitta and Michele Sebag\n" +
-    "81,Locally Weighted Regression for Control,Jo{-}Anne Ting and Sethu Vijayakumar and Stefan Schaal\n" +
-    "82,Error Rate,Kai Ming Ting\n" +
-    "83,Mobile Data Management, 4th International Conference, {MDM} 2003, Melbourne, Australia, January 21-24, 2003, Proceedings,\n" +
-    "84,Evolutionary Fuzzy Systems,Carlos Kavka\n" +
-    "85,Regression Trees,Luis Torgo\n" +
-    "86,Fuzzy Sets,\n" +
-    "87,Fuzzy Systems,\n" +
-    "88,Generality And Logic,\n" +
-    "89,Generative Learning,\n" +
-    "90,Genetic Clustering,\n" +
-    "91,False Negative,\n" +
-    "92,False Positive,\n" +
-    "93,Finite Mixture Model,\n" +
-    "94,First-Order Regression Tree,\n" +
-    "95,EFSC,\n" +
-    "96,Foreword for the special issue of selected papers from the 1st {ECML/PKDD} Workshop on Privacy and Security issues in Data Mining and Machine Learning,Aris Gkoulalas{-}Divanis and Yucel Saygin and Vassilios S. Verykios\n" +
-    "97,Database and {XML} Technologies, First International {XML} Database Symposium, XSym 2003, Berlin, Germany, September 8, 2003, Proceedings,\n" +
-    "98,ECOC,\n" +
-    "99,Database and {XML} Technologies, Second International {XML} Database Symposium, XSym 2004, Toronto, Canada, August 29-30, 2004, Proceedings,\n" +
-    "100,Using Machine Learning Techniques and Genomic/Proteomic Information from Known Databases for {PPI} Prediction,Jose M. Urquiza and Ignacio Rojas and Hector Pomares and Luis Javier Herrera and J. P. Florido and Francisco M. Ortuno Guzman\n" +
-    "101,Embodied Evolutionary Learning,\n" +
-    "102,Elman Network,\n" +
-    "103,Learning in Logic,\n" +
-    "104,Entailment,\n" +
-    "105,Intelligent Backtracking,\n" +
-    "106,Minimum Message Length,Rohan A. Baxter\n" +
-    "107,Instance Language,\n" +
-    "108,Distance,\n" +
-    "109,Large scale data mining using genetics-based machine learning,Jaume Bacardit and Xavier Llora\n" +
-    "110,Interval Scale,\n" +
-    "111,Precision,Kai Ming Ting\n" +
-    "112,Precision and Recall,Kai Ming Ting\n" +
-    "113,Sensitivity and Specificity,Kai Ming Ting\n" +
-    "114,Improvement Curve,\n" +
-    "115,Dynamic Systems,\n" +
-    "116,EBL,\n" +
-    "117,Immunological Computation,\n" +
-    "118,Dynamic Decision Networks,\n" +
-    "119,Cost,\n" +
-    "120,Associative Reinforcement Learning,Alexander L. Strehl\n" +
-    "121,Inductive Inference Rules,\n" +
-    "122,Inductive Bias,\n" +
-    "123,Inductive Inference,Sanjay Jain and Frank Stephan\n" +
-    "124,Probabilistic Context-Free Grammars,Yasubumi Sakakibara\n" +
-    "125,Multistrategy Ensemble Learning,\n" +
-    "126,Multiple-Instance Learning,\n" +
-    "127,Hopfield Network,Risto Miikkulainen\n" +
-    "128,Maximum Entropy Models for Natural Language Processing,Adwait Ratnaparkhi\n" +
-    "129,Artificial Societies,Jurgen Branke\n" +
-    "130,Preference Learning,Johannes Furnkranz and Eyke Hullermeier\n" +
-    "131,Speedup Learning For Planning,\n" +
-    "132,Comparison of Classification Techniques used in Machine Learning as Applied on Vocational Guidance Data,Halil-Ibrahim Bulbul and Ozkan Unsal\n" +
-    "133,Online Learning,Peter Auer\n" +
-    "134,Learning Vector Quantization,\n" +
-    "135,Identity Uncertainty,\n" +
-    "136,Holdout Evaluation,\n" +
-    "137,Holdout Data,\n" +
-    "138,Hold-One-Out Error,\n" +
-    "139,Heuristic Rewards,\n" +
-    "140,Growth Function,\n" +
-    "141,Grouping,\n" +
-    "142,Grammar Learning,\n" +
-    "143,Gram Matrix,\n" +
-    "144,Gini Coefficient,\n" +
-    "145,Gibbs Sampling,\n" +
-    "146,Genetics-Based Machine Learning,\n" +
-    "147,Genetic Neural Networks,\n" +
-    "148,Genetic Grouping,\n" +
-    "149,Genetic Feature Selection,\n" +
-    "150,Lift,\n" +
-    "151,Classification of Poincar{\'{e}} plots for temporal series of heart rate variability by using machine learning techniques,Andre Ricardo Gonccalves and Maria Angelica de Oliveira Camargo-Brunetto\n" +
-    "152,Application Of Machine Learning Techniques For The Forecasting Of Fashion Trends,Paola Mello and Sergio Storari and Bernardo Valli\n" +
-    "153,Comparative analysis of machine learning techniques for the prediction of logP,Edward W. Lowe and Mariusz Butkiewicz and Matthew Spellings and Albert Omlor and Jens Meiler\n" +
-    "154,Machine Learning Techniques based on Random Projections,Yoan Miche and Benjamin Schrauwen and Amaury Lendasse\n" +
-    "155,Blue-white veil and dark-red patch of pigment pattern recognition in dermoscopic images using machine-learning techniques,Jose Luis Garcia Arroyo and Begona Garcia Zapirain and Amaia Mendez Zorrilla\n" +
-    "156,Bayesian Network,\n" +
-    "157,Privacy in Statistical Databases: {CASC} Project International Workshop, {PSD} 2004, Barcelona, Spain, June 9-11, 2004. Proceedings,\n" +
-    "158,Privacy-Related Aspects and Techniques,Stan Matwin\n" +
-    "159,Privacy-Related Aspects and Techniques,Stan Matwin\n" +
-    "160,Dynamic Programming,Martin L. Puterman and Jonathan Patrick\n" +
-    "161,Artificial Immune Systems,Jon Timmis\n" +
-    "162,Predictive Techniques in Software Engineering,Jelber Sayyad{-}Shirabad\n" +
-    "163,Predictive Techniques in Software Engineering,Jelber Sayyad{-}Shirabad\n" +
-    "164,Policy Gradient Methods,Jan Peters and J. Andrew Bagnell\n" +
-    "165,Conditional Random Field,\n" +
-    "166,Incremental Learning,Paul E. Utgoff\n" +
-    "167,Initiated language learning machine with multi-media and speech-recognition techniques,Dong-Liang Lee and Chun-Liang Hsu and Sheng-Yuan Yang and Wei-Ying Chen\n" +
-    "168,Inductive Transfer,Ricardo Vilalta and Christophe G. Giraud{-}Carrier and Pavel Brazdil and Carlos Soares\n" +
-    "169,Comparison of Machine Learning Techniques for Bayesian Networks for User-Adaptive Systems,Frank Wittig\n" +
-    "170,Probably Approximately Correct Learning,\n" +
-    "171,Link Mining and Link Discovery,Lise Getoor\n" +
-    "172,Deep Belief Networks,\n" +
-    "173,Feature Construction in Text Mining,Janez Brank and Dunja Mladenic and Marko Grobelnik\n" +
-    "174,Hypothesis Language,Hendrik Blockeel\n" +
-    "175,Q-Learning,Peter Stone\n" +
-    "176,Observation Language,Hendrik Blockeel\n" +
-    "177,Hypothesis Space,Hendrik Blockeel\n" +
-    "178,Inductive Database Approach to Graphmining,Stefan Kramer\n" +
-    "179,Attribute Selection,\n" +
-    "180,Model-Based Reinforcement Learning,Soumya Ray and Prasad Tadepalli\n" +
-    "181,Discriminative Learning,\n" +
-    "182,Inductive Process Modeling,Ljupco Todorovski\n" +
-    "183,Hidden Markov Models,Antal van den Bosch\n" +
-    "184,Learning Curves in Machine Learning,Claudia Perlich\n" +
-    "185,Using Linguistic Information and Machine Learning Techniques to Identify Entities from Juridical Documents,Paulo Quaresma and Teresa Gonccalves\n" +
-    "186,Search Engines: Applications of {ML},Eric Martin\n" +
-    "187,Grammatical Inference,Lorenza Saitta and Michele Sebag\n" +
-    "188,Generalized Expectation Criteria for Semi-Supervised Learning with Weakly Labeled Data,Gideon S. Mann and Andrew McCallum\n" +
-    "189,Computational Complexity of Learning,Sanjay Jain and Frank Stephan\n" +
-    "190,Programming by Demonstration,Pierre Flener and Ute Schmid\n" +
-    "191,Feedforward Recurrent Network,\n" +
-    "192,Partially Observable Markov Decision Processes,Pascal Poupart\n" +
-    "193,Using Machine Learning Techniques for Modelling and Simulation of Metabolic Networks,Marenglen Biba and Fatos Xhafa and Floriana Esposito and Stefano Ferilli\n" +
-    "194,Synthesis of Integrated Passive Components for High-Frequency {RF} ICs Based on Evolutionary Computation and Machine Learning Techniques,Bo Liu and Dixian Zhao and Patrick Reynaert and Georges G.E. Gielen\n" +
-    "195,Reinforcement Learning,Peter Stone\n" +
-    "196,Learning to detect incidents from noisily labeled data,Tomas Singliar and Milos Hauskrecht\n" +
-    "197,Graphical Models,Julian John McAuley and Tiberio S. Caetano and Wray L. Buntine\n" +
-    "198,Graphical Models,Julian John McAuley and Tiberio S. Caetano and Wray L. Buntine\n" +
-    "199,Deep Belief Nets,Geoffrey E. Hinton\n" +
-    "200,Overfitting,Geoffrey I. Webb\n" +
-    "201,Prior Probability,Geoffrey I. Webb\n" +
-    "202,Integrity in Databases - 6th International Workshop on Foundations of Models and Languages for Data and Objects, Schloss Dagstuhl, Germany, September 16-20, 1996, Proceedings,\n" +
-    "203,Model Evaluation,Geoffrey I. Webb\n" +
-    "204,Data Preparation,Geoffrey I. Webb\n" +
-    "205,Lazy Learning,Geoffrey I. Webb\n" +
-    "206,Discussion on 'Techniques for Massive-Data Machine Learning in Astronomy' by A. Gray,Nicholas M. Ball\n" +
-    "207,Operation of an international data center: Canadian Scientific Numeric Database Service,Gordon H. Wood and John R. Rodgers and S. Roger Gough\n" +
-    "208,Integrated Spatial Databases, Digital Inages and GIS, International Workshop {ISD} '99, Portland, ME, USA, June 14-16, 1999, Selected Papers,\n" +
-    "209,Frequent Set,\n" +
-    "210,Evolutionary Kernel Learning,Christian Igel\n" +
-    "211,Inductive Programming,Pierre Flener and Ute Schmid\n" +
-    "212,Computer-Aided Detection of Polyps in {CT} Colonography with Pixel-Based Machine Learning Techniques,Jianwu Xu and Kenji Suzuki\n" +
-    "213,Graphs,Tommy R. Jensen\n" +
-    "214,Frequent Pattern,Hannu Toivonen\n" +
-    "215,Committee Machines,\n" +
-    "216,Learning Control Rules,\n" +
-    "217,Learning from Labeled and Unlabeled Data,\n" +
-    "218,Learning from Labeled and Unlabeled Data,\n" +
-    "219,Learning from Labeled and Unlabeled Data,\n" +
-    "220,Learning By Imitation,\n" +
-    "221,Learning Classifier Systems,\n" +
-    "222,Learning Classifier Systems,\n" +
-    "223,Learning Control,\n" +
-    "224,Learning in Worlds with Objects,\n" +
-    "225,Learning with Different Classification Costs,\n" +
-    "226,Learning with Hidden Context,\n" +
-    "227,Advances in Database Technology - {EDBT} 2004, 9th International Conference on Extending Database Technology, Heraklion, Crete, Greece, March 14-18, 2004, Proceedings,\n" +
-    "228,Learning from Preferences,\n" +
-    "229,Life-Long Learning,\n" +
-    "230,Lifelong Learning,\n" +
-    "231,Linear Regression Trees,\n" +
-    "232,Learning Word Senses,\n" +
-    "233,Leave-One-Out Cross-Validation,\n" +
-    "234,Lessons-Learned Systems,\n" +
-    "235,Linear Separability,\n" +
-    "236,Link Analysis,\n" +
-    "237,Link-Based Classification,\n" +
-    "238,General-to-Specific Search,\n" +
-    "239,Condensed Vector Machines: Learning Fast Machine for Large Data,D. D. Nguyen and K. Matsumoto and Y. Takishima and Kenji Hashimoto\n" +
-    "240,Use of machine learning techniques to analyse the risk associated with mine sludge deposits,Maria Araujo and T. Rivas and Eduardo Giraldez and Javier Taboada\n" +
-    "241,Learning Graphical Models,Kevin B. Korb\n" +
-    "242,Learning Graphical Models,Kevin B. Korb\n" +
-    "243,Clustering,\n" +
-    "244,Generalization Performance,\n" +
-    "245,Generalized Delta Rule,\n" +
-    "246,Relational Learning,Jan Struyf and Hendrik Blockeel\n" +
-    "247,Bayesian Methods,Wray L. Buntine\n" +
-    "248,Decomposing the tensor kernel support vector machine for neuroscience data with structured labels,David R. Hardoon and John Shawe{-}Taylor\n" +
-    "249,Genetic Attribute Construction,\n" +
-    "250,Beam Search,Claude Sammut\n" +
-    "251,Active Learning,David Cohn\n" +
-    "252,Active Learning,David Cohn\n" +
-    "253,Clonal Selection,\n" +
-    "254,Apprenticeship Learning,\n" +
-    "255,Squared Error,\n" +
-    "256,Coevolutionary Learning,R. Paul Wiegand\n" +
-    "257,Statistical Learning,\n" +
-    "258,Association Rule,Hannu Toivonen\n" +
-    "259,Basket Analysis,Hannu Toivonen\n" +
-    "260,Frequent Itemset,Hannu Toivonen\n" +
-    "261,Metaheuristic,Marco Dorigo and Mauro Birattari and Thomas Stutzle\n" +
-    "262,A comparison of machine learning techniques for modeling human-robot interaction with children with autism,Elaine Short and David Feil-Seifer and Maja J. Mataric\n" +
-    "263,Feature Selection in Text Mining,Dunja Mladenic\n" +
-    "264,Local Feature Selection,\n" +
-    "265,Liquid State Machine,\n" +
-    "266,Logical Consequence,\n" +
-    "267,Logic Program,\n" +
-    "268,Locally Weighted Learning,\n" +
-    "269,Logical Regression Tree,\n" +
-    "270,Laplace Estimate,\n" +
-    "271,Conjunctive Normal Form,Bernhard Pfahringer\n" +
-    "272,Expectation Propagation,Tom Heskes\n" +
-    "273,Language Bias,\n" +
-    "274,Abstract data types and Modula-2 - a worked example of design using data abstraction,Richard J. Mitchell\n" +
-    "275,Constructing knowledge from multivariate spatiotemporal data: integrating geographical visualization with knowledge discovery in database methods,Alan M. MacEachren and Monica Wachowicz and Robert M. Edsall and Daniel Haug and Raymon Masters\n" +
-    "276,Label,\n" +
-    "277,Group Detection,Hossam Sharara and Lise Getoor\n" +
-    "278,Self-Organizing Maps,Samuel Kaski\n" +
-    "279,Learning Bayesian Networks,\n" +
-    "280,Filtering artificial texts with statistical machine learning techniques,Thomas Lavergne and Tanguy Urvoy and Franccois Yvon\n" +
-    "281,Machine-learning techniques for building a diagnostic model for very mild dementia,Rong Chen and Edward Herskovits\n" +
-    "282,Item,\n" +
-    "283,Density-Based Clustering,Jorg Sander\n" +
-    "284,Shape functional optimization with restrictions boosted with machine learning techniques,M. F. Lopez and J. Martinez and Jose M. Matias and Javier Taboada and Jose A. Vilan\n" +
-    "285,Adaptive Real-Time Dynamic Programming,Andrew G. Barto\n" +
-    "286,Kind,\n" +
-    "287,Causality,Ricardo Bezerra de Andrade e Silva\n" +
-    "288,Co-Training,\n" +
-    "289,Applying Machine Learning Techniques to Improve User Acceptance on Ubiquitous Environment,Djallel Bouneffouf\n" +
-    "290,Autonomous driving: {A} comparison of machine learning techniques by means of the prediction of lane change behavior,Urun Dogan and Johann Edelbrunner and Ioannis Iossifidis\n" +
-    "291,Dimensionality Reduction,Michail Vlachos\n" +
-    "292,Out-of-Sample Data,\n" +
-    "293,Dependency Directed Backtracking,\n" +
-    "294,Transductive Learning for Spatial Data Classification,Michelangelo Ceci and Annalisa Appice and Donato Malerba\n" +
-    "295,Semantics of Data Types, International Symposium, Sophia-Antipolis, France, June 27-29, 1984, Proceedings,\n" +
-    "296,Decision Threshold,\n" +
-    "297,Clustering with Constraints,\n" +
-    "298,Evolutionary Games,Moshe Sipper\n" +
-    "299,Inverse Reinforcement Learning,Pieter Abbeel and Andrew Y. Ng\n" +
-    "300,Cascor,\n" +
-    "301,Link Prediction,Galileo Namata and Lise Getoor\n" +
-    "302,Cannot-Link Constraint,\n" +
-    "303,Ensemble Learning,Gavin Brown\n" +
-    "304,Identification of Individualized Feature Combinations for Survival Prediction in Breast Cancer: {A} Comparison of Machine Learning Techniques,Leonardo Vanneschi and Antonella Farinaccio and Mario Giacobini and Giancarlo Mauri and Marco Antoniotti and Paolo Provero\n" +
-    "305,Bottom Clause,\n" +
-    "306,Apriori Algorithm,Hannu Toivonen\n" +
-    "307,Query-Based Learning,Sanjay Jain and Frank Stephan\n" +
-    "308,Smart data structures: an online machine learning approach to multicore data structures,Jonathan Eastep and David Wingate and Anant Agarwal\n" +
-    "309,Online pattern recognition and machine learning techniques for computer-vision: Theory and applications,Bogdan Raducanu and Jordi Vitria and Ales Leonardis\n" +
-    "310,City Block Distance,\n" +
-    "311,Combining Machine Learning and Optimization Techniques to Determine 3-D Structures of Polypeptides,Marcio Dorn and Luciana S. Buriol and Luis C. Lamb\n" +
-    "312,Discrete Attribute,\n" +
-    "313,Category,\n" +
-    "314,Advances in Database Technology - {EDBT} 2002, 8th International Conference on Extending Database Technology, Prague, Czech Republic, March 25-27, Proceedings,\n" +
-    "315,Advances in Database Technology - {EDBT} 2000, 7th International Conference on Extending Database Technology, Konstanz, Germany, March 27-31, 2000, Proceedings,\n" +
-    "316,Spectrum Evaluation on Multispectral Images by Machine Learning Techniques,Marcin Michalak and Adam Switonski\n" +
-    "317,Average-Reward Reinforcement Learning,Prasad Tadepalli\n" +
-    "318,Evolutionary Robotics,Phil Husbands\n" +
-    "319,Curse of Dimensionality,Eamonn J. Keogh and Abdullah Mueen\n" +
-    "320,Constraint Databases, Proceedings of the 1st International Symposium on Applications of Constraint Databases, CDB'04, Paris, June 12-13, 2004,\n" +
-    "321,Advanced machine learning techniques for microarray spot quality classification,Loris Nanni and Alessandra Lumini and Sheryl Brahnam\n" +
-    "322,Autonomous Helicopter Flight Using Reinforcement Learning,Adam Coates and Pieter Abbeel and Andrew Y. Ng\n" +
-    "323,BP,\n" +
-    "324,Breakeven Point,\n" +
-    "325,Bounded Differences Inequality,\n" +
-    "326,Bootstrap Sampling,\n" +
-    "327,Binning,\n" +
-    "328,Blog Mining,\n" +
-    "329,Evolutionary Clustering,David Corne and Julia Handl and Joshua D. Knowles\n" +
-    "330,Bilingual Lexicon Extraction,\n" +
-    "331,Classification Algorithms,\n" +
-    "332,Characteristic,\n" +
-    "333,CC,\n" +
-    "334,Causal Discovery,\n" +
-    "335,Categorization,\n" +
-    "336,Case-Based Learning,\n" +
-    "337,Categorical Attribute,\n" +
-    "338,Nonstandard Criteria in Evolutionary Learning,Michele Sebag\n" +
-    "339,Evolutionary Computation in Economics,Serafin Martinez-Jaramillo and Biliana Alexandrova-Kabadjova and Alma Lilia Garcia-Almanza and Tonatiuh Pena Centeno\n" +
-    "340,Exploring New Ways of Utilizing Automated Clustering and Machine Learning Techniques in Information Visualization,Johann Schrammel\n" +
-    "341,A Comparative Study of Blog Comments Spam Filtering with Machine Learning Techniques,Christian Romero and Jose Mario Garcia Valdez and Arnulfo Alanis Garza\n" +
-    "342,A Comparative Study of Blog Comments Spam Filtering with Machine Learning Techniques,Christian Romero and Jose Mario Garcia Valdez and Arnulfo Alanis Garza\n" +
-    "343,Machine Learning Techniques for Passive Network Inventory,Jerome Franccois and Humberto J. Abdelnur and Radu State and Olivier Festor\n" +
-    "344,Backpropagation,Paul W. Munro\n" +
-    "345,Objects and Databases, International Symposium, Sophia Antipolis, France, June 13, 2000, Proceedings,\n" +
-    "346,Neuroevolution,Risto Miikkulainen\n" +
-    "347,Neuron,Risto Miikkulainen\n" +
-    "348,Predicting football scores using machine learning techniques,Josip Hucaljuk and Alen Rakipovic\n" +
-    "349,MultiBoosting,Geoffrey I. Webb\n" +
-    "350,Interactive Image Segmentation Using Machine Learning Techniques,Yusuf Artan\n" +
-    "351,Evolutionary Computation in Finance,Serafin Martinez-Jaramillo and Alma Lilia Garcia-Almanza and Biliana Alexandrova-Kabadjova and Tonatiuh Pena Centeno\n" +
-    "352,Artificial Life,\n" +
-    "353,Bayesian Nonparametric Models,Peter Orbanz and Yee Whye Teh\n" +
-    "354,Applying Machine Learning Techniques for Knowledge-Based Credit Verification,David A. Ostrowski and George Schleis\n" +
-    "355,Agent-Based Modeling and Simulation,\n" +
-    "356,Agent,\n" +
-    "357,Adaptive System,\n" +
-    "358,Adaptive Control Processes,\n" +
-    "359,Adaboost,\n" +
-    "360,Actions,\n" +
-    "361,ACO,\n" +
-    "362,Accuracy,\n" +
-    "363,Absolute Error Loss,\n" +
-    "364,Equation Discovery,Ljupco Todorovski\n" +
-    "365,Greedy Search Approach of Graph Mining,Lawrence B. Holder\n" +
-    "366,Decision Lists and Decision Trees,Johannes Furnkranz\n" +
-    "367,Detail,\n" +
-    "368,Scaling Datalog for Machine Learning on Big Data,Yingyi Bu and Vinayak R. Borkar and Michael J. Carey and Joshua Rosen and Neoklis Polyzotis and Tyson Condie and Markus Weimer and Raghu Ramakrishnan\n" +
-    "369,DBN,\n" +
-    "370,Workshop on Managing Systems via Log Analysis and Machine Learning Techniques, SLAML'10, Vancouver, BC, Canada, October 3, 2010,\n" +
-    "371,Linear Regression,Novi Quadrianto and Wray L. Buntine\n" +
-    "372,Data Preprocessing,\n" +
-    "373,Active Learning Theory,Sanjoy Dasgupta\n" +
-    "374,Metalearning,Pavel Brazdil and Ricardo Vilalta and Christophe G. Giraud{-}Carrier and Carlos Soares\n" +
-    "375,Clustering Aggregation,\n" +
-    "376,Clustering with Advice,\n" +
-    "377,Concept Drift,Claude Sammut and Michael Bonnell Harries\n" +
-    "378,Cluster Ensembles,\n" +
-    "379,Cluster Editing,\n" +
-    "380,Cluster Optimization,\n" +
-    "381,Click-Through Rate {(CTR)},\n" +
-    "382,Closest Point,\n" +
-    "383,Clause,\n" +
-    "384,Clause,\n" +
-    "385,Classification Tree,\n" +
-    "386,Collection,\n" +
-    "387,Collaborative Filtering,\n" +
-    "388,Commercial Email Filtering,\n" +
-    "389,Coevolutionary Computation,\n" +
-    "390,Coevolution,\n" +
-    "391,Clustering with Qualitative Information,\n" +
-    "392,Overview of the workshop on managing large-scale systems via the analysis of system logs and the application of machine learning techniques,Peter Bodik\n" +
-    "393,{ROC} Analysis,Peter A. Flach\n" +
-    "394,Generalization Bounds,Mark D. Reid\n" +
-    "395,Boltzmann Machines,Geoffrey E. Hinton\n" +
-    "396,Exploiting Multilingual Grammars and Machine Learning Techniques to Build an Event Extraction System for Portuguese,Vanni Zavarella and Hristo Tanev and Jens P. Linge and Jakub Piskorski and Martin Atkinson and Ralf Steinberger\n" +
-    "397,Employing Machine Learning Techniques for Data Enrichment: Increasing the Number of Samples for Effective Gene Expression Data Analysis,Utku Erdogdu and Mehmet Tan and Reda Alhajj and Faruk Polat and Douglas J. Demetrick and Jon G. Rokne\n" +
-    "398,Speedup Learning,Alan Fern\n" +
-    "399,Logic of Generality,Luc De Raedt\n" +
-    "400,Advances in Database Technology - EDBT'88, Proceedings of the International Conference on Extending Database Technology, Venice, Italy, March 14-18, 1988,\n" +
-    "401,Cost-Sensitive Classification,\n" +
-    "402,Using Machine-Learning Techniques for Plant Communities Classification,Ahmad A. M. Al{-}Modayan and Mohammed Abdel Razek\n" +
-    "403,An Investigation of Missing Data Methods for Classification Trees Applied to Binary Response Data,Yufeng Ding and Jeffrey S. Simonoff\n" +
-    "404,Spatial Multi-Database Topological Continuity and Indexing: {A} Step Towards Seamless {GIS} Data Interoperability,Robert Laurini\n" +
-    "405,Data Driven Design Optimization Methodology: {A} Dynamic Data Driven Application System,Doyle D. Knight\n" +
-    "406,Inductive Logic Programming,Luc De Raedt\n" +
-    "407,Predicting Breast Screening Attendance Using Machine Learning Techniques,Vikraman Baskaran and Aziz Guergachi and Rajeev K. Bali and Raouf N. Gorgui{-}Naguib\n" +
-    "408,Machine Learning for Author Affiliation within Web Forums - Using Statistical Techniques on {NLP} Features for Online Group Identification,Jeffrey Ellen and Shibin Parameswaran\n" +
-    "409,Cross-Language Information Retrieval,\n" +
-    "410,Quest for efficient option pricing prediction model using machine learning techniques,B. V. Phani and Bala Chandra and Vijay Raghav\n" +
-    "411,Formal Concept Analysis,Gemma C. Garriga\n" +
-    "412,Data Sharing Model for Sequence Alignment to Reduce Database Retrieve,Min Jun Kim and Jai{-}Hoon Kim and Jin{-}Won Jung and Weontae Lee\n" +
-    "413,Co-Reference Resolution,\n" +
-    "414,Cascade-Correlation,Thomas R. Shultz and Scott E. Fahlman\n" +
-    "415,Example-Based Programming,\n" +
-    "416,Graph Kernels,Thomas Gartner and Tamas Horvath and Stefan Wrobel\n" +
-    "417,Advances in Intelligent Data Analysis, Reasoning about Data, Second International Symposium, IDA-97, London, UK, August 4-6, 1997, Proceedings,\n" +
-    "418,Machine Learning Techniques and Mammographic Risk Assessment,Neil MacParthalain and Reyer Zwiggelaar\n" +
-    "419,Diagonal Replication on Grid for Efficient Access of Data in Distributed Database Systems,Mustafa Mat Deris and N. Bakar and M. Rabiei and H. M. Suzuri\n" +
-    "420,Error Correcting Output Codes,\n" +
-    "421,Estimation of Density Level Sets,\n" +
-    "422,Protein model assessment via machine learning techniques,Anjum Reyaz-Ahmed and Robert W. Harrison and Yan-Qing Zhang\n" +
-    "423,Evaluation,\n" +
-    "424,Evaluation Set,\n" +
-    "425,Clustering Ensembles,\n" +
-    "426,Evolutionary Computation,\n" +
-    "427,Privacy-Preserving Data Mining,\n" +
-    "428,Memory-Based,\n" +
-    "429,An Efficient Content Based Image Retrieval Framework Using Machine Learning Techniques,B. Celia and I. Felci Rajam\n" +
-    "430,Learning from Complex Data,\n" +
-    "431,Learning from Complex Data,\n" +
-    "432,Machine Learning Techniques for Predicting Web Server Anomalies,Marin Marinov and Dimiter R. Avresky\n" +
-    "433,A comparison of machine learning techniques for detection of drug target articles,Roxana Danger and Isabel Segura-Bedmar and Paloma Martinez Fernandez and Paolo Rosso\n" +
-    "434,Manhattan Distance,Susan Craw\n" +
-    "435,Learning from Nonpropositional Data,\n" +
-    "436,Learning from Nonvectorial Data,\n" +
-    "437,Learning from Nonvectorial Data,\n" +
-    "438,Evolving Neural Networks,\n" +
-    "439,Artificial Neural Networks,\n" +
-    "440,Bias-Variance Trade-offs: Novel Applications,Dev G. Rajnarayan and David Wolpert\n" +
-    "441,Markov Chain Monte Carlo,Claude Sammut\n" +
-    "442,Density Estimation,Claude Sammut\n" +
-    "443,Greedy Search,Claude Sammut\n" +
-    "444,Genetic and Evolutionary Algorithms,Claude Sammut\n" +
-    "445,Behavioral Cloning,Claude Sammut\n" +
-    "446,Concept Learning,Claude Sammut\n" +
-    "447,Leave-One-Out Error,\n" +
-    "448,Analytical Learning,\n" +
-    "449,Projective Clustering,Cecilia M. Procopiuc\n" +
-    "450,AIS,\n" +
-    "451,Agent-Based Simulation Models,\n" +
-    "452,Agent-Based Computational Models,\n" +
-    "453,Clustering of Nonnumerical Data,\n" +
-    "454,Fuzzy machine learning and data mining,Eyke Hullermeier\n" +
-    "455,Instance-Based Learning,Eamonn J. Keogh\n" +
-    "456,Grammatical Tagging,\n" +
-    "457,Automatic localization and annotation of facial features using machine learning techniques,Paul C. Conilione and Dianhui Wang\n" +
-    "458,Evaluation Data,\n" +
-    "459,Automatic Quality Inspection of Percussion Cap Mass Production by Means of 3D Machine Vision and Machine Learning Techniques,Alberto Tellaeche and Ramon Arana and Aitor Ibarguren and Jose Maria Martinez-Otzeta\n" +
-    "460,Enhancing Content-Based Image Retrieval Using Machine Learning Techniques,Qinmin Vivian Hu and Zheng Ye and Jimmy Xiangji Huang\n" +
-    "461,Big Data [Guest editorial],Francis J. Alexander and Adolfy Hoisie and Alexander S. Szalay\n" +
-    "462,Collective Classification,Prithviraj Sen and Galileo Namata and Mustafa Bilgic and Lise Getoor\n" +
-    "463,Instance-Based Reinforcement Learning,William D. Smart\n" +
-    "464,Genetic Programming,Moshe Sipper\n" +
-    "465,Improving User Stereotypes through Machine Learning Techniques,Teresa Maria Altomare Basile and Floriana Esposito and Stefano Ferilli\n" +
-    "466,Linear Discriminant,Novi Quadrianto and Wray L. Buntine\n" +
-    "467,Multi-stage classification of Gyrodactylus species using machine learning and feature selection techniques,Rozniza Ali and Amir Hussain and James E. Bron and Andrew P. Shinn\n" +
-    "468,Multi-Relational Data Mining,Luc De Raedt\n" +
-    "469,Belief State Markov Decision Processes,\n" +
-    "470,Higher-Order Logic,John Lloyd\n" +
-    "471,Class,Chris Drummond\n" +
-    "472,Semi-Supervised Text Processing,Ion Muslea\n" +
-    "473,Entity Resolution,Indrajit Bhattacharya and Lise Getoor\n" +
-    "474,Machine Learning Techniques for Prostate Ultrasound Image Diagnosis,Aboul Ella Hassanien and Hameed Al-Qaheri and Vaclav Snasel and James F. Peters\n" +
-    "475,Evaluating imaging biomarkers for neurodegeneration in pre-symptomatic Huntington's disease using machine learning techniques,Angela Rizk-Jackson and Diederick Stoffers and Sarah Sheldon and Joshua M. Kuperman and Anders M. Dale and Jody Goldstein and Jody Corey-Bloom and Russell A. Poldrack and Adam R. Aron\n" +
-    "476,On the Predictability of Software Efforts using Machine Learning Techniques,Wen Zhang and Ye Yang and Qing Wang\n" +
-    "477,Rules in Database Systems, Second International Workshop, {RIDS} '95, Glyfada, Athens, Greece, September 25 - 27, 1995, Proceedings,\n" +
-    "478,Model Trees,Luis Torgo\n" +
-    "479,Clause Learning,\n" +
-    "480,Clause Learning,\n" +
-    "481,Comparison of Machine Learning Techniques using the {WEKA} Environment for Prostate Cancer Therapy Plan,Nikolaos Mallios and Elpiniki I. Papageorgiou and Michael Samarinas\n" +
-    "482,Reinforcement Learning in Structured Domains,\n" +
-    "483,Record Linkage,\n" +
-    "484,Rank Correlation,\n" +
-    "485,Bayesian Model Averaging,\n" +
-    "486,Clustering from Data Streams,Joao Gama\n" +
-    "487,Bayes Adaptive Markov Decision Processes,\n" +
-    "488,Baum-Welch Algorithm,\n" +
-    "489,Semi-Supervised Learning,Xiaojin Zhu\n" +
-    "490,Bias-Variance-Covariance Decomposition,\n" +
-    "491,Case-Based Reasoning,Susan Craw\n" +
-    "492,Complexity of Inductive Inference,Sanjay Jain and Frank Stephan\n" +
-    "493,Bias Variance Decomposition,\n" +
-    "494,Average-Cost Optimization,\n" +
-    "495,Classification,Chris Drummond\n" +
-    "496,Latent Class Model,\n" +
-    "497,AUC,\n" +
-    "498,Data-Mining Based Skin-Color Modeling Using the {ECL} Skin-Color Images Database,Mohamed Hammami and Dzmitry V. Tsishkou and Liming Chen\n" +
-    "499,Gaussian Process Reinforcement Learning,Yaakov Engel\n" +
-    "500,Learning from Structured Data,Tamas Horvath and Stefan Wrobel\n" +
-    "501,Learning from Structured Data,Tamas Horvath and Stefan Wrobel\n" +
-    "502,Passive Learning,\n" +
-    "503,{PAC-MDP} Learning,\n" +
-    "504,Identifying Relevant Data for a Biological Database: Handcrafted Rules versus Machine Learning,Aditya Kumar Sehgal and Sanmay Das and Keith Noto and Milton H. Saier Jr. and Charles Elkan\n" +
-    "505,Basic Lemma,\n" +
-    "506,Partitional Clustering,Xin Jin and Jiawei Han\n" +
-    "507,Relational Reinforcement Learning,Kurt Driessens\n" +
-    "508,Rules in Database Systems, Third International Workshop, {RIDS} '97, Skovde, Sweden, June 26-28, 1997, Proceedings,\n" +
-    "509,Evolutionary Grouping,\n" +
-    "510,Evolutionary Feature Synthesis,\n" +
-    "511,Example,\n" +
-    "512,Bake-Off,\n" +
-    "513,Experience Curve,\n" +
-    "514,Explanation,\n" +
-    "515,Experience-Based Reasoning,\n" +
-    "516,Explanation-Based Generalization for Planning,\n" +
-    "517,Backprop,\n" +
-    "518,Average-Payoff Reinforcement Learning,\n" +
-    "519,Databases in Telecommunications II, {VLDB} 2001 International Workshop, DBTel 2001 Rome, Italy, September 10, 2001, Proceedings,\n" +
-    "520,Quality Threshold Clustering,Xin Jin and Jiawei Han\n" +
-    "521,Correlation-Based Learning,\n" +
-    "522,Continual Learning,\n" +
-    "523,Continuous Attribute,\n" +
-    "524,Contrast Set Mining,\n" +
-    "525,Content-Based Filtering,\n" +
-    "526,Content-Based Recommending,\n" +
-    "527,Context-Sensitive Learning,\n" +
-    "528,Consensus Clustering,\n" +
-    "529,Content Match,\n" +
-    "530,Computational Discovery of Quantitative Laws,\n" +
-    "531,Confirmation Theory,\n" +
-    "532,Competitive Coevolution,\n" +
-    "533,Complex Adaptive System,\n" +
-    "534,Community Detection,\n" +
-    "535,Comparable Corpus,\n" +
-    "536,Candidate-Elimination Algorithm,\n" +
-    "537,Database Systems of the 90s, International Symposium, Muggelsee, Berlin, Germany, November 5-7, 1990, Proceedings,\n" +
-    "538,Rule Learning,Johannes Furnkranz\n" +
-    "539,Ant Colony Optimization,Marco Dorigo and Mauro Birattari\n" +
-    "540,Regression,Novi Quadrianto and Wray L. Buntine\n" +
-    "541,Advances in Object-Oriented Database Systems, 2nd International Workshop on Object-Oriented Database Systems, Bad Munster am Stein-Ebernburg, FRG, September 27-30, 1988, Proceedings,\n" +
-    "542,{PAC} Learning,Thomas Zeugmann\n" +
-    "543,Machine Learning and Game Playing,Johannes Furnkranz\n" +
-    "544,Constrained Clustering,Kiri L. Wagstaff\n" +
-    "545,Machine Learning Techniques for Understanding Context and Process,Marko Grobelnik and Dunja Mladenic and Gregor Leban and Tadej Stajner\n" +
-    "546,The Combination of Clinical, Dose-Related and Imaging Features Helps Predict Radiation-Induced Normal-Tissue Toxicity in Lung-cancer Patients - An in-silico Trial Using Machine Learning Techniques,Georgi I. Nalbantov and Andre Dekker and Dirk De Ruysscher and Philippe Lambin and Evgueni N. Smirnov\n" +
-    "547,Negative Correlation Learning,\n" +
-    "548,Attribute,Chris Drummond\n" +
-    "549,Mobile Data Management, Second International Conference, {MDM} 2001, Hong Kong, China, January 8-10, 2001, Proceedings,\n" +
-    "550,Cost Function,\n" +
-    "551,Mixture Model,Rohan A. Baxter\n" +
-    "552,Decision List,Johannes Furnkranz\n" +
-    "553,Bias Specification Language,Hendrik Blockeel\n" +
-    "554,Cooperative Coevolution,\n" +
-    "555,Contextual Advertising,\n" +
-    "556,Instance Space,\n" +
-    "557,Information Retrieval,\n" +
-    "558,Inductive Synthesis,\n" +
-    "559,Inequalities,\n" +
-    "560,Intent Recognition,\n" +
-    "561,Internal Model Control,\n" +
-    "562,Implication,\n" +
-    "563,Immunocomputing,\n" +
-    "564,Immune Network,\n" +
-    "565,Immune-Inspired Computing,\n" +
-    "566,Immune Computing,\n" +
-    "567,Inductive Learning,\n" +
-    "568,Inductive Program Synthesis,\n" +
-    "569,Inductive Inference,\n" +
-    "570,Induction as Inverted Deduction,\n" +
-    "571,In-Sample Evaluation,\n" +
-    "572,Indirect Reinforcement Learning,\n" +
-    "573,Connection Strength,\n" +
-    "574,Competitive Learning,\n" +
-    "575,Compositional Coevolution,\n" +
-    "576,Correlation Clustering,Anthony Wirth\n" +
-    "577,Feature Subset Selection,\n" +
-    "578,Medicine: Applications of Machine Learning,Katharina Morik\n" +
-    "579,First-Order Logic,Peter A. Flach\n" +
-    "580,First-Order Predicate Calculus,\n";
+    "conf/tapp/2017,9th USENIX Workshop on the Theory and Practice of Provenance, TaPP 2017, Seattle, WA, USA, June 23, 2017,Adam M. Bates and Bill Howe\n" +
+    "conf/sigmod/2017,Proceedings of the 2017 ACM International Conference on Management of Data, SIGMOD Conference 2017, Chicago, IL, USA, May 14-19, 2017,Semih Salihoglu and Wenchao Zhou and Rada Chirkova and Jun Yang and Dan Suciu\n" +
+    "conf/pods/Suciu17,Communication Cost in Parallel Query Evaluation: A Tutorial,Dan Suciu\n" +
+    "conf/cidr/ChuWWC17,Cosette: An Automated Prover for SQL,Shumo Chu and Chenglong Wang and Konstantin Weitz and Alvin Cheung\n" +
+    "conf/cikm/YanCYL17,Understanding Database Performance Inefficiencies in Real-world Web Applications,Cong Yan and Alvin Cheung and Junwen Yang and Shan Lu\n" +
+    "conf/pldi/ChuWCS17,HoTTSQL: proving query rewrites with univalent SQL semantics,Shumo Chu and Konstantin Weitz and Alvin Cheung and Dan Suciu\n" +
+    "conf/pldi/WangCB17,Synthesizing highly expressive SQL queries from input-output examples,Chenglong Wang and Alvin Cheung and Rastislav Bodik\n" +
+    "conf/acl/IyerKCKZ17,Learning a Neural Semantic Parser from User Feedback,Srinivasan Iyer and Ioannis Konstas and Alvin Cheung and Jayant Krishnamurthy and Luke Zettlemoyer\n" +
+    "conf/ssdbm/PingSH17,DataSynthesizer: Privacy-Preserving Synthetic Datasets,Haoyue Ping and Julia Stoyanovich and Bill Howe\n" +
+    "conf/usenix/WangB17,Elastic Memory Management for Cloud Data Analytics,Jingjing Wang and Magdalena Balazinska\n" +
+    "conf/www/HoweLGYW17,Deep Mapping of the Visual Literature,Bill Howe and Po-Shen Lee and Maxim Grechkin and Sean T. Yang and Jevin D. West\n" +
+    "conf/damon/FurstOH17,Profiling a GPU database implementation: a holistic view of GPU resource utilization on TPC-H queries,Emily Furst and Mark Oskin and Bill Howe\n" +
+    "conf/icde/HoweFHKU17,Data Science Education: We're Missing the Boat, Again,Bill Howe and Michael J. Franklin and Laura M. Haas and Tim Kraska and Jeffrey D. Ullman\n" +
+    "conf/pods/KetsmanS17,A Worst-Case Optimal Multi-Round Algorithm for Parallel Computation of Conjunctive Queries,Bas Ketsman and Dan Suciu\n" +
+    "conf/pods/Khamis0S17,What Do Shannon-type Inequalities, Submodular Width, and Disjunctive Datalog Have to Do with One Another?,Mahmoud Abo Khamis and Hung Q. Ngo and Dan Suciu\n" +
+    "conf/sigmod/AhmadC17,Optimizing Data-Intensive Applications Automatically By Leveraging Parallel Data Processing Frameworks,Maaz Bin Safeer Ahmad and Alvin Cheung\n" +
+    "conf/sigmod/WangCB17,Interactive Query Synthesis from Input-Output Examples,Chenglong Wang and Alvin Cheung and Rastislav Bodik\n" +
+    "conf/sigmod/ChuLWCS17,Demonstration of the Cosette Automated SQL Prover,Shumo Chu and Daniel Li and Chenglong Wang and Alvin Cheung and Dan Suciu\n" +
+    "journals/cacm/LiLMS17,A theory of pricing private data,Chao Li and Daniel Yang Li and Gerome Miklau and Dan Suciu\n" +
+    "journals/pvldb/OrrSB17,Probabilistic Database Summarization for Interactive Data Exploration,Laurel Orr and Dan Suciu and Magdalena Balazinska\n" +
+    "journals/ftdb/BroeckS17,Query Processing on Probabilistic Data: A Survey,Guy Van den Broeck and Dan Suciu\n" +
+    "journals/jacm/BeameKS17,Communication Steps for Parallel Query Processing,Paul Beame and Paraschos Koutris and Dan Suciu\n" +
+    "journals/tkdd/BaeHWRH17,Scalable and Efficient Flow-Based Community Detection for Large-Scale Graph Analysis,Seung-Hee Bae and Daniel Halperin and Jevin D. West and Martin Rosvall and Bill Howe\n" +
+    "conf/sigmod/HaynesMBCC17,VisualCloud Demonstration: A DBMS for Virtual Reality,Brandon Haynes and Artem Minyaylov and Magdalena Balazinska and Luis Ceze and Alvin Cheung\n" +
+    "journals/tods/Beame0RS17,Exact Model Counting of Query Expressions: Limitations of Propositional Methods,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
+    "conf/sigmod/HutchisonHS17,LaraDB: A Minimalist Kernel for Linear and Relational Algebra Computation,Dylan Hutchison and Bill Howe and Dan Suciu\n" +
+    "journals/mst/KoutrisMRS17,Answering Conjunctive Queries with Inequalities,Paraschos Koutris and Tova Milo and Sudeepa Roy and Dan Suciu\n" +
+    "conf/chi/WongsuphasawatQ17,Voyager 2: Augmenting Visual Analysis with Partial View Specifications,Kanit Wongsuphasawat and Zening Qu and Dominik Moritz and Riley Chang and Felix Ouk and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
+    "conf/cidr/BalazinskaCCCS17,A Visual Cloud for Virtual Reality Applications,Magdalena Balazinska and Luis Ceze and Alvin Cheung and Brian Curless and Steven M. Seitz\n" +
+    "journals/pvldb/SalimiCPS17,ZaliQL: Causal Inference from Observational Data at Scale,Babak Salimi and Corey Cole and Dan R. K. Ports and Dan Suciu\n" +
+    "conf/cidr/WangBBHHHHJMMMM17,The Myria Big Data Management and Analytics System and Cloud Services,Jingjing Wang and Tobin Baker and Magdalena Balazinska and Daniel Halperin and Brandon Haynes and Bill Howe and Dylan Hutchison and Shrainik Jain and Ryan Maas and Parmita Mehta and Dominik Moritz and Brandon Myers and Jennifer Ortiz and Dan Suciu and Andrew Whitaker and Shengliang Xu\n" +
+    "conf/ssdbm/StoyanovichHAMS17,Fides: Towards a Platform for Responsible Data Science,Julia Stoyanovich and Bill Howe and Serge Abiteboul and Gerome Miklau and Arnaud Sahuguet and Gerhard Weikum\n" +
+    "journals/vldb/GatterbauerS17,Dissociation and propagation for approximate lifted inference with standard relational database management systems,Wolfgang Gatterbauer and Dan Suciu\n" +
+    "conf/sigmod/GudmundsdottirS17,A Demonstration of Interactive Analysis of Performance Measurements with Viska,Helga Gudmundsdottir and Babak Salimi and Magdalena Balazinska and Dan R. K. Ports and Dan Suciu\n" +
+    "journals/pvldb/MehtaDZKCBRCVA17,Comparative Evaluation of Big-Data Systems on Scientific Image Analytics Workloads,Parmita Mehta and Sven Dorkenwald and Dongfang Zhao and Tomer Kaftan and Alvin Cheung and Magdalena Balazinska and Ariel Rokem and Andrew J. Connolly and Jacob VanderPlas and Yusra AlSayyad\n" +
+    "conf/www/LeeWH16,VizioMetrix: A Platform for Analyzing the Visual Information in Big Scholarly Data,Po-Shen Lee and Jevin D. West and Bill Howe\n" +
+    "conf/dlog/Suciu16,Lifted Inference in Probabilistic Databases,Dan Suciu\n" +
+    "conf/acl/IyerKCZ16,Summarizing Source Code using a Neural Attention Model,Srinivasan Iyer and Ioannis Konstas and Alvin Cheung and Luke Zettlemoyer\n" +
+    "conf/icde/JainMH16,High variety cloud databases,Shrainik Jain and Dominik Moritz and Bill Howe\n" +
+    "conf/sigmod/WangB16,Toward elastic memory management for cloud data analytics,Jingjing Wang and Magdalena Balazinska\n" +
+    "conf/ismir/HyrkasH16,MusicDB: A Platform for Longitudinal Music Analytics,Jeremy Hyrkas and Bill Howe\n" +
+    "conf/pldi/KamilCIS16,Verified lifting of stencil computations,Shoaib Kamil and Alvin Cheung and Shachar Itzhaky and Armando Solar-Lezama\n" +
+    "conf/pods/KhamisNS16,Computing Join Queries with Functional Dependencies,Mahmoud Abo Khamis and Hung Q. Ngo and Dan Suciu\n" +
+    "conf/aaai/GribkoffS16,SlimShot: Probabilistic Inference for Web-Scale Knowledge Bases,Eric Gribkoff and Dan Suciu\n" +
+    "conf/cloud/HaynesCB16,PipeGen: Data Pipe Generator for Hybrid Analytics,Brandon Haynes and Alvin Cheung and Magdalena Balazinska\n" +
+    "conf/icdt/KoutrisBS16,Worst-Case Optimal Algorithms for Parallel Query Processing,Paraschos Koutris and Paul Beame and Dan Suciu\n" +
+    "conf/sigmod/OrtizLB16,PerfEnforce Demonstration: Data Analytics with Performance Guarantees,Jennifer Ortiz and Brendan Lee and Magdalena Balazinska\n" +
+    "conf/tapp/SalimiBSB16,Quantifying Causal Effects on Query Answering in Databases,Babak Salimi and Leopoldo E. Bertossi and Dan Suciu and Guy Van den Broeck\n" +
+    "journals/pvldb/YanC16,Leveraging Lock Contention to Improve OLTP Application Performance,Cong Yan and Alvin Cheung\n" +
+    "conf/sigmod/JainMHHL16,SQLShare: Results from a Multi-Year SQL-as-a-Service Experiment,Shrainik Jain and Dominik Moritz and Daniel Halperin and Bill Howe and Ed Lazowska\n" +
+    "journals/corr/AhmadC16,Leveraging Parallel Data Processing Frameworks with Verified Lifting,Maaz Bin Safeer Ahmad and Alvin Cheung\n" +
+    "journals/ftpl/CheungS16,Computer-Assisted Query Formulation,Alvin Cheung and Armando Solar-Lezama\n" +
+    "conf/hpec/HutchisonKGH16,From NoSQL Accumulo to NewSQL Graphulo: Design and utility of graph algorithms inside a BigTable database,Dylan Hutchison and Jeremy Kepner and Vijay Gadepally and Bill Howe\n" +
+    "journals/tods/CheungMS16,Sloth: Being Lazy Is a Virtue (When Issuing Database Queries),Alvin Cheung and Samuel Madden and Armando Solar-Lezama\n" +
+    "journals/pvldb/GribkoffS16,SlimShot: In-Database Probabilistic Inference for Knowledge Bases,Eric Gribkoff and Dan Suciu\n" +
+    "journals/sigmod/KoutrisS16,A Guide to Formal Analysis of Join Processing in Massively Parallel Systems,Paraschos Koutris and Dan Suciu\n" +
+    "journals/pvldb/UpadhyayaBS16,Price-Optimal Querying with Data APIs,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
+    "conf/sigmod/WongsuphasawatM16,Towards a general-purpose query language for visualization recommendation,Kanit Wongsuphasawat and Dominik Moritz and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
+    "conf/sigcomm/SivaramanCBKABV16,Packet Transactions: High-Level Programming for Line-Rate Switches,Anirudh Sivaraman and Alvin Cheung and Mihai Budiu and Changhoon Kim and Mohammad Alizadeh and Hari Balakrishnan and George Varghese and Nick McKeown and Steve Licking\n" +
+    "journals/cacm/AbadiAABBCCDDFG16,The Beckman report on database research,Daniel Abadi and Rakesh Agrawal and Anastasia Ailamaki and Magdalena Balazinska and Philip A. Bernstein and Michael J. Carey and Surajit Chaudhuri and Jeffrey Dean and AnHai Doan and Michael J. Franklin and Johannes Gehrke and Laura M. Haas and Alon Y. Halevy and Joseph M. Hellerstein and Yannis E. Ioannidis and H. V. Jagadish and Donald Kossmann and Samuel Madden and Sharad Mehrotra and Tova Milo and Jeffrey F. Naughton and Raghu Ramakrishnan and Volker Markl and Christopher Olston and Beng Chin Ooi and Christopher Re and Dan Suciu and Michael Stonebraker and Todd Walter and Jennifer Widom\n" +
+    "journals/tvcg/WongsuphasawatM16,Voyager: Exploratory Analysis via Faceted Browsing of Visualization Recommendations,Kanit Wongsuphasawat and Dominik Moritz and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
+    "journals/sigmod/AbiteboulABBCDH16,Research Directions for Principles of Data Management (Abridged),Serge Abiteboul and Marcelo Arenas and Pablo Barcelo and Meghyn Bienvenu and Diego Calvanese and Claire David and Richard Hull and Eyke Hullermeier and Benny Kimelfeld and Leonid Libkin and Wim Martens and Tova Milo and Filip Murlak and Frank Neven and Magdalena Ortiz and Thomas Schwentick and Julia Stoyanovich and Jianwen Su and Dan Suciu and Victor Vianu and Ke Yi\n" +
+    "journals/bioinformatics/HyrkasCRHAH16,Scalable clustering algorithms for continuous environmental flow cytometry,Jeremy Hyrkas and Sophie Clayton and Francois Ribalet and Daniel Halperin and E. Virginia Armbrust and Bill Howe\n" +
+    "books/sp/16/CetintemelAABBCHMMRRSTXZ16,The Aurora and Borealis Stream Processing Engines,Ugur Cetintemel and Daniel J. Abadi and Yanif Ahmad and Hari Balakrishnan and Magdalena Balazinska and Mitch Cherniack and Jeong-Hyon Hwang and Samuel Madden and Anurag Maskey and Alexander Rasin and Esther Ryvkina and Mike Stonebraker and Nesime Tatbul and Ying Xing and Stan Zdonik\n" +
+    "conf/sc/BaeH15,GossipMap: a distributed community detection algorithm for billion-edge directed graphs,Seung-Hee Bae and Bill Howe\n" +
+    "conf/cloud/2015,Proceedings of the Sixth {ACM} Symposium on Cloud Computing, SoCC 2015, Kohala Coast, Hawaii, USA, August 27-29, 2015,Shahram Ghandeharizadeh and Sumita Barahmand and  Magdalena Balazinska and  Michael J. Freedman\n" +
+    "conf/cidr/Howe15,Big Data Science Needs Big Data Middleware,Bill Howe\n" +
+    "conf/edbt/Suciu15,Communication Cost in Parallel Query Processing,Dan Suciu\n" +
+    "conf/cidr/Cheung15,Towards Generating Application-Specific Data Management Systems,Alvin Cheung\n" +
+    "conf/icpram/LeeH15,Dismantling Composite Visualizations in the Scientific Literature,Po-Shen Lee and Bill Howe\n" +
+    "phd/ndltd/Cheung15,Rethinking the application-database interface,Alvin Cheung\n" +
+    "conf/cidr/OrtizAB15,Changing the Face of Database Cloud Services with Personalized Service Level Agreements,Jennifer Ortiz and Victor Teixeira de Almeida and Magdalena Balazinska\n" +
+    "conf/icpram/LeeH15a,Detecting and Dismantling Composite Visualizations in the Scientific Literature,Po-Shen Lee and Bill Howe\n" +
+    "conf/sigmod/ChuBS15,From Theory to Practice: Efficient Join Query Evaluation in a Parallel Database System,Shumo Chu and Magdalena Balazinska and Dan Suciu\n" +
+    "conf/aaai/HyrkasHH15,Time-Varying Clusters in Large-Scale Flow Cytometry,Jeremy Hyrkas and Daniel Halperin and Bill Howe\n" +
+    "conf/pods/AfratiNS15,The ACM PODS Alberto O. Mendelzon Test-of-Time Award 2015,Foto N. Afrati and Frank Neven and Dan Suciu\n" +
+    "conf/pods/BeameBGS15,Symmetric Weighted First-Order Model Counting,Paul Beame and Guy Van den Broeck and Eric Gribkoff and Dan Suciu\n" +
+    "conf/snapl/CheungKS15,Bridging the Gap Between General-Purpose and Domain-Specific Compilers with Synthesis,Alvin Cheung and Shoaib Kamil and Armando Solar-Lezama\n" +
+    "conf/vldb/MaasHTBCH15,Gaussian Mixture Models Use-Case: In-Memory Analysis with Myria,Ryan Maas and Jeremy Hyrkas and Olivia Grace Telford and Magdalena Balazinska and Andrew J. Connolly and Bill Howe\n" +
+    "conf/icdt/KoutrisMRS15,Answering Conjunctive Queries with Inequalities,Paraschos Koutris and Tova Milo and Sudeepa Roy and Dan Suciu\n" +
+    "conf/sigmod/ReABCJKR15,Machine Learning and Databases: The Sound of Things to Come or a Cacophony of Hype?,Christopher Re and Divy Agrawal and Magdalena Balazinska and Michael J. Cafarella and Michael I. Jordan and Tim Kraska and Raghu Ramakrishnan\n" +
+    "conf/vldb/WilliamsBD15,Automated Analysis of Muscle X-ray Diffraction Imaging with MCMC,C. David Williams and Magdalena Balazinska and Thomas L. Daniel\n" +
+    "journals/pvldb/RoyOS15,Explaining Query Answers with Explanation-Ready Databases,Sudeepa Roy and Laurel Orr and Dan Suciu\n" +
+    "conf/ssdbm/SoroushBKC15,Efficient iterative processing in the SciDB parallel array engine,Emad Soroush and Magdalena Balazinska and K. Simon Krughoff and Andrew J. Connolly\n" +
+    "journals/pvldb/WangBH15,Asynchronous and Fault-Tolerant Recursive Datalog Evaluation in Shared-Nothing Engines,Jingjing Wang and Magdalena Balazinska and Daniel Halperin\n" +
+    "conf/ssdbm/AlawiniMTHN15,Towards automated prediction of relationships among scientific datasets,Abdussalam Alawini and David Maier and Kristin Tufte and Bill Howe and Rashmi Nandikur\n" +
+    "journals/cgf/MoritzHHH15,Perfopticon: Visual Query Analysis for Distributed Databases,Dominik Moritz and Daniel Halperin and Bill Howe and Jeffrey Heer\n" +
+    "journals/mst/AfratiKSU15,Parallel Skyline Queries,Foto N. Afrati and Paraschos Koutris and Dan Suciu and Jeffrey D. Ullman\n" +
+    "conf/sigmod/UpadhyayaBS15,Automatic Enforcement of Data Use Policies with DataLawyer,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
+    "journals/jacm/KoutrisUBHS15,Query-Based Data Pricing,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "journals/pvldb/Balazinska15,Front Matter,Magdalena Balazinska\n" +
+    "journals/pvldb/Balazinska15a,Big Data Research: Will Industry Solve all the Problems?,Magdalena Balazinska\n" +
+    "journals/pvldb/GatterbauerS15,Approximate Lifted Inference with Probabilistic Databases,Wolfgang Gatterbauer and Dan Suciu\n" +
+    "journals/pvldb/ElmoreDSBCGHHKK15,A Demonstration of the BigDAWG Polystore System,Aaron J. Elmore and Jennie Duggan and Mike Stonebraker and Magdalena Balazinska and Ugur Cetintemel and Vijay Gadepally and Jeffrey Heer and Bill Howe and Jeremy Kepner and Tim Kraska and Samuel Madden and David Maier and Timothy G. Mattson and Stavros Papadopoulos and Jeff Parkhurst and Nesime Tatbul and Manasi Vartak and Stan Zdonik\n" +
+    "journals/sigmod/DugganESBHKMMMZ15,The BigDAWG Polystore System,Jennie Duggan and Aaron J. Elmore and Michael Stonebraker and Magdalena Balazinska and Bill Howe and Jeremy Kepner and Sam Madden and David Maier and Tim Mattson and Stanley B. Zdonik\n" +
+    "conf/hpdc/Cheung14,Rethinking the application-database interface,Alvin Cheung\n" +
+    "conf/sigmod/RoyS14,A formal approach to finding explanations for database queries,Sudeepa Roy and Dan Suciu\n" +
+    "conf/icdt/BeameLRS14,Counting of Query Expressions: Limitations of Propositional Methods,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
+    "conf/icdt/KoutrisS14,A Dichotomy on the Complexity of Consistent Query Answering for Atoms with Simple Keys,Paraschos Koutris and Dan Suciu\n" +
+    "conf/uai/GribkoffBS14,Understanding the Complexity of Lifted Inference and Asymmetric Weighted Model Counting,Eric Gribkoff and Guy Van den Broeck and Dan Suciu\n" +
+    "journals/tods/LiLMS14,A Theory of Pricing Private Data,Chao Li and Daniel Yang Li and Gerome Miklau and Dan Suciu\n" +
+    "conf/aaai/GribkoffBS14,Understanding the Complexity of Lifted Inference and Asymmetric Weighted Model Counting,Eric Gribkoff and Guy Van den Broeck and Dan Suciu\n" +
+    "conf/sigmod/CheungMS14,Sloth: being lazy is a virtue (when issuing database queries),Alvin Cheung and Samuel Madden and Armando Solar-Lezama\n" +
+    "conf/sigmod/HoweFFFKR14,Should we all be teaching \"intro to data science\" instead of \"intro to databases\"?,Bill Howe and Michael J. Franklin and Juliana Freire and James Frew and Tim Kraska and Raghu Ramakrishnan\n" +
+    "conf/ssdbm/AlawiniMTH14,Helping scientists reconnect their datasets,Abdussalam Alawini and David Maier and Kristin Tufte and Bill Howe\n" +
+    "conf/vldb/UpadhyayaUBSH14,Affordable Analytics on Expensive Data,Prasang Upadhyaya and Martina Unutzer and Magdalena Balazinska and Dan Suciu and Hakan Hacigumus\n" +
+    "journals/is/LetchnerBRP14,Approximation trade-offs in a Markovian stream warehouse: An empirical study,Julie Letchner and Magdalena Balazinska and Christopher Re and Matthai Philipose\n" +
+    "journals/pvldb/MeliouRS14,Causality and Explanations in Databases,Alexandra Meliou and Sudeepa Roy and Dan Suciu\n" +
+    "journals/debu/CheungMSAM14,Using Program Analysis to Improve Database Applications,Alvin Cheung and Samuel Madden and Armando Solar-Lezama and Owen Arden and Andrew C. Myers\n" +
+    "journals/debu/GribkoffSB14,Lifted Probabilistic Inference: A Guide for the Database Researcher,Eric Gribkoff and Dan Suciu and Guy Van den Broeck\n" +
+    "journals/pvldb/MortonBGM14,Support the Data Enthusiast: Challenges for Next-Generation Data-Analysis Systems,Kristi Morton and Magdalena Balazinska and Dan Grossman and Jock D. Mackinlay\n" +
+    "journals/sigmod/MortonBGKM14,Public Data and Visualizations: How are Many Eyes and Tableau Public Used for Collaborative Analytics?,Kristi Morton and Magdalena Balazinska and Dan Grossman and Robert Kosara and Jock D. Mackinlay\n" +
+    "journals/tods/GatterbauerS14,Oblivious bounds on the probability of boolean functions,Wolfgang Gatterbauer and Dan Suciu\n" +
+    "conf/sigmod/LoebmanOCOAHBQG14,Big-Data Management Use-Case: A Cloud Service for Creating and Analyzing Galactic Merger Trees,Sarah Loebman and Jennifer Ortiz and Lee Lee Choo and Laurel Orr and Lauren Anderson and Daniel Halperin and Magdalena Balazinska and Thomas Quinn and Fabio Governato\n" +
+    "journals/sigmod/BalazinskaHS14,The database group at the University of Washington,Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "conf/sigmod/HalperinACCKMORWWXBHS14,Demonstration of the Myria big data management service,Daniel Halperin and Victor Teixeira de Almeida and Lee Lee Choo and Shumo Chu and Paraschos Koutris and Dominik Moritz and Jennifer Ortiz and Vaspol Ruamviboonsuk and Jingjing Wang and Andrew Whitaker and Shengliang Xu and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "journals/sigmod/AbadiAABBCCDDFGHHHIJKMMMNRMOORSSWW14,The Beckman Report on Database Research,Daniel J. Abadi and Rakesh Agrawal and Anastasia Ailamaki and Magdalena Balazinska and Philip A. Bernstein and Michael J. Carey and Surajit Chaudhuri and Jeffrey Dean and AnHai Doan and Michael J. Franklin and Johannes Gehrke and Laura M. Haas and Alon Y. Halevy and Joseph M. Hellerstein and Yannis E. Ioannidis and H. V. Jagadish and Donald Kossmann and Samuel Madden and Sharad Mehrotra and Tova Milo and Jeffrey F. Naughton and Raghu Ramakrishnan and Volker Markl and Christopher Olston and Beng Chin Ooi and Christopher Re and Dan Suciu and Michael Stonebraker and Todd Walter and Jennifer Widom\n" +
+    "conf/ssdbm/2013,Conference on Scientific and Statistical Database Management, SSDBM '13, Baltimore, MD, USA, July 29 - 31, 2013,Alex Szalay and Tamas Budavari and Magdalena Balazinska and Alexandra Meliou and Ahmet Sacan\n" +
+    "conf/icdt/LiLMS13,A theory of pricing private data,Chao Li and Daniel Yang Li and Gerome Miklau and Dan Suciu\n" +
+    "conf/bncod/Suciu13,Big Data Begets Big Database Theory,Dan Suciu\n" +
+    "conf/icdm/BaeHWRH13,Scalable Flow-Based Community Detection for Large-Scale Network Analysis,Seung-Hee Bae and Daniel Halperin and Jevin D. West and Martin Rosvall and Bill Howe\n" +
+    "conf/pods/BeameKS13,Communication steps for parallel query processing,Paul Beame and Paraschos Koutris and Dan Suciu\n" +
+    "conf/uai/BeameLRS13,Lower Bounds for Exact Model Counting and Applications in Probabilistic Databases,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
+    "journals/mst/JhaS13,Knowledge Compilation Meets Database Theory: Compiling Queries to Decision Diagrams,Abhay Kumar Jha and Dan Suciu\n" +
+    "conf/icde/SoroushB13,Time travel in a scientific array database,Emad Soroush and Magdalena Balazinska\n" +
+    "conf/pldi/CheungSM13,Optimizing database-backed applications with query synthesis,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
+    "conf/vldb/MyersHHH13,Compiled Plans for In-Memory Path-Counting Queries,Brandon Myers and Jeremy Hyrkas and Daniel Halperin and Bill Howe\n" +
+    "conf/vldb/MyersHHH13a,Compiled Plans for In-Memory Path-Counting Queries,Brandon Myers and Jeremy Hyrkas and Daniel Halperin and Bill Howe\n" +
+    "conf/cidr/CheungAMSM13,StatusQuo: Making Familiar Abstractions Perform Using Program Analysis,Alvin Cheung and Owen Arden and Samuel Madden and Armando Solar-Lezama and Andrew C. Myers\n" +
+    "conf/apsys/CheungR0MB13,Mobile applications need targeted micro-updates,Alvin Cheung and Lenin Ravindranath and Eugene Wu and Samuel Madden and Hari Balakrishnan\n" +
+    "conf/sigmod/CheungAMM13,Speeding up database applications with Pyxis,Alvin Cheung and Owen Arden and Samuel Madden and Andrew C. Myers\n" +
+    "journals/cse/HoweHRCA13,Collaborative Science Workflows in SQL,Bill Howe and Daniel Halperin and Francois Ribalet and Sagar Chitnis and E. Virginia Armbrust\n" +
+    "journals/debu/KwonRBH13,Managing Skew in Hadoop,YongChul Kwon and Kai Ren and Magdalena Balazinska and Bill Howe\n" +
+    "journals/pvldb/RenKBH13,Hadoop's Adolescence,Kai Ren and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
+    "conf/sigmod/JoslynCHHNO13,Massive scale cyber traffic analysis: a driver for graph database research,Cliff Joslyn and Sutanay Choudhury and David Haglin and Bill Howe and Bill Nickless and Bryan Olsen\n" +
+    "conf/sigmod/KoutrisUBHS13,Toward practical query pricing with QueryMarket,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "conf/ssdbm/BalazinskaDHL13,Education and career paths for data scientists,Magdalena Balazinska and Susan B. Davidson and Bill Howe and Alexandros Labrinidis\n" +
+    "conf/ssdbm/HalperinRWSHA13,Real-time collaborative analysis with (almost) pure SQL: a case study in biogeochemical oceanography,Daniel Halperin and Francois Ribalet and Konstantin Weitz and Mak A. Saito and Bill Howe and E. Virginia Armbrust\n" +
+    "conf/cidr/UpadhyayaABHKRS13,Stop That Query! The Need for Managing Data Use,Prasang Upadhyaya and Nick R. Anderson and Magdalena Balazinska and Bill Howe and Raghav Kaushik and Ravishankar Ramamurthy and Dan Suciu\n" +
+    "conf/sigmod/UpadhyayaABHKRS13,The power of data use management in action,Prasang Upadhyaya and Nick R. Anderson and Magdalena Balazinska and Bill Howe and Raghav Kaushik and Ravishankar Ramamurthy and Dan Suciu\n" +
+    "journals/debu/VanderPlasSKB13,Squeezing a Big Orange into Little Boxes: The AscotDB System for Parallel Processing of Data on a Sphere,Jacob VanderPlas and Emad Soroush and K. Simon Krughoff and Magdalena Balazinska\n" +
+    "journals/pvldb/MoyersSWKVBC13,A Demonstration of Iterative Parallel Array Processing in Support of Telescope Image Analysis,Matthew Moyers and Emad Soroush and Spencer Wallace and K. Simon Krughoff and Jake VanderPlas and Magdalena Balazinska and Andrew J. Connolly\n" +
+    "conf/birthday/BalazinskaHKSU13,A Discussion on Pricing Relational Data,Magdalena Balazinska and Bill Howe and Paraschos Koutris and Dan Suciu and Prasang Upadhyaya\n" +
+    "conf/amw/2012,Proceedings of the 6th Alberto Mendelzon International Workshop on Foundations of Data Management, Ouro Preto, Brazil, June 27-30, 2012,Juliana Freire and Dan Suciu\n" +
+    "conf/icdt/JhaS12,On the tractability of query compilation and bounded treewidth,Abhay Kumar Jha and Dan Suciu\n" +
+    "conf/sc/RenGKBH12,Abstract: Hadoop's Adolescence; A Comparative Workloads Analysis from Three Research Clusters,Kai Ren and Garth Gibson and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
+    "conf/chi/HoweKPA12,VizDeck: a card game metaphor for fast visual data exploration,Bill Howe and Alicia Key and Daniel Perry and Cecilia R. Aragon\n" +
+    "conf/sc/RenGKBH12a,Poster: Hadoop's Adolescence; A Comparative Workloads Analysis from Three Research Clusters,Kai Ren and Garth Gibson and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
+    "journals/cse/Howe12,Virtual Appliances, Cloud Computing, and Reproducible Research,Bill Howe\n" +
+    "journals/tods/ReS12,Understanding cardinality estimation using entropy maximization,Christopher Re and Dan Suciu\n" +
+    "conf/cikm/CheungSM12,Using program synthesis for social recommendations,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
+    "conf/sigmod/KeyHPA12,VizDeck: self-organizing dashboards for visual analytics,Bill Howe and Alicia Key and Daniel Perry and Cecilia R. Aragon\n" +
+    "conf/ssdbm/ShawDBS12,A Dataflow Graph Transformation Language and Query Rewriting System for RDF Ontologies,Marianne Shaw and Landon Detwiler and James F. Brinkley and Dan Suciu\n" +
+    "conf/icdt/AfratiKSU12,Parallel skyline queries,Foto N. Afrati and Paraschos Koutris and Dan Suciu and Jeffrey D. Ullman\n" +
+    "conf/sigmod/KwonBHR12,SkewTune: mitigating skew in mapreduce applications,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
+    "conf/sigmod/MeliouS12,Tiresias: the database oracle for how-to queries,Alexandra Meliou and Dan Suciu\n" +
+    "journals/cacm/Suciu12,SQL on an encrypted database: technical perspective,Dan Suciu\n" +
+    "journals/debu/HoweH12,Advancing Declarative Query in the Long Tail of Science,Bill Howe and Daniel Halperin\n" +
+    "journals/pvldb/JhaS12,Probabilistic Databases with MarkoViews,Abhay Kumar Jha and Dan Suciu\n" +
+    "journals/vldb/BuHBE12,The HaLoop approach to large-scale iterative data analysis,Yingyi Bu and Bill Howe and Magdalena Balazinska and Michael D. Ernst\n" +
+    "conf/apsys/WangCCJZK12,Undefined behavior: what happened to my code?,Xi Wang and Haogang Chen and Alvin Cheung and Zhihao Jia and Nickolai Zeldovich and M. Frans Kaashoek\n" +
+    "conf/datalog/ShawKHS12,Optimizing Large-Scale Semi-Naive Datalog Evaluation in Hadoop,Marianne Shaw and Paraschos Koutris and Bill Howe and Dan Suciu\n" +
+    "conf/sigmod/MeliouSS12,Tiresias: a demonstration of how-to queries,Alexandra Meliou and Yisong Song and Dan Suciu\n" +
+    "journals/jacm/DalviS12,The dichotomy of probabilistic inference for unions of conjunctive queries,Nilesh N. Dalvi and Dan Suciu\n" +
+    "conf/pods/KoutrisUBHS12,Query-based data pricing,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "conf/cloud/AfratiBSHSU12,Designing good algorithms for MapReduce and beyond,Foto N. Afrati and Magdalena Balazinska and Anish Das Sarma and Bill Howe and Semih Salihoglu and Jeffrey D. Ullman\n" +
+    "journals/pvldb/KwonBHR12,SkewTune in Action: Mitigating Skew in MapReduce Applications,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
+    "journals/pvldb/CheungAMM12,Automatic Partitioning of Database Applications,Alvin Cheung and Owen Arden and Samuel Madden and Andrew C. Myers\n" +
+    "journals/pvldb/KoutrisUBHS12,QueryMarket Demonstration: Pricing for Online Data Markets,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu}\n" +
+    "journals/pvldb/UpadhyayaBS12,How to Price Shared Optimizations in the Cloud,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
+    "journals/pvldb/KhoussainovaBS12,PerfXplain: Debugging MapReduce Job Performance,Nodira Khoussainova and Magdalena Balazinska and Dan Suciu\n" +
+    "conf/icdt/JhaS11,Knowledge compilation meets database theory: compiling queries to decision diagrams,Abhay Kumar Jha and Dan Suciu\n" +
+    "conf/icdt/Suciu11,Tractability in probabilistic databases,Dan Suciu\n" +
+    "conf/edbt/2011array,Proceedings of the 2011 EDBT/ICDT Workshop on Array Databases, Uppsala, Sweden, March 25, 2011,Peter Baumann and Bill Howe and Kjell Orsborn and Silvia Stefanova\n" +
+    "conf/edbt/SoroushB11,Hybrid merge/overlap execution technique for parallel array processing,Emad Soroush and Magdalena Balazinska\n" +
+    "conf/pods/KoutrisS11,Parallel evaluation of conjunctive queries,Paraschos Koutris and Dan Suciu\n" +
+    "conf/tapp/MeliouGS11,Bringing Provenance to Its Full Potential Using Causal Reasoning,Alexandra Meliou and Wolfgang Gatterbauer and Dan Suciu\n" +
+    "conf/ldav/VoBSCFHPS11,Parallel visualization on large clusters using MapReduce,Huy T. Vo and Jonathan Bronson and Brian Summa and Joao Luiz Dihl Comba and Juliana Freire and Bill Howe and Valerio Pascucci and Claudio T. Silva\n" +
+    "conf/sigmod/HoweCKB11,Automatic example queries for ad hoc databases,Bill Howe and Garrett Cole and Nodira Khoussainova and Leilani Battle\n" +
+    "conf/sensys/CheungTM11,Automatically generating interesting events with LifeJoin,Alvin Cheung and Arvind Thiagarajan and Samuel Madden\n" +
+    "conf/mobide/LetchnerB11,Lineage for Markovian stream event queries,Julie Letchner and Magdalena Balazinska\n" +
+    "conf/sigmod/MeliouGNS11,Tracing data errors with view-conditioned causality,Alexandra Meliou and Wolfgang Gatterbauer and Suman Nath and Dan Suciu\n" +
+    "conf/sigmod/SoroushBW11,ArrayStore: a storage manager for complex parallel array processing,Emad Soroush and Magdalena Balazinska and Daniel L. Wang\n" +
+    "conf/sigsoft/CheungSM11,Partial replay of long-running applications,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
+    "conf/ssdbm/HoweCSKKKB11,Database-as-a-Service for Long-Tail Science,Bill Howe and Garrett Cole and Emad Souroush and Paraschos Koutris and Alicia Key and Nodira Khoussainova and Leilani Battle\n" +
+    "journals/jbi/ShawDNBS11,vSPARQL: A view definition language for the semantic web,Marianne Shaw and Landon Fridman Detwiler and Natalya Fridman Noy and James F. Brinkley and Dan Suciu\n" +
+    "journals/jcss/DalviRS11,Queries and materialized views on probabilistic databases,Nilesh N. Dalvi and Christopher Re and Dan Suciu\n" +
+    "conf/cidr/GatterbauerS11,Managing Structured Collections of Community Data,Wolfgang Gatterbauer and Dan Suciu\n" +
+    "conf/sigmod/UpadhyayaKB11,A latency and fault-tolerance optimizer for online parallel query plans,Prasang Upadhyaya and YongChul Kwon and Magdalena Balazinska\n" +
+    "conf/tapp/GatterbauerMS11,Default-all is dangerous!,Wolfgang Gatterbauer and Alexandra Meliou and Dan Suciu\n" +
+    "eries/synthesis/2011Suciu,Probabilistic Databases,Dan Suciu and Dan Olteanu and Christopher Re and Christoph Koch\n" +
+    "journals/pvldb/MeliouGS11,Reverse Data Management,Alexandra Meliou and Wolfgang Gatterbauer and Dan Suciu\n" +
+    "conf/ssdbm/AlSayyadKHCBJ11,Towards Efficient and Precise Queries over Ten Million Asteroid Trajectory Models,Yusra AlSayyad and K. Simon Krughoff and Bill Howe and Andrew J. Connolly and Magdalena Balazinska and Lynne Jones\n" +
+    "journals/pvldb/MeliouGMS11,The Complexity of Causality and Responsibility for Query Answers and non-Answers,Alexandra Meliou and Wolfgang Gatterbauer and Katherine F. Moore and Dan Suciu\n" +
+    "journals/pvldb/BalazinskaHS11,Data Markets in the Cloud: An Opportunity for the Database Community,Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "conf/ssdbm/KhoussainovaKLBGS11,Session-Based Browsing for More Effective Query Reuse,Nodira Khoussainova and YongChul Kwon and Wei-Ting Liao and Magdalena Balazinska and Wolfgang Gatterbauer and Dan Suciu\n" +
+    "conf/pods/ReS10,Understanding cardinality estimation using entropy maximization,Christopher Re and Dan Suciu\n" +
+    "conf/edbt/JhaOS10,Bridging the gap between intensional and extensional query evaluation in probabilistic databases,Abhay Kumar Jha and Dan Olteanu and Dan Suciu\n" +
+    "conf/edbtw/Suciu10,Definitions matter: reconciling differential and adversarial privacy: invited talk,Dan Suciu\n" +
+    "conf/nips/JhaGMS10,Lifted Inference Seen from the Other Side : The Tractable Features,Abhay Kumar Jha and Vibhav Gogate and Alexandra Meliou and Dan Suciu\n" +
+    "conf/pods/DalviSS10,Computing query probability with incidence algebras,Nilesh N. Dalvi and Karl Schnaitter and Dan Suciu\n" +
+    "conf/cloud/KwonBHR10,Skew-resistant parallel processing of feature-extracting scientific user-defined functions,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
+    "conf/mud/MeliouGMS10,WHY SO? or WHY NO? Functional Causality for Explaining Query Answers,Alexandra Meliou and Wolfgang Gatterbauer and Katherine F. Moore and Dan Suciu\n" +
+    "conf/icde/MortonFBG10,Estimating the progress of MapReduce pipelines,Kristi Morton and Abram L. Friesen and Magdalena Balazinska and Dan Grossman\n" +
+    "conf/sigmod/MortonBG10,ParaTimer: a progress indicator for MapReduce DAGs,Kristi Morton and Magdalena Balazinska and Dan Grossman\n" +
+    "conf/ssdbm/KwonNGBHL10,Scalable Clustering Algorithm for N-Body Simulations in a Shared-Nothing Cluster,YongChul Kwon and Dylan Nunley and Jeffrey P. Gardner and Magdalena Balazinska and Bill Howe and Sarah Loebman\n" +
+    "journals/pvldb/BuHBE10,HaLoop: Efficient Iterative Data Processing on Large Clusters,Yingyi Bu and Bill Howe and Magdalena Balazinska and Michael D. Ernst\n" +
+    "conf/icde/LetchnerRBP10,Approximation trade-offs in Markovian stream processing: An empirical study,Julie Letchner and Christopher Re and Magdalena Balazinska and Matthai Philipose\n" +
+    "journals/pvldb/HayRMS10,Boosting the Accuracy of Differentially Private Histograms Through Consistency,Michael Hay and Vibhor Rastogi and Gerome Miklau and Dan Suciu\n" +
+    "conf/mud/GatterbauerJS10,Dissociation and Propagation for Efficient Query Evaluation over Probabilistic Databases,Wolfgang Gatterbauer and Abhay Kumar Jha and Dan Suciu\n" +
+    "conf/sigmod/GatterbauerS10,Data conflict resolution using trust mappings,Wolfgang Gatterbauer and Dan Suciu\n" +
+    "journals/debu/MeliouGHKMS10,Causality in Databases,Alexandra Meliou and Wolfgang Gatterbauer and Joseph Y. Halpern and Christoph Koch and Katherine F. Moore and Dan Suciu\n" +
+    "conf/pervasive/WelbourneBBF10,Specification and Verification of Complex Location Events with Panoramic,Evan Welbourne and Magdalena Balazinska and Gaetano Borriello and James Fogarty\n" +
+    "journals/pvldb/KhoussainovaKBS11,SnipSuggest: Context-Aware Autocompletion for SQL,Nodira Khoussainova and YongChul Kwon and Magdalena Balazinska and Dan Suciu\n" +
+    "conf/ssdbm/GrochowHSBL10,Client + Cloud: Evaluating Seamless Architectures for Visual Data Analytics in the Ocean Sciences,Keith Grochow and Bill Howe and Mark Stoermer and Roger S. Barga and Edward D. Lazowska\n" +
+    "conf/eScience/GrochowSFLHL10,COVE: A Visual Environment for Multidisciplinary Ocean Science Collaboration,Keith Grochow and Mark Stoermer and James Fogarty and Charlotte Lee and Bill Howe and Edward D. Lazowska\n";
 
 var yelp_search_text = "business_id,name,full_address\n" +
     "C59Gr3A35GMqKs593mfxVA,Grand Canyon University,3300 W Camelback Rd Phoenix, AZ 85017\n" +

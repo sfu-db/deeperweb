@@ -66,14 +66,20 @@ def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
     localdata_csv = localdata.getRawData()
     crawldata_csv = Json2csv(hiddendata.getMergeResult()).getCsvdata()
 
-    join_csv = []
+    result = {}
+    result['record'] = []
     if 'header' in crawldata_csv:
-        join_csv.append(localdata_csv['header'] + crawldata_csv['header'])
+        result['local_header'] = localdata_csv['header']
+        result['hidden_header'] = crawldata_csv['header']
         matchpair = sorted(hiddendata.getMatchPair().items(), key=lambda item: item[0], reverse=False)
         for m in matchpair:
+            temp_record = []
             local_id = m[0]
+            temp_record.append(localdata_csv[local_id])
             for hidden_id in m[1]:
-                join_csv.append(localdata_csv[local_id] + crawldata_csv[hidden_id])
+                temp_record.append(crawldata_csv[hidden_id])
+            result['record'].append(temp_record)
     else:
-        join_csv.append(localdata_csv['header'])
-    return join_csv
+        result['local_header'] = localdata_csv['header']
+
+    return result

@@ -74,10 +74,10 @@ def smartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jacc
         D1_ids_deeper.difference_update(matched_ids)
         curcov = curcov.union(matched_ids)
         curmat.extend(matched_pair)
-        print 'budget:', 100.0 * (len(query_pool) - flagNum) / budget, '%, coverage ratio:', \
-            100.0 * len(curcov) / len(D1_ids), '%, ', len(cur_raw_result), 'results returned, ', \
+        print >> perr, 'coverage ratio:', 100.0 * len(curcov) / len(D1_ids), '%, ',\
+            len(cur_raw_result), 'results returned, ', \
             len(matched_ids), 'local records covered at this iteration. ', \
-            len(hiddendata.getMergeResult()), 'different results returned, ', len(curcov), \
-            'local records covered totally.'
+            len(hiddendata.getMergeResult()), 'different results returned, ', \
+            len(curcov), 'local records covered totally.'
     api.getSession().close()
     hiddendata.setMatchPair(curmat)
