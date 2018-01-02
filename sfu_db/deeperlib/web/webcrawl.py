@@ -4,7 +4,7 @@ import copy
 from deeperlib.core import utils
 
 
-def smartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jaccard_thre=0.85, threads=4):
+def SmartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jaccard_thre=0.85, threads=4):
     time_s = timeit.default_timer()
     sample = sampledata.getSample()
     D1_ids, D1_query, D1_er = localdata.getlocalData()
@@ -74,10 +74,15 @@ def smartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jacc
         D1_ids_deeper.difference_update(matched_ids)
         curcov = curcov.union(matched_ids)
         curmat.extend(matched_pair)
-        print >> perr, 'coverage ratio:', 100.0 * len(curcov) / len(D1_ids), '%, ',\
+        print >> perr, 'coverage ratio:', 100.0 * len(curcov) / len(D1_ids), '%, ', \
             len(cur_raw_result), 'results returned, ', \
             len(matched_ids), 'local records covered at this iteration. ', \
             len(hiddendata.getMergeResult()), 'different results returned, ', \
             len(curcov), 'local records covered totally.'
     api.getSession().close()
     hiddendata.setMatchPair(curmat)
+
+
+def NaiveCrawl(api, queries):
+    cur_raw_result = api.callMulAPI(queries)
+    return

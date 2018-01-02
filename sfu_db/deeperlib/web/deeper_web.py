@@ -7,13 +7,13 @@ import time
 from deeperlib.api.dblp.publapi import PublApi
 from deeperlib.api.yelp.searchapi import SearchApi
 from deeperlib.data_processing.sample_data import SampleData
-from smartcrawl import smartCrawl
+from webcrawl import SmartCrawl
 from local_data import LocalData
 from hidden_data import HiddenData
 from json2csv import Json2csv
 
 
-def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
+def Deeper_WEB(budget, api_msg, typos_tag, original_csv, local_match, hidden_match):
     if api_msg == 'dblp Publ API':
         search_term = 'q'
         parameters = {'h': 1000}
@@ -62,7 +62,7 @@ def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
                                   matchlist=[local_match[hidden_match.index("name")],
                                              local_match[hidden_match.index("location.display_address.*")]],
                                   data_raw=original_csv)
-    smartCrawl(budget, api, sampledata, localdata, hiddendata)
+    SmartCrawl(budget, api, sampledata, localdata, hiddendata)
     localdata_csv = localdata.getRawData()
     crawldata_csv = Json2csv(hiddendata.getMergeResult()).getCsvdata()
 
@@ -82,4 +82,8 @@ def smartcrawl_web(budget, api_msg, original_csv, local_match, hidden_match):
     else:
         result['local_header'] = localdata_csv['header']
 
+    if typos_tag:
+        result['naive'] = 4
+    else:
+        result['naive'] = 4
     return result

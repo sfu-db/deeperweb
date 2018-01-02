@@ -375,7 +375,7 @@ function smart_crawl() {
                     var row = [];
                     var table_row = $(element).children('td');
                     for (var i = 0; i < table_row.length; i++) {
-                        row.push(table_row.eq(i).text());
+                        row.push(table_row.eq(i).html());
                     }
                     original_data[index] = row;
                 }
@@ -473,7 +473,7 @@ function smart_crawl() {
 
                 $(".alert-popup").addClass("open");
                 $(".alert-popup p:first").html("SmartCrawl   Queries: 4   Cover: " + response['record'].length);
-                $(".alert-popup p:last").html("NaiveCrawl   Queries: 4   Cover: 4");
+                $(".alert-popup p:last").html("NaiveCrawl   Queries: 4   Cover: " + response['naive']);
             },
             error: function () {
                 $(".alert-popup").addClass("open");
@@ -499,22 +499,33 @@ function init_table() {
 /*re-enrich*/
 function re_enrich() {
     $("button#re-enrich").click(function () {
-        var table_input = $('div#table_input table');
-        table_input.find('thead tr').remove();
-        table_input.find('tbody tr').remove();
         var join_schema = $("div#join_schema");
+        var result_head = $('table#table_result thead tr');
+        var result_body = $('table#table_result tbody tr');
         $(join_schema.children('a.tag')).each(function () {
             if (!$(this).attr("style")) {
-                $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').remove();
-                $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').remove();
+                result_head.find('th:eq(' + $(this).index() + ')').remove();
+                result_body.find('td:eq(' + $(this).index() + ')').remove();
                 $(this).remove();
             }
         });
-        table_input.find('thead').append($('table#table_result thead tr'));
-        table_input.find('tbody').append($('table#table_result tbody tr'));
-        location.hash = "#api";
         join_schema.children().remove();
+        $(result_body).each(function () {
+            if ($(this).find("td:last div").length) {
+                $(this).find("td:last").remove();
+            } else {
+                $(this).remove();
+            }
+        });
+
         $('.bootstrap-switch#example input').bootstrapSwitch('state', false);
+        $('.bootstrap-switch#format input').bootstrapSwitch('state', true);
+        var table_input = $('div#table_input table');
+        table_input.find('thead tr').remove();
+        table_input.find('tbody tr').remove();
+        table_input.find('thead').append(result_head);
+        table_input.find('tbody').append(result_body);
+        location.hash = "#api";
     });
 }
 
@@ -535,7 +546,7 @@ function download_csv() {
                 } else {
                     var row = [];
                     var table_row = $(element).children('td');
-                    for (var i = 0; i < table_row.length; i++) {
+                    for (var i = 0; i < table_row.length - 1; i++) {
                         row.push(table_row.eq(i).text());
                     }
                     original_data[index] = row;

@@ -4,12 +4,13 @@ from __future__ import unicode_literals
 from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.shortcuts import render
 from django.core.files.uploadedfile import UploadedFile
-from django.conf import settings
 from models import Subscriber
+from deeperlib.web.deeper_htmlparser import Deeper_HTMLParser
+from deeperlib.web.deeper_web import Deeper_WEB
+import copy
 import codecs
 import csv
 import ast
-from deeperlib.web import deeper_web
 
 
 # Create your views here.
@@ -64,10 +65,22 @@ def smartcrawl(request):
                 else:
                     row.append(i)
             original_csv.append(row)
+
+    parser = Deeper_HTMLParser()
+    typos_tag = False
+    for i in range(1, len(original_csv)):
+        for j in range(0, len(original_csv[i])):
+            if '</span>' in original_csv[i][j]:
+                parser.feed(original_csv[i][j])
+                original_csv[i][j] = parser.get_text()
+                typos_tag = True
+                break
+
     if len(original_csv) > 1:
-        result = deeper_web.smartcrawl_web(4, api_msg, original_csv, local_match, hidden_match)
+        result = Deeper_WEB(8, api_msg, typos_tag, original_csv, local_match, hidden_match)
     else:
         result = {}
+
     return JsonResponse(result)
 
 
