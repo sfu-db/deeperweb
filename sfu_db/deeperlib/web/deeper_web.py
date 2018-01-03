@@ -7,13 +7,13 @@ import time
 from deeperlib.api.dblp.publapi import PublApi
 from deeperlib.api.yelp.searchapi import SearchApi
 from deeperlib.data_processing.sample_data import SampleData
-from webcrawl import SmartCrawl
+from webcrawl import SmartCrawl, NaiveCrawl
 from local_data import LocalData
 from hidden_data import HiddenData
 from json2csv import Json2csv
 
 
-def Deeper_WEB(budget, api_msg, typos_tag, original_csv, local_match, hidden_match):
+def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
     if api_msg == 'dblp Publ API':
         search_term = 'q'
         parameters = {'h': 1000}
@@ -82,8 +82,20 @@ def Deeper_WEB(budget, api_msg, typos_tag, original_csv, local_match, hidden_mat
     else:
         result['local_header'] = localdata_csv['header']
 
-    if typos_tag:
-        result['naive'] = 4
-    else:
-        result['naive'] = 4
+    if api_msg == 'dblp Publ API':
+        search_term = 'q'
+        parameters = {'h': 10}
+        api = PublApi(top_k=10, delay=4, search_term=search_term, **parameters)
+        hiddendata = HiddenData(uniqueid="info.key", matchlist=["info.title"])
+    elif api_msg == 'yelp Search API':
+        client_id = "kCe2YbZePXsPnC204ZrXoQ"
+        client_secret = "s9KnvEEQW7jaA2wlrBi4X2fnDQ0F7asdklXVvJUidWp8i50ov24E8EjkHX2AUhoL"
+        search_term = 'term'
+        parameters = {'limit': 20, 'location': 'AZ'}
+        api = SearchApi(client_id=client_id, client_secret=client_secret, top_k=20, delay=5,
+                        search_term=search_term,
+                        **parameters)
+        hiddendata = HiddenData(uniqueid="id", matchlist=["name", "location.display_address.*"])
+    result['naive'] = NaiveCrawl(4, api, localdata, hiddendata)
+
     return result

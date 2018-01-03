@@ -1,6 +1,7 @@
 from sys import stderr as perr
 import timeit
 import copy
+import random
 from deeperlib.core import utils
 
 
@@ -74,7 +75,7 @@ def SmartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jacc
         D1_ids_deeper.difference_update(matched_ids)
         curcov = curcov.union(matched_ids)
         curmat.extend(matched_pair)
-        print >> perr, 'coverage ratio:', 100.0 * len(curcov) / len(D1_ids), '%, ', \
+        print >> perr, 'smartcrawl, coverage ratio:', 100.0 * len(curcov) / len(D1_ids), '%, ', \
             len(cur_raw_result), 'results returned, ', \
             len(matched_ids), 'local records covered at this iteration. ', \
             len(hiddendata.getMergeResult()), 'different results returned, ', \
@@ -83,6 +84,24 @@ def SmartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jacc
     hiddendata.setMatchPair(curmat)
 
 
-def NaiveCrawl(api, queries):
-    cur_raw_result = api.callMulAPI(queries)
-    return
+def NaiveCrawl(budget, api, localdata, hiddendata, jaccard_thre=0.85, threads=4):
+    D1_ids, D1_query, D1_er = localdata.getlocalData()
+    naive_ids = random.sample(D1_ids, budget)
+    curcov = set()
+
+    while len(naive_ids) != 0:
+        queries = []
+        for i in range(0, threads):
+            if len(naive_ids):
+                queries.append(D1_query[naive_ids.pop()])
+        cur_raw_result = api.callMulAPI(queries)
+        cur_er_result = hiddendata.proResult(cur_raw_result)
+        matched_ids, matched_pair = utils.results_simjoin(cur_er_result, D1_er, jaccard_thre)
+        curcov = curcov.union(matched_ids)
+        print >> perr, 'naivecrawl, coverage ratio:', 100.0 * len(curcov) / len(D1_ids), '%, ', \
+            len(cur_raw_result), 'results returned, ', \
+            len(matched_ids), 'local records covered at this iteration. ', \
+            len(hiddendata.getMergeResult()), 'different results returned, ', \
+            len(curcov), 'local records covered totally.'
+    api.getSession().close()
+    return len(curcov)

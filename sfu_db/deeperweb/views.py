@@ -67,17 +67,15 @@ def smartcrawl(request):
             original_csv.append(row)
 
     parser = Deeper_HTMLParser()
-    typos_tag = False
     for i in range(1, len(original_csv)):
         for j in range(0, len(original_csv[i])):
             if '</span>' in original_csv[i][j]:
                 parser.feed(original_csv[i][j])
                 original_csv[i][j] = parser.get_text()
-                typos_tag = True
                 break
 
     if len(original_csv) > 1:
-        result = Deeper_WEB(8, api_msg, typos_tag, original_csv, local_match, hidden_match)
+        result = Deeper_WEB(8, api_msg, original_csv, local_match, hidden_match)
     else:
         result = {}
 

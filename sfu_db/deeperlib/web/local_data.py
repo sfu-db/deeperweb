@@ -1,6 +1,5 @@
 from sys import stderr as perr
-import copy
-from deeperlib.data_processing.data_process import wordset, getElement
+from deeperlib.data_processing.data_process import wordset
 
 
 class LocalData:
