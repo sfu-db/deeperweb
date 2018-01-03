@@ -80,7 +80,24 @@ class AdvancedPublApi(deeperlib.api.simapi.SimpleApi):
         mresult = []
         for t in threads:
             mresult.extend(t.getResult())
-        return mresult
+        simresult = []
+        for m in mresult:
+            temp_record = {}
+            try:
+                temp_record['id'] = m['id']
+                temp_record['title'] = m['title']
+                temp_record['authors'] = []
+                for author in m['authors']:
+                    temp_record['authors'].append({'name': author['name']})
+                temp_record['issn'] = m['issn']
+                temp_record['num_citation'] = m['num_citation']
+                temp_record['urls'] = m['urls']
+                temp_record['venue'] = {'name': m['venue']['name'], 'id': m['venue']['id']}
+                temp_record['year'] = m['year']
+                simresult.append(temp_record)
+            except (KeyError):
+                pass
+        return simresult
 
     def setTopk(self, top_k):
         self.__topk = top_k

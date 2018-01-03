@@ -6,6 +6,7 @@ from django.conf import settings
 import time
 from deeperlib.api.dblp.publapi import PublApi
 from deeperlib.api.yelp.searchapi import SearchApi
+from deeperlib.api.aminer.advanced_publapi import AdvancedPublApi
 from deeperlib.data_processing.sample_data import SampleData
 from webcrawl import SmartCrawl, NaiveCrawl
 from local_data import LocalData
@@ -17,7 +18,7 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
     if api_msg == 'dblp Publ API':
         search_term = 'q'
         parameters = {'h': 1000}
-        api = PublApi(top_k=1000, delay=4, search_term=search_term, **parameters)
+        api = PublApi(top_k=1000, delay=5, search_term=search_term, **parameters)
         sample_file = settings.BASE_DIR + '/netdisk/dblp_sample.csv'
         sampledata = SampleData(sample_ratio=0.5, samplepath=sample_file, filetype='csv', uniqueid="key",
                                 querylist=["title"])
@@ -35,6 +36,27 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
             localdata = LocalData(uniqueid=uniqueID,
                                   querylist=[local_match[hidden_match.index("info.title")]],
                                   matchlist=[local_match[hidden_match.index("info.title")]], data_raw=original_csv)
+    elif api_msg == 'aminer Publ API':
+        search_term = 'term'
+        parameters = {'size': 100, 'sort': 'relevance'}
+        api = AdvancedPublApi(top_k=300, delay=5, search_term=search_term, **parameters)
+        sample_file = settings.BASE_DIR + '/netdisk/dblp_sample.csv'
+        sampledata = SampleData(sample_ratio=0.5, samplepath=sample_file, filetype='csv', uniqueid="key",
+                                querylist=["title"])
+        hiddendata = HiddenData(uniqueid="id", matchlist=["title"])
+
+        if "id" in hidden_match:
+            localdata = LocalData(uniqueid=local_match[hidden_match.index("id")],
+                                  querylist=[local_match[hidden_match.index("title")]],
+                                  matchlist=[local_match[hidden_match.index("title")]], data_raw=original_csv)
+        else:
+            uniqueID = 'ID' + str(int(time.time()))
+            original_csv[0].append(uniqueID)
+            for i in range(1, len(original_csv)):
+                original_csv[i].append(i)
+            localdata = LocalData(uniqueid=uniqueID,
+                                  querylist=[local_match[hidden_match.index("title")]],
+                                  matchlist=[local_match[hidden_match.index("title")]], data_raw=original_csv)
     elif api_msg == 'yelp Search API':
         client_id = "kCe2YbZePXsPnC204ZrXoQ"
         client_secret = "s9KnvEEQW7jaA2wlrBi4X2fnDQ0F7asdklXVvJUidWp8i50ov24E8EjkHX2AUhoL"
@@ -85,8 +107,13 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
     if api_msg == 'dblp Publ API':
         search_term = 'q'
         parameters = {'h': 10}
-        api = PublApi(top_k=10, delay=4, search_term=search_term, **parameters)
+        api = PublApi(top_k=10, delay=5, search_term=search_term, **parameters)
         hiddendata = HiddenData(uniqueid="info.key", matchlist=["info.title"])
+    elif api_msg == 'aminer Publ API':
+        search_term = 'term'
+        parameters = {'size': 10, 'sort': 'relevance'}
+        api = AdvancedPublApi(top_k=10, delay=5, search_term=search_term, **parameters)
+        hiddendata = HiddenData(uniqueid="id", matchlist=["title"])
     elif api_msg == 'yelp Search API':
         client_id = "kCe2YbZePXsPnC204ZrXoQ"
         client_secret = "s9KnvEEQW7jaA2wlrBi4X2fnDQ0F7asdklXVvJUidWp8i50ov24E8EjkHX2AUhoL"

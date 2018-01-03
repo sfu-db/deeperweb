@@ -2387,7 +2387,7 @@ nav .inner-nav.mobile_nav.opened ul {
 }
 
 .breadcrumbs h1 {
-    color: #404040;
+    color: #f8f5f0;
     font-size: 30px;
     margin: 0;
     text-transform: uppercase;
@@ -2400,16 +2400,16 @@ nav .inner-nav.mobile_nav.opened ul {
 }
 
 .breadcrumbs .breadcrumbs-item a {
-    color: #404040;
+    color: #f8f5f0;
     font-size: 14px;
 }
 
 .breadcrumbs .breadcrumbs-item a:hover {
-    color: #237dc8;
+    color: #46b8da;
 }
 
 .breadcrumbs .breadcrumbs-item a:last-child {
-    color: #237dc8;
+    color: #46b8da;
 }
 
 .breadcrumbs .breadcrumbs-item i {

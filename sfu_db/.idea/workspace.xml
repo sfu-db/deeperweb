@@ -10,67 +10,39 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/sfu_db$Nosetests_for_test_aminer_advanced_publapi_AminerAdvancedPublapiTestCase_test_callMulApi.coverage" NAME="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi Coverage Results" MODIFIED="1514966819420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/api/aminer" />
+    <SUITE FILE_PATH="coverage/sfu_db$Nosetests_in_test_aminer_advanced_publapi_py.coverage" NAME="Nosetests in test_aminer_advanced_publapi.py Coverage Results" MODIFIED="1514966874235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/api/aminer" />
     <SUITE FILE_PATH="coverage/sfu_db$deeper_htmlparser.coverage" NAME="deeper_htmlparser Coverage Results" MODIFIED="1514963109792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/web" />
+    <SUITE FILE_PATH="coverage/sfu_db$Nosetests_for_test_aminer_advanced_publapi_AminerAdvancedPublapiTestCase.coverage" NAME="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase Coverage Results" MODIFIED="1514966772524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/api/aminer" />
     <SUITE FILE_PATH="coverage/sfu_db$deeperHTMLParser.coverage" NAME="deeperHTMLParser Coverage Results" MODIFIED="1514884327171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/web" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="demo.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
+      <file leaf-file-name="demo.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-42">
-              <caret line="133" column="9" lean-forward="false" selection-start-line="133" selection-start-column="9" selection-end-line="133" selection-end-column="9" />
+            <state relative-caret-position="1690">
+              <caret line="81" column="95" lean-forward="false" selection-start-line="81" selection-start-column="95" selection-end-line="81" selection-end-column="95" />
               <folding>
-                <marker date="1514909379516" expanded="true" signature="5653:5662" ph="..." />
-                <marker date="1514909379516" expanded="true" signature="17337:17353" ph="..." />
-                <marker date="1514909379516" expanded="true" signature="17531:17544" ph="..." />
-                <marker date="1514909379516" expanded="true" signature="17802:17818" ph="..." />
+                <element signature="n#style#0;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#textarea#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#section#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="webcrawl.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deeperlib/web/webcrawl.py">
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-141">
-              <caret line="86" column="4" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="4" />
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="local_data.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deeperlib/web/local_data.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="66" column="18" lean-forward="false" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="18" />
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deeperweb/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-521">
-              <caret line="68" column="32" lean-forward="true" selection-start-line="68" selection-start-column="32" selection-end-line="68" selection-end-column="32" />
-              <folding>
-                <element signature="e#24#63#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="deeper_web.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_web.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="15" column="32" lean-forward="false" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+            <state relative-caret-position="184">
+              <caret line="2424" column="155" lean-forward="false" selection-start-line="2424" selection-start-column="154" selection-end-line="2424" selection-end-column="155" />
               <folding />
             </state>
           </provider>
@@ -103,14 +75,23 @@
       <find>countdown</find>
       <find>find</find>
       <find>each</find>
+      <find>bg_</find>
+      <find>bg-g</find>
+      <find>content-body</find>
+      <find>container</find>
+      <find>background</find>
+      <find>site</find>
+      <find>style-1</find>
+      <find>content-title</find>
+      <find>call-out</find>
+      <find>23</find>
+      <find>breadcrumbs</find>
+      <find>a</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/includes/side.html" />
-        <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/contact.html" />
-        <option value="$PROJECT_DIR$/deeperweb/myforms.py" />
         <option value="$USER_HOME$/Desktop/backup/DeepER/NewDeepER/csv_example/dblp_example.py" />
         <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/setting.html" />
         <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/css/bootstrap.css" />
@@ -131,7 +112,6 @@
         <option value="$PROJECT_DIR$/deeperlib/web/json2csv.py" />
         <option value="$PROJECT_DIR$/deeperweb/models.py" />
         <option value="$PROJECT_DIR$/deeperweb/migrations/0001_initial.py" />
-        <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/index.html" />
         <option value="$PROJECT_DIR$/sfu_db/urls.py" />
         <option value="$PROJECT_DIR$/netdisk/dblp_3881.csv" />
         <option value="$PROJECT_DIR$/deeperweb/templates/aaa.py" />
@@ -144,21 +124,25 @@
         <option value="$PROJECT_DIR$/netdisk/deeperweb.conf" />
         <option value="$PROJECT_DIR$/netdisk/settings.py" />
         <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/about.html" />
-        <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css" />
         <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/js/script.js" />
         <option value="$PROJECT_DIR$/deeperlib/web/hidden_data.py" />
         <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/includes/header.html" />
         <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/includes/footer.html" />
         <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/js/bootstrap-table-expandable.js" />
         <option value="$PROJECT_DIR$/deeperlib/web/smartcrawl.py" />
-        <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html" />
         <option value="$PROJECT_DIR$/deeperlib/web/deeperHTMLParser.py" />
-        <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js" />
         <option value="$PROJECT_DIR$/deeperlib/web/local_data.py" />
         <option value="$PROJECT_DIR$/deeperlib/web/deeper_htmlparser.py" />
-        <option value="$PROJECT_DIR$/deeperlib/web/webcrawl.py" />
         <option value="$PROJECT_DIR$/deeperweb/views.py" />
+        <option value="$PROJECT_DIR$/deeperlib/api/aminer/test_aminer_advanced_publapi.py" />
+        <option value="$PROJECT_DIR$/deeperlib/api/aminer/advanced_personapi.py" />
+        <option value="$PROJECT_DIR$/deeperlib/web/webcrawl.py" />
         <option value="$PROJECT_DIR$/deeperlib/web/deeper_web.py" />
+        <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js" />
+        <option value="$PROJECT_DIR$/deeperlib/api/aminer/advanced_publapi.py" />
+        <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/index.html" />
+        <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css" />
+        <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html" />
       </list>
     </option>
   </component>
@@ -168,9 +152,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="256" />
-    <option name="y" value="256" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-8" />
+    <option name="y" value="27" />
     <option name="width" value="1600" />
     <option name="height" value="710" />
   </component>
@@ -200,31 +184,19 @@
             <path>
               <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
               <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperlib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperlib" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
               <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
               <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
               <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
               <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -241,11 +213,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\PycharmProjects\sfu_db\deeperlib\api\aminer" />
       <recent name="C:\PycharmProjects\sfu_db\netdisk" />
       <recent name="C:\PycharmProjects\sfu_db\deeperweb\static\deeperweb\js" />
       <recent name="C:\PycharmProjects\sfu_db\deeperlib\web" />
       <recent name="C:\PycharmProjects\sfu_db\deeperweb" />
-      <recent name="C:\PycharmProjects\sfu_db\filebrowser\templates\filebrowser" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -260,64 +232,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.deeper_htmlparser">
-    <configuration name="aaa" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperweb/templates" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sfu_db" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/deeperweb/templates/aaa.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="dasfaf" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperweb" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sfu_db" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/deeperweb/dasfaf.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="dblp_example (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../deeperlib/csv_example" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sfu_db" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../deeperlib/csv_example/dblp_example.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
+  <component name="RunManager" selected="Python tests.Nosetests in test_aminer_advanced_publapi.py">
     <configuration name="deeperHTMLParser" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -356,20 +271,68 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperlib/api/aminer" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="sfu_db" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_regexPattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
+    <configuration name="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperlib/api/aminer" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="sfu_db" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_regexPattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
+    <configuration name="Nosetests in test_aminer_advanced_publapi.py" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperlib/api/aminer" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="sfu_db" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_regexPattern" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/deeperlib/api/aminer/test_aminer_advanced_publapi.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+    </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.dblp_example (1)" />
-      <item index="1" class="java.lang.String" itemvalue="Python.aaa" />
-      <item index="2" class="java.lang.String" itemvalue="Python.dasfaf" />
-      <item index="3" class="java.lang.String" itemvalue="Python.deeperHTMLParser" />
-      <item index="4" class="java.lang.String" itemvalue="Python.deeper_htmlparser" />
+      <item index="0" class="java.lang.String" itemvalue="Python.deeperHTMLParser" />
+      <item index="1" class="java.lang.String" itemvalue="Python.deeper_htmlparser" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi" />
+      <item index="4" class="java.lang.String" itemvalue="Python tests.Nosetests in test_aminer_advanced_publapi.py" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.deeper_htmlparser" />
-        <item index="1" class="java.lang.String" itemvalue="Python.deeperHTMLParser" />
-        <item index="2" class="java.lang.String" itemvalue="Python.dasfaf" />
-        <item index="3" class="java.lang.String" itemvalue="Python.aaa" />
-        <item index="4" class="java.lang.String" itemvalue="Python.dblp_example (1)" />
+        <item index="0" class="java.lang.String" itemvalue="Python tests.Nosetests in test_aminer_advanced_publapi.py" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase" />
+        <item index="3" class="java.lang.String" itemvalue="Python.deeper_htmlparser" />
+        <item index="4" class="java.lang.String" itemvalue="Python.deeperHTMLParser" />
       </list>
     </recent_temporary>
   </component>
@@ -390,8 +353,17 @@
     <servers />
   </component>
   <component name="TestHistory">
+    <history-entry file="Nosetests_for_test_aminer_advanced_publapi_AminerAdvancedPublapiTestCase - 2018.01.03 at 16h 06m 38s.xml">
+      <configuration name="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_for_test_aminer_advanced_publapi_AminerAdvancedPublapiTestCase_test_callMulApi - 2018.01.03 at 16h 07m 12s.xml">
+      <configuration name="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi" configurationId="tests" />
+    </history-entry>
     <history-entry file="Nosetests_in_dblp_example_py - 2017.10.03 at 21h 23m 20s.xml">
       <configuration name="Nosetests in dblp_example.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_test_aminer_advanced_publapi_py - 2018.01.03 at 16h 08m 22s.xml">
+      <configuration name="Nosetests in test_aminer_advanced_publapi.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -404,7 +376,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -442,26 +414,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/hidden_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5280">
-          <caret line="160" column="59" lean-forward="true" selection-start-line="160" selection-start-column="59" selection-end-line="160" selection-end-column="59" />
-          <folding>
-            <marker date="1514909379516" expanded="true" signature="5653:5662" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17337:17353" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17531:17544" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17802:17818" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1419">
@@ -469,17 +421,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/script.js">
+    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="49929">
-          <caret line="1513" column="38" lean-forward="false" selection-start-line="1513" selection-start-column="38" selection-end-line="1513" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/json2csv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="5016">
+          <caret line="152" column="21" lean-forward="false" selection-start-line="152" selection-start-column="21" selection-end-line="152" selection-end-column="21" />
+          <folding>
+            <marker date="1514977208171" expanded="true" signature="6826:6835" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="18788:18804" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="18982:18995" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="19253:19269" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -487,6 +438,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1353">
           <caret line="41" column="47" lean-forward="false" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
+          <folding>
+            <element signature="n#style#0;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -516,10 +478,10 @@
         <state relative-caret-position="5016">
           <caret line="152" column="21" lean-forward="false" selection-start-line="152" selection-start-column="21" selection-end-line="152" selection-end-column="21" />
           <folding>
-            <marker date="1514909379516" expanded="true" signature="5653:5662" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17337:17353" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17531:17544" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17802:17818" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="6826:6835" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="18788:18804" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="18982:18995" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="19253:19269" ph="..." />
           </folding>
         </state>
       </provider>
@@ -528,47 +490,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1353">
           <caret line="41" column="47" lean-forward="false" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_web.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1419">
-          <caret line="43" column="37" lean-forward="false" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="49929">
-          <caret line="1513" column="38" lean-forward="false" selection-start-line="1513" selection-start-column="38" selection-end-line="1513" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1419">
-          <caret line="43" column="53" lean-forward="false" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5016">
-          <caret line="152" column="21" lean-forward="false" selection-start-line="152" selection-start-column="21" selection-end-line="152" selection-end-column="21" />
           <folding>
-            <marker date="1514909379516" expanded="true" signature="5653:5662" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17337:17353" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17531:17544" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17802:17818" ph="..." />
+            <element signature="n#style#0;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1353">
-          <caret line="41" column="47" lean-forward="false" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -598,10 +530,10 @@
         <state relative-caret-position="9042">
           <caret line="274" column="42" lean-forward="false" selection-start-line="274" selection-start-column="42" selection-end-line="274" selection-end-column="42" />
           <folding>
-            <marker date="1514909379516" expanded="true" signature="5653:5662" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17337:17353" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17531:17544" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17802:17818" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="6826:6835" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="18788:18804" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="18982:18995" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="19253:19269" ph="..." />
           </folding>
         </state>
       </provider>
@@ -676,13 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/includes/header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="20" column="86" lean-forward="true" selection-start-line="20" selection-start-column="86" selection-end-line="20" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/includes/footer.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="33">
@@ -702,14 +627,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/data_process.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -751,13 +668,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="83" column="9" lean-forward="false" selection-start-line="83" selection-start-column="9" selection-end-line="83" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_htmlparser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -782,19 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-42">
-          <caret line="133" column="9" lean-forward="false" selection-start-line="133" selection-start-column="9" selection-end-line="133" selection-end-column="9" />
-          <folding>
-            <marker date="1514909379516" expanded="true" signature="5653:5662" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17337:17353" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17531:17544" ph="..." />
-            <marker date="1514909379516" expanded="true" signature="17802:17818" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/api/yelp/searchapi.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1617">
@@ -808,7 +705,7 @@
         <state relative-caret-position="-521">
           <caret line="68" column="32" lean-forward="true" selection-start-line="68" selection-start-column="32" selection-end-line="68" selection-end-column="32" />
           <folding>
-            <element signature="e#24#63#0" expanded="true" />
+            <element signature="e#24#63#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -818,26 +715,139 @@
         <state relative-caret-position="166">
           <caret line="66" column="18" lean-forward="false" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="18" />
           <folding>
-            <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/simapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/simthread.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="8" column="8" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/aminer/advanced_personapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="130" column="0" lean-forward="true" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#30#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/aminer/test_aminer_advanced_publapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="27" column="34" lean-forward="false" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/includes/header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-924">
+          <caret line="20" column="86" lean-forward="true" selection-start-line="20" selection-start-column="86" selection-end-line="20" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/local_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="63" column="27" lean-forward="false" selection-start-line="63" selection-start-column="27" selection-end-line="63" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#30#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/web/webcrawl.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-141">
-          <caret line="86" column="4" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="429">
+          <caret line="98" column="93" lean-forward="false" selection-start-line="98" selection-start-column="93" selection-end-line="98" selection-end-column="93" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/data_process.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-653">
+          <caret line="32" column="4" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_web.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="15" column="32" lean-forward="false" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+        <state relative-caret-position="2178">
+          <caret line="66" column="36" lean-forward="true" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="36" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/aminer/advanced_publapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="98" column="20" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="93" column="134" lean-forward="false" selection-start-line="93" selection-start-column="134" selection-end-line="93" selection-end-column="134" />
+          <folding>
+            <marker date="1514977208171" expanded="true" signature="6826:6835" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="18788:18804" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="18982:18995" ph="..." />
+            <marker date="1514977208171" expanded="true" signature="19253:19269" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="63" column="51" lean-forward="true" selection-start-line="63" selection-start-column="44" selection-end-line="63" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="2424" column="155" lean-forward="false" selection-start-line="2424" selection-start-column="154" selection-end-line="2424" selection-end-column="155" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1690">
+          <caret line="81" column="95" lean-forward="false" selection-start-line="81" selection-start-column="95" selection-end-line="81" selection-end-column="95" />
+          <folding>
+            <element signature="n#style#0;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#div#2;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#1;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

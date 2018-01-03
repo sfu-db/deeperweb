@@ -89,6 +89,27 @@ function api_choose() {
                 $(".alert-popup").addClass("open");
                 $(".alert-popup p").html("Sorry, this api is not supported now.");
             }
+        } else if($(this).parent().is($("ul#aminer"))){
+            if ($(this).text() === 'Publ API') {
+                var aminer_search_schema = ['id', 'title', 'authors.*.name', 'issn', 'num_citation', 'urls.*', 'venue.name', 'venue.id', 'year'];
+                $.each(aminer_search_schema, function (index, element) {
+                    hidden_schema.append("<a class='tag'>" + element + "</a>");
+                    if (index < 3) {
+                        hidden_schema.find("a:last").css({
+                            'color': '#ffffff',
+                            'background': '#237dc8',
+                            'border-color': '#237dc8'
+                        });
+                        hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
+                    }
+                });
+                if ($('.bootstrap-switch#example input').bootstrapSwitch('state')) {
+                    $("div#text_input textarea").val(dblp_publ_text);
+                }
+            } else {
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p").html("Sorry, this api is not supported now.");
+            }
         } else if ($(this).parent().is($("ul#yelp"))) {
             if ($(this).text() === 'Search API') {
                 var yelp_search_schema = ['id', 'name', 'location.display_address.*', 'rating', 'review_count', 'transactions.*', 'url', 'price', 'distance', 'coordinates.latitude', 'coordinates.longitude', 'phone', 'image_url', 'categories.*.alias', 'categories.*.title', 'display_phone', 'is_closed', 'location.city', 'location.country', 'location.address2', 'location.address3', 'location.state', 'location.address1', 'location.zip_code'];
@@ -336,13 +357,19 @@ function smart_crawl() {
                 $(".alert-popup p").html("info.title is necessary.");
                 return false;
             }
+        } else if (api_msg === "aminer Publ API") {
+            if ($.inArray("title", hidden_match) === -1) {
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p").html("info.title is necessary.");
+                return false;
+            }
         } else if (api_msg === "yelp Search API") {
             if ($.inArray("name", hidden_match) === -1 || $.inArray("location.display_address.*", hidden_match) === -1) {
                 $(".alert-popup").addClass("open");
                 $(".alert-popup p").html("name and location.display_address.* is necessary.");
                 return false;
             }
-        } else {
+        }  else {
             $(".alert-popup").addClass("open");
             $(".alert-popup p").html("Sorry, this api is not supported now.");
             return false;
