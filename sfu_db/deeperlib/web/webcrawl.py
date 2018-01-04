@@ -5,7 +5,7 @@ import random
 from deeperlib.core import utils
 
 
-def SmartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jaccard_thre=0.85, threads=4):
+def SmartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jaccard_thre=0.75, threads=4):
     time_s = timeit.default_timer()
     sample = sampledata.getSample()
     D1_ids, D1_query, D1_er = localdata.getlocalData()
@@ -104,4 +104,7 @@ def NaiveCrawl(budget, api, localdata, hiddendata, jaccard_thre=0.85, threads=4)
             len(hiddendata.getMergeResult()), 'different results returned, ', \
             len(curcov), 'local records covered totally.'
     api.getSession().close()
+
+    if len(curcov) > budget:
+        return budget
     return len(curcov)

@@ -89,7 +89,7 @@ function api_choose() {
                 $(".alert-popup").addClass("open");
                 $(".alert-popup p").html("Sorry, this api is not supported now.");
             }
-        } else if($(this).parent().is($("ul#aminer"))){
+        } else if ($(this).parent().is($("ul#aminer"))) {
             if ($(this).text() === 'Publ API') {
                 var aminer_search_schema = ['id', 'title', 'authors.*.name', 'issn', 'num_citation', 'urls.*', 'venue.name', 'venue.id', 'year'];
                 $.each(aminer_search_schema, function (index, element) {
@@ -155,20 +155,25 @@ function api_choose() {
 function add_typos() {
     var table_input = $('div#table_input table');
     var header_num = $('div#table_input table thead tr th').length;
-    var typos = ["&*^%#", "SIGMOD", "VLDB", "ICDE", "2018", "Database", "Journal", "Conference", "Vancouver", "Seattle"];
+    var typos = ["SIGMOD", "VLDB", "ICDE", "2018", "Database", "Journal", "Conference", "Vancouver", "Seattle"];
     var temp;
     var temp_array;
     $.each(table_input.find('tbody tr'), function (index, element) {
-        temp = $(element).find('td:eq(' + Math.floor(Math.random() * header_num) + ')');
-        typo = "<span style=\"color:Red\">" + typos[Math.floor(Math.random() * typos.length)] + "</span>";
-        if (temp.text().indexOf(' ') !== -1) {
-            temp_array = temp.text().split(' ');
-            temp_array.splice(Math.floor(Math.random() * (temp_array.length + 1)), 0, typo);
-            temp.html(temp_array.join(' '));
-        } else if (temp.text().indexOf('/') !== -1) {
-            temp_array = temp.text().split('/');
-            temp_array.splice(Math.floor(Math.random() * (temp_array.length + 1)), 0, typo);
-            temp.html(temp_array.join('/'));
+        if (index >= 10) {
+            return false;
+        }
+        if (!(index % 3)) {
+            temp = $(element).find('td:eq(1)');
+            typo = "<span style=\"color:Red\">" + typos[Math.floor(Math.random() * typos.length)] + "</span>";
+            if (temp.text().indexOf(' ') !== -1) {
+                temp_array = temp.text().split(' ');
+                temp_array.splice(Math.floor(Math.random() * (temp_array.length + 1)), 0, typo);
+                temp.html(temp_array.join(' '));
+            } else if (temp.text().indexOf('/') !== -1) {
+                temp_array = temp.text().split('/');
+                temp_array.splice(Math.floor(Math.random() * (temp_array.length + 1)), 0, typo);
+                temp.html(temp_array.join('/'));
+            }
         }
     });
 }
@@ -369,7 +374,7 @@ function smart_crawl() {
                 $(".alert-popup p").html("name and location.display_address.* is necessary.");
                 return false;
             }
-        }  else {
+        } else {
             $(".alert-popup").addClass("open");
             $(".alert-popup p").html("Sorry, this api is not supported now.");
             return false;
@@ -513,6 +518,9 @@ function smart_crawl() {
 /*init table*/
 function init_table() {
     $("table#table_result tbody").delegate("tr td div.table-expandable-arrow", "click", function () {
+        $("table#table_result tbody tr td span.glyphicon").each(function () {
+            $(this).closest("tr").addClass('bg-sand')
+        });
         var element = $(this).closest('tr');
         element.find(".table-expandable-arrow").toggleClass("up");
         temp = element.next('tr');
@@ -617,7 +625,7 @@ function timer() {
         $topLoader.setProgress(0);
         $topLoader.setValue('0ms');
         var ms = 0;
-        var totalMs = 20000;
+        var totalMs = 8000;
 
         var animateFunc = function () {
             ms += 25;
@@ -718,227 +726,216 @@ function record_replace() {
         alter_row.find("td:last").html("<div class='table-expandable-arrow'></div>");
         current_row.find("td:last").html("<span class=\"glyphicon glyphicon-retweet\"></span>");
         current_row.before(alter_row);
+        current_row.addClass('bg-sand');
+        alter_row.removeClass('bg-sand');
         alter_row.find(".table-expandable-arrow").toggleClass("up");
     });
 }
 
 var dblp_publ_text = "ID,title,author\n" +
-    "conf/tapp/2017,9th USENIX Workshop on the Theory and Practice of Provenance, TaPP 2017, Seattle, WA, USA, June 23, 2017,Adam M. Bates and Bill Howe\n" +
-    "conf/sigmod/2017,Proceedings of the 2017 ACM International Conference on Management of Data, SIGMOD Conference 2017, Chicago, IL, USA, May 14-19, 2017,Semih Salihoglu and Wenchao Zhou and Rada Chirkova and Jun Yang and Dan Suciu\n" +
-    "conf/pods/Suciu17,Communication Cost in Parallel Query Evaluation: A Tutorial,Dan Suciu\n" +
-    "conf/cidr/ChuWWC17,Cosette: An Automated Prover for SQL,Shumo Chu and Chenglong Wang and Konstantin Weitz and Alvin Cheung\n" +
-    "conf/cikm/YanCYL17,Understanding Database Performance Inefficiencies in Real-world Web Applications,Cong Yan and Alvin Cheung and Junwen Yang and Shan Lu\n" +
-    "conf/pldi/ChuWCS17,HoTTSQL: proving query rewrites with univalent SQL semantics,Shumo Chu and Konstantin Weitz and Alvin Cheung and Dan Suciu\n" +
-    "conf/pldi/WangCB17,Synthesizing highly expressive SQL queries from input-output examples,Chenglong Wang and Alvin Cheung and Rastislav Bodik\n" +
-    "conf/acl/IyerKCKZ17,Learning a Neural Semantic Parser from User Feedback,Srinivasan Iyer and Ioannis Konstas and Alvin Cheung and Jayant Krishnamurthy and Luke Zettlemoyer\n" +
-    "conf/ssdbm/PingSH17,DataSynthesizer: Privacy-Preserving Synthetic Datasets,Haoyue Ping and Julia Stoyanovich and Bill Howe\n" +
-    "conf/usenix/WangB17,Elastic Memory Management for Cloud Data Analytics,Jingjing Wang and Magdalena Balazinska\n" +
-    "conf/www/HoweLGYW17,Deep Mapping of the Visual Literature,Bill Howe and Po-Shen Lee and Maxim Grechkin and Sean T. Yang and Jevin D. West\n" +
-    "conf/damon/FurstOH17,Profiling a GPU database implementation: a holistic view of GPU resource utilization on TPC-H queries,Emily Furst and Mark Oskin and Bill Howe\n" +
-    "conf/icde/HoweFHKU17,Data Science Education: We're Missing the Boat, Again,Bill Howe and Michael J. Franklin and Laura M. Haas and Tim Kraska and Jeffrey D. Ullman\n" +
-    "conf/pods/KetsmanS17,A Worst-Case Optimal Multi-Round Algorithm for Parallel Computation of Conjunctive Queries,Bas Ketsman and Dan Suciu\n" +
-    "conf/pods/Khamis0S17,What Do Shannon-type Inequalities, Submodular Width, and Disjunctive Datalog Have to Do with One Another?,Mahmoud Abo Khamis and Hung Q. Ngo and Dan Suciu\n" +
-    "conf/sigmod/AhmadC17,Optimizing Data-Intensive Applications Automatically By Leveraging Parallel Data Processing Frameworks,Maaz Bin Safeer Ahmad and Alvin Cheung\n" +
-    "conf/sigmod/WangCB17,Interactive Query Synthesis from Input-Output Examples,Chenglong Wang and Alvin Cheung and Rastislav Bodik\n" +
-    "conf/sigmod/ChuLWCS17,Demonstration of the Cosette Automated SQL Prover,Shumo Chu and Daniel Li and Chenglong Wang and Alvin Cheung and Dan Suciu\n" +
-    "journals/cacm/LiLMS17,A theory of pricing private data,Chao Li and Daniel Yang Li and Gerome Miklau and Dan Suciu\n" +
-    "journals/pvldb/OrrSB17,Probabilistic Database Summarization for Interactive Data Exploration,Laurel Orr and Dan Suciu and Magdalena Balazinska\n" +
-    "journals/ftdb/BroeckS17,Query Processing on Probabilistic Data: A Survey,Guy Van den Broeck and Dan Suciu\n" +
-    "journals/jacm/BeameKS17,Communication Steps for Parallel Query Processing,Paul Beame and Paraschos Koutris and Dan Suciu\n" +
-    "journals/tkdd/BaeHWRH17,Scalable and Efficient Flow-Based Community Detection for Large-Scale Graph Analysis,Seung-Hee Bae and Daniel Halperin and Jevin D. West and Martin Rosvall and Bill Howe\n" +
-    "conf/sigmod/HaynesMBCC17,VisualCloud Demonstration: A DBMS for Virtual Reality,Brandon Haynes and Artem Minyaylov and Magdalena Balazinska and Luis Ceze and Alvin Cheung\n" +
-    "journals/tods/Beame0RS17,Exact Model Counting of Query Expressions: Limitations of Propositional Methods,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
-    "conf/sigmod/HutchisonHS17,LaraDB: A Minimalist Kernel for Linear and Relational Algebra Computation,Dylan Hutchison and Bill Howe and Dan Suciu\n" +
-    "journals/mst/KoutrisMRS17,Answering Conjunctive Queries with Inequalities,Paraschos Koutris and Tova Milo and Sudeepa Roy and Dan Suciu\n" +
-    "conf/chi/WongsuphasawatQ17,Voyager 2: Augmenting Visual Analysis with Partial View Specifications,Kanit Wongsuphasawat and Zening Qu and Dominik Moritz and Riley Chang and Felix Ouk and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
-    "conf/cidr/BalazinskaCCCS17,A Visual Cloud for Virtual Reality Applications,Magdalena Balazinska and Luis Ceze and Alvin Cheung and Brian Curless and Steven M. Seitz\n" +
-    "journals/pvldb/SalimiCPS17,ZaliQL: Causal Inference from Observational Data at Scale,Babak Salimi and Corey Cole and Dan R. K. Ports and Dan Suciu\n" +
-    "conf/cidr/WangBBHHHHJMMMM17,The Myria Big Data Management and Analytics System and Cloud Services,Jingjing Wang and Tobin Baker and Magdalena Balazinska and Daniel Halperin and Brandon Haynes and Bill Howe and Dylan Hutchison and Shrainik Jain and Ryan Maas and Parmita Mehta and Dominik Moritz and Brandon Myers and Jennifer Ortiz and Dan Suciu and Andrew Whitaker and Shengliang Xu\n" +
-    "conf/ssdbm/StoyanovichHAMS17,Fides: Towards a Platform for Responsible Data Science,Julia Stoyanovich and Bill Howe and Serge Abiteboul and Gerome Miklau and Arnaud Sahuguet and Gerhard Weikum\n" +
-    "journals/vldb/GatterbauerS17,Dissociation and propagation for approximate lifted inference with standard relational database management systems,Wolfgang Gatterbauer and Dan Suciu\n" +
-    "conf/sigmod/GudmundsdottirS17,A Demonstration of Interactive Analysis of Performance Measurements with Viska,Helga Gudmundsdottir and Babak Salimi and Magdalena Balazinska and Dan R. K. Ports and Dan Suciu\n" +
-    "journals/pvldb/MehtaDZKCBRCVA17,Comparative Evaluation of Big-Data Systems on Scientific Image Analytics Workloads,Parmita Mehta and Sven Dorkenwald and Dongfang Zhao and Tomer Kaftan and Alvin Cheung and Magdalena Balazinska and Ariel Rokem and Andrew J. Connolly and Jacob VanderPlas and Yusra AlSayyad\n" +
-    "conf/www/LeeWH16,VizioMetrix: A Platform for Analyzing the Visual Information in Big Scholarly Data,Po-Shen Lee and Jevin D. West and Bill Howe\n" +
-    "conf/dlog/Suciu16,Lifted Inference in Probabilistic Databases,Dan Suciu\n" +
-    "conf/acl/IyerKCZ16,Summarizing Source Code using a Neural Attention Model,Srinivasan Iyer and Ioannis Konstas and Alvin Cheung and Luke Zettlemoyer\n" +
-    "conf/icde/JainMH16,High variety cloud databases,Shrainik Jain and Dominik Moritz and Bill Howe\n" +
-    "conf/sigmod/WangB16,Toward elastic memory management for cloud data analytics,Jingjing Wang and Magdalena Balazinska\n" +
-    "conf/ismir/HyrkasH16,MusicDB: A Platform for Longitudinal Music Analytics,Jeremy Hyrkas and Bill Howe\n" +
-    "conf/pldi/KamilCIS16,Verified lifting of stencil computations,Shoaib Kamil and Alvin Cheung and Shachar Itzhaky and Armando Solar-Lezama\n" +
-    "conf/pods/KhamisNS16,Computing Join Queries with Functional Dependencies,Mahmoud Abo Khamis and Hung Q. Ngo and Dan Suciu\n" +
-    "conf/aaai/GribkoffS16,SlimShot: Probabilistic Inference for Web-Scale Knowledge Bases,Eric Gribkoff and Dan Suciu\n" +
-    "conf/cloud/HaynesCB16,PipeGen: Data Pipe Generator for Hybrid Analytics,Brandon Haynes and Alvin Cheung and Magdalena Balazinska\n" +
-    "conf/icdt/KoutrisBS16,Worst-Case Optimal Algorithms for Parallel Query Processing,Paraschos Koutris and Paul Beame and Dan Suciu\n" +
-    "conf/sigmod/OrtizLB16,PerfEnforce Demonstration: Data Analytics with Performance Guarantees,Jennifer Ortiz and Brendan Lee and Magdalena Balazinska\n" +
-    "conf/tapp/SalimiBSB16,Quantifying Causal Effects on Query Answering in Databases,Babak Salimi and Leopoldo E. Bertossi and Dan Suciu and Guy Van den Broeck\n" +
-    "journals/pvldb/YanC16,Leveraging Lock Contention to Improve OLTP Application Performance,Cong Yan and Alvin Cheung\n" +
-    "conf/sigmod/JainMHHL16,SQLShare: Results from a Multi-Year SQL-as-a-Service Experiment,Shrainik Jain and Dominik Moritz and Daniel Halperin and Bill Howe and Ed Lazowska\n" +
-    "journals/corr/AhmadC16,Leveraging Parallel Data Processing Frameworks with Verified Lifting,Maaz Bin Safeer Ahmad and Alvin Cheung\n" +
-    "journals/ftpl/CheungS16,Computer-Assisted Query Formulation,Alvin Cheung and Armando Solar-Lezama\n" +
-    "conf/hpec/HutchisonKGH16,From NoSQL Accumulo to NewSQL Graphulo: Design and utility of graph algorithms inside a BigTable database,Dylan Hutchison and Jeremy Kepner and Vijay Gadepally and Bill Howe\n" +
-    "journals/tods/CheungMS16,Sloth: Being Lazy Is a Virtue (When Issuing Database Queries),Alvin Cheung and Samuel Madden and Armando Solar-Lezama\n" +
-    "journals/pvldb/GribkoffS16,SlimShot: In-Database Probabilistic Inference for Knowledge Bases,Eric Gribkoff and Dan Suciu\n" +
-    "journals/sigmod/KoutrisS16,A Guide to Formal Analysis of Join Processing in Massively Parallel Systems,Paraschos Koutris and Dan Suciu\n" +
-    "journals/pvldb/UpadhyayaBS16,Price-Optimal Querying with Data APIs,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
-    "conf/sigmod/WongsuphasawatM16,Towards a general-purpose query language for visualization recommendation,Kanit Wongsuphasawat and Dominik Moritz and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
-    "conf/sigcomm/SivaramanCBKABV16,Packet Transactions: High-Level Programming for Line-Rate Switches,Anirudh Sivaraman and Alvin Cheung and Mihai Budiu and Changhoon Kim and Mohammad Alizadeh and Hari Balakrishnan and George Varghese and Nick McKeown and Steve Licking\n" +
-    "journals/cacm/AbadiAABBCCDDFG16,The Beckman report on database research,Daniel Abadi and Rakesh Agrawal and Anastasia Ailamaki and Magdalena Balazinska and Philip A. Bernstein and Michael J. Carey and Surajit Chaudhuri and Jeffrey Dean and AnHai Doan and Michael J. Franklin and Johannes Gehrke and Laura M. Haas and Alon Y. Halevy and Joseph M. Hellerstein and Yannis E. Ioannidis and H. V. Jagadish and Donald Kossmann and Samuel Madden and Sharad Mehrotra and Tova Milo and Jeffrey F. Naughton and Raghu Ramakrishnan and Volker Markl and Christopher Olston and Beng Chin Ooi and Christopher Re and Dan Suciu and Michael Stonebraker and Todd Walter and Jennifer Widom\n" +
-    "journals/tvcg/WongsuphasawatM16,Voyager: Exploratory Analysis via Faceted Browsing of Visualization Recommendations,Kanit Wongsuphasawat and Dominik Moritz and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
-    "journals/sigmod/AbiteboulABBCDH16,Research Directions for Principles of Data Management (Abridged),Serge Abiteboul and Marcelo Arenas and Pablo Barcelo and Meghyn Bienvenu and Diego Calvanese and Claire David and Richard Hull and Eyke Hullermeier and Benny Kimelfeld and Leonid Libkin and Wim Martens and Tova Milo and Filip Murlak and Frank Neven and Magdalena Ortiz and Thomas Schwentick and Julia Stoyanovich and Jianwen Su and Dan Suciu and Victor Vianu and Ke Yi\n" +
-    "journals/bioinformatics/HyrkasCRHAH16,Scalable clustering algorithms for continuous environmental flow cytometry,Jeremy Hyrkas and Sophie Clayton and Francois Ribalet and Daniel Halperin and E. Virginia Armbrust and Bill Howe\n" +
-    "books/sp/16/CetintemelAABBCHMMRRSTXZ16,The Aurora and Borealis Stream Processing Engines,Ugur Cetintemel and Daniel J. Abadi and Yanif Ahmad and Hari Balakrishnan and Magdalena Balazinska and Mitch Cherniack and Jeong-Hyon Hwang and Samuel Madden and Anurag Maskey and Alexander Rasin and Esther Ryvkina and Mike Stonebraker and Nesime Tatbul and Ying Xing and Stan Zdonik\n" +
-    "conf/sc/BaeH15,GossipMap: a distributed community detection algorithm for billion-edge directed graphs,Seung-Hee Bae and Bill Howe\n" +
-    "conf/cloud/2015,Proceedings of the Sixth {ACM} Symposium on Cloud Computing, SoCC 2015, Kohala Coast, Hawaii, USA, August 27-29, 2015,Shahram Ghandeharizadeh and Sumita Barahmand and  Magdalena Balazinska and  Michael J. Freedman\n" +
-    "conf/cidr/Howe15,Big Data Science Needs Big Data Middleware,Bill Howe\n" +
-    "conf/edbt/Suciu15,Communication Cost in Parallel Query Processing,Dan Suciu\n" +
-    "conf/cidr/Cheung15,Towards Generating Application-Specific Data Management Systems,Alvin Cheung\n" +
-    "conf/icpram/LeeH15,Dismantling Composite Visualizations in the Scientific Literature,Po-Shen Lee and Bill Howe\n" +
-    "phd/ndltd/Cheung15,Rethinking the application-database interface,Alvin Cheung\n" +
-    "conf/cidr/OrtizAB15,Changing the Face of Database Cloud Services with Personalized Service Level Agreements,Jennifer Ortiz and Victor Teixeira de Almeida and Magdalena Balazinska\n" +
-    "conf/icpram/LeeH15a,Detecting and Dismantling Composite Visualizations in the Scientific Literature,Po-Shen Lee and Bill Howe\n" +
-    "conf/sigmod/ChuBS15,From Theory to Practice: Efficient Join Query Evaluation in a Parallel Database System,Shumo Chu and Magdalena Balazinska and Dan Suciu\n" +
-    "conf/aaai/HyrkasHH15,Time-Varying Clusters in Large-Scale Flow Cytometry,Jeremy Hyrkas and Daniel Halperin and Bill Howe\n" +
-    "conf/pods/AfratiNS15,The ACM PODS Alberto O. Mendelzon Test-of-Time Award 2015,Foto N. Afrati and Frank Neven and Dan Suciu\n" +
-    "conf/pods/BeameBGS15,Symmetric Weighted First-Order Model Counting,Paul Beame and Guy Van den Broeck and Eric Gribkoff and Dan Suciu\n" +
-    "conf/snapl/CheungKS15,Bridging the Gap Between General-Purpose and Domain-Specific Compilers with Synthesis,Alvin Cheung and Shoaib Kamil and Armando Solar-Lezama\n" +
-    "conf/vldb/MaasHTBCH15,Gaussian Mixture Models Use-Case: In-Memory Analysis with Myria,Ryan Maas and Jeremy Hyrkas and Olivia Grace Telford and Magdalena Balazinska and Andrew J. Connolly and Bill Howe\n" +
-    "conf/icdt/KoutrisMRS15,Answering Conjunctive Queries with Inequalities,Paraschos Koutris and Tova Milo and Sudeepa Roy and Dan Suciu\n" +
-    "conf/sigmod/ReABCJKR15,Machine Learning and Databases: The Sound of Things to Come or a Cacophony of Hype?,Christopher Re and Divy Agrawal and Magdalena Balazinska and Michael J. Cafarella and Michael I. Jordan and Tim Kraska and Raghu Ramakrishnan\n" +
-    "conf/vldb/WilliamsBD15,Automated Analysis of Muscle X-ray Diffraction Imaging with MCMC,C. David Williams and Magdalena Balazinska and Thomas L. Daniel\n" +
-    "journals/pvldb/RoyOS15,Explaining Query Answers with Explanation-Ready Databases,Sudeepa Roy and Laurel Orr and Dan Suciu\n" +
-    "conf/ssdbm/SoroushBKC15,Efficient iterative processing in the SciDB parallel array engine,Emad Soroush and Magdalena Balazinska and K. Simon Krughoff and Andrew J. Connolly\n" +
-    "journals/pvldb/WangBH15,Asynchronous and Fault-Tolerant Recursive Datalog Evaluation in Shared-Nothing Engines,Jingjing Wang and Magdalena Balazinska and Daniel Halperin\n" +
-    "conf/ssdbm/AlawiniMTHN15,Towards automated prediction of relationships among scientific datasets,Abdussalam Alawini and David Maier and Kristin Tufte and Bill Howe and Rashmi Nandikur\n" +
-    "journals/cgf/MoritzHHH15,Perfopticon: Visual Query Analysis for Distributed Databases,Dominik Moritz and Daniel Halperin and Bill Howe and Jeffrey Heer\n" +
-    "journals/mst/AfratiKSU15,Parallel Skyline Queries,Foto N. Afrati and Paraschos Koutris and Dan Suciu and Jeffrey D. Ullman\n" +
-    "conf/sigmod/UpadhyayaBS15,Automatic Enforcement of Data Use Policies with DataLawyer,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
-    "journals/jacm/KoutrisUBHS15,Query-Based Data Pricing,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "journals/pvldb/Balazinska15,Front Matter,Magdalena Balazinska\n" +
-    "journals/pvldb/Balazinska15a,Big Data Research: Will Industry Solve all the Problems?,Magdalena Balazinska\n" +
-    "journals/pvldb/GatterbauerS15,Approximate Lifted Inference with Probabilistic Databases,Wolfgang Gatterbauer and Dan Suciu\n" +
-    "journals/pvldb/ElmoreDSBCGHHKK15,A Demonstration of the BigDAWG Polystore System,Aaron J. Elmore and Jennie Duggan and Mike Stonebraker and Magdalena Balazinska and Ugur Cetintemel and Vijay Gadepally and Jeffrey Heer and Bill Howe and Jeremy Kepner and Tim Kraska and Samuel Madden and David Maier and Timothy G. Mattson and Stavros Papadopoulos and Jeff Parkhurst and Nesime Tatbul and Manasi Vartak and Stan Zdonik\n" +
-    "journals/sigmod/DugganESBHKMMMZ15,The BigDAWG Polystore System,Jennie Duggan and Aaron J. Elmore and Michael Stonebraker and Magdalena Balazinska and Bill Howe and Jeremy Kepner and Sam Madden and David Maier and Tim Mattson and Stanley B. Zdonik\n" +
-    "conf/hpdc/Cheung14,Rethinking the application-database interface,Alvin Cheung\n" +
-    "conf/sigmod/RoyS14,A formal approach to finding explanations for database queries,Sudeepa Roy and Dan Suciu\n" +
-    "conf/icdt/BeameLRS14,Counting of Query Expressions: Limitations of Propositional Methods,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
-    "conf/icdt/KoutrisS14,A Dichotomy on the Complexity of Consistent Query Answering for Atoms with Simple Keys,Paraschos Koutris and Dan Suciu\n" +
-    "conf/uai/GribkoffBS14,Understanding the Complexity of Lifted Inference and Asymmetric Weighted Model Counting,Eric Gribkoff and Guy Van den Broeck and Dan Suciu\n" +
-    "journals/tods/LiLMS14,A Theory of Pricing Private Data,Chao Li and Daniel Yang Li and Gerome Miklau and Dan Suciu\n" +
-    "conf/aaai/GribkoffBS14,Understanding the Complexity of Lifted Inference and Asymmetric Weighted Model Counting,Eric Gribkoff and Guy Van den Broeck and Dan Suciu\n" +
-    "conf/sigmod/CheungMS14,Sloth: being lazy is a virtue (when issuing database queries),Alvin Cheung and Samuel Madden and Armando Solar-Lezama\n" +
-    "conf/sigmod/HoweFFFKR14,Should we all be teaching \"intro to data science\" instead of \"intro to databases\"?,Bill Howe and Michael J. Franklin and Juliana Freire and James Frew and Tim Kraska and Raghu Ramakrishnan\n" +
-    "conf/ssdbm/AlawiniMTH14,Helping scientists reconnect their datasets,Abdussalam Alawini and David Maier and Kristin Tufte and Bill Howe\n" +
-    "conf/vldb/UpadhyayaUBSH14,Affordable Analytics on Expensive Data,Prasang Upadhyaya and Martina Unutzer and Magdalena Balazinska and Dan Suciu and Hakan Hacigumus\n" +
-    "journals/is/LetchnerBRP14,Approximation trade-offs in a Markovian stream warehouse: An empirical study,Julie Letchner and Magdalena Balazinska and Christopher Re and Matthai Philipose\n" +
-    "journals/pvldb/MeliouRS14,Causality and Explanations in Databases,Alexandra Meliou and Sudeepa Roy and Dan Suciu\n" +
-    "journals/debu/CheungMSAM14,Using Program Analysis to Improve Database Applications,Alvin Cheung and Samuel Madden and Armando Solar-Lezama and Owen Arden and Andrew C. Myers\n" +
-    "journals/debu/GribkoffSB14,Lifted Probabilistic Inference: A Guide for the Database Researcher,Eric Gribkoff and Dan Suciu and Guy Van den Broeck\n" +
-    "journals/pvldb/MortonBGM14,Support the Data Enthusiast: Challenges for Next-Generation Data-Analysis Systems,Kristi Morton and Magdalena Balazinska and Dan Grossman and Jock D. Mackinlay\n" +
-    "journals/sigmod/MortonBGKM14,Public Data and Visualizations: How are Many Eyes and Tableau Public Used for Collaborative Analytics?,Kristi Morton and Magdalena Balazinska and Dan Grossman and Robert Kosara and Jock D. Mackinlay\n" +
-    "journals/tods/GatterbauerS14,Oblivious bounds on the probability of boolean functions,Wolfgang Gatterbauer and Dan Suciu\n" +
-    "conf/sigmod/LoebmanOCOAHBQG14,Big-Data Management Use-Case: A Cloud Service for Creating and Analyzing Galactic Merger Trees,Sarah Loebman and Jennifer Ortiz and Lee Lee Choo and Laurel Orr and Lauren Anderson and Daniel Halperin and Magdalena Balazinska and Thomas Quinn and Fabio Governato\n" +
-    "journals/sigmod/BalazinskaHS14,The database group at the University of Washington,Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "conf/sigmod/HalperinACCKMORWWXBHS14,Demonstration of the Myria big data management service,Daniel Halperin and Victor Teixeira de Almeida and Lee Lee Choo and Shumo Chu and Paraschos Koutris and Dominik Moritz and Jennifer Ortiz and Vaspol Ruamviboonsuk and Jingjing Wang and Andrew Whitaker and Shengliang Xu and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "journals/sigmod/AbadiAABBCCDDFGHHHIJKMMMNRMOORSSWW14,The Beckman Report on Database Research,Daniel J. Abadi and Rakesh Agrawal and Anastasia Ailamaki and Magdalena Balazinska and Philip A. Bernstein and Michael J. Carey and Surajit Chaudhuri and Jeffrey Dean and AnHai Doan and Michael J. Franklin and Johannes Gehrke and Laura M. Haas and Alon Y. Halevy and Joseph M. Hellerstein and Yannis E. Ioannidis and H. V. Jagadish and Donald Kossmann and Samuel Madden and Sharad Mehrotra and Tova Milo and Jeffrey F. Naughton and Raghu Ramakrishnan and Volker Markl and Christopher Olston and Beng Chin Ooi and Christopher Re and Dan Suciu and Michael Stonebraker and Todd Walter and Jennifer Widom\n" +
-    "conf/ssdbm/2013,Conference on Scientific and Statistical Database Management, SSDBM '13, Baltimore, MD, USA, July 29 - 31, 2013,Alex Szalay and Tamas Budavari and Magdalena Balazinska and Alexandra Meliou and Ahmet Sacan\n" +
-    "conf/icdt/LiLMS13,A theory of pricing private data,Chao Li and Daniel Yang Li and Gerome Miklau and Dan Suciu\n" +
-    "conf/bncod/Suciu13,Big Data Begets Big Database Theory,Dan Suciu\n" +
-    "conf/icdm/BaeHWRH13,Scalable Flow-Based Community Detection for Large-Scale Network Analysis,Seung-Hee Bae and Daniel Halperin and Jevin D. West and Martin Rosvall and Bill Howe\n" +
-    "conf/pods/BeameKS13,Communication steps for parallel query processing,Paul Beame and Paraschos Koutris and Dan Suciu\n" +
-    "conf/uai/BeameLRS13,Lower Bounds for Exact Model Counting and Applications in Probabilistic Databases,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
-    "journals/mst/JhaS13,Knowledge Compilation Meets Database Theory: Compiling Queries to Decision Diagrams,Abhay Kumar Jha and Dan Suciu\n" +
-    "conf/icde/SoroushB13,Time travel in a scientific array database,Emad Soroush and Magdalena Balazinska\n" +
-    "conf/pldi/CheungSM13,Optimizing database-backed applications with query synthesis,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
-    "conf/vldb/MyersHHH13,Compiled Plans for In-Memory Path-Counting Queries,Brandon Myers and Jeremy Hyrkas and Daniel Halperin and Bill Howe\n" +
-    "conf/vldb/MyersHHH13a,Compiled Plans for In-Memory Path-Counting Queries,Brandon Myers and Jeremy Hyrkas and Daniel Halperin and Bill Howe\n" +
-    "conf/cidr/CheungAMSM13,StatusQuo: Making Familiar Abstractions Perform Using Program Analysis,Alvin Cheung and Owen Arden and Samuel Madden and Armando Solar-Lezama and Andrew C. Myers\n" +
-    "conf/apsys/CheungR0MB13,Mobile applications need targeted micro-updates,Alvin Cheung and Lenin Ravindranath and Eugene Wu and Samuel Madden and Hari Balakrishnan\n" +
-    "conf/sigmod/CheungAMM13,Speeding up database applications with Pyxis,Alvin Cheung and Owen Arden and Samuel Madden and Andrew C. Myers\n" +
-    "journals/cse/HoweHRCA13,Collaborative Science Workflows in SQL,Bill Howe and Daniel Halperin and Francois Ribalet and Sagar Chitnis and E. Virginia Armbrust\n" +
-    "journals/debu/KwonRBH13,Managing Skew in Hadoop,YongChul Kwon and Kai Ren and Magdalena Balazinska and Bill Howe\n" +
-    "journals/pvldb/RenKBH13,Hadoop's Adolescence,Kai Ren and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
-    "conf/sigmod/JoslynCHHNO13,Massive scale cyber traffic analysis: a driver for graph database research,Cliff Joslyn and Sutanay Choudhury and David Haglin and Bill Howe and Bill Nickless and Bryan Olsen\n" +
-    "conf/sigmod/KoutrisUBHS13,Toward practical query pricing with QueryMarket,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "conf/ssdbm/BalazinskaDHL13,Education and career paths for data scientists,Magdalena Balazinska and Susan B. Davidson and Bill Howe and Alexandros Labrinidis\n" +
-    "conf/ssdbm/HalperinRWSHA13,Real-time collaborative analysis with (almost) pure SQL: a case study in biogeochemical oceanography,Daniel Halperin and Francois Ribalet and Konstantin Weitz and Mak A. Saito and Bill Howe and E. Virginia Armbrust\n" +
-    "conf/cidr/UpadhyayaABHKRS13,Stop That Query! The Need for Managing Data Use,Prasang Upadhyaya and Nick R. Anderson and Magdalena Balazinska and Bill Howe and Raghav Kaushik and Ravishankar Ramamurthy and Dan Suciu\n" +
-    "conf/sigmod/UpadhyayaABHKRS13,The power of data use management in action,Prasang Upadhyaya and Nick R. Anderson and Magdalena Balazinska and Bill Howe and Raghav Kaushik and Ravishankar Ramamurthy and Dan Suciu\n" +
-    "journals/debu/VanderPlasSKB13,Squeezing a Big Orange into Little Boxes: The AscotDB System for Parallel Processing of Data on a Sphere,Jacob VanderPlas and Emad Soroush and K. Simon Krughoff and Magdalena Balazinska\n" +
-    "journals/pvldb/MoyersSWKVBC13,A Demonstration of Iterative Parallel Array Processing in Support of Telescope Image Analysis,Matthew Moyers and Emad Soroush and Spencer Wallace and K. Simon Krughoff and Jake VanderPlas and Magdalena Balazinska and Andrew J. Connolly\n" +
-    "conf/birthday/BalazinskaHKSU13,A Discussion on Pricing Relational Data,Magdalena Balazinska and Bill Howe and Paraschos Koutris and Dan Suciu and Prasang Upadhyaya\n" +
-    "conf/amw/2012,Proceedings of the 6th Alberto Mendelzon International Workshop on Foundations of Data Management, Ouro Preto, Brazil, June 27-30, 2012,Juliana Freire and Dan Suciu\n" +
-    "conf/icdt/JhaS12,On the tractability of query compilation and bounded treewidth,Abhay Kumar Jha and Dan Suciu\n" +
-    "conf/sc/RenGKBH12,Abstract: Hadoop's Adolescence; A Comparative Workloads Analysis from Three Research Clusters,Kai Ren and Garth Gibson and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
-    "conf/chi/HoweKPA12,VizDeck: a card game metaphor for fast visual data exploration,Bill Howe and Alicia Key and Daniel Perry and Cecilia R. Aragon\n" +
-    "conf/sc/RenGKBH12a,Poster: Hadoop's Adolescence; A Comparative Workloads Analysis from Three Research Clusters,Kai Ren and Garth Gibson and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
-    "journals/cse/Howe12,Virtual Appliances, Cloud Computing, and Reproducible Research,Bill Howe\n" +
-    "journals/tods/ReS12,Understanding cardinality estimation using entropy maximization,Christopher Re and Dan Suciu\n" +
-    "conf/cikm/CheungSM12,Using program synthesis for social recommendations,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
-    "conf/sigmod/KeyHPA12,VizDeck: self-organizing dashboards for visual analytics,Bill Howe and Alicia Key and Daniel Perry and Cecilia R. Aragon\n" +
-    "conf/ssdbm/ShawDBS12,A Dataflow Graph Transformation Language and Query Rewriting System for RDF Ontologies,Marianne Shaw and Landon Detwiler and James F. Brinkley and Dan Suciu\n" +
-    "conf/icdt/AfratiKSU12,Parallel skyline queries,Foto N. Afrati and Paraschos Koutris and Dan Suciu and Jeffrey D. Ullman\n" +
-    "conf/sigmod/KwonBHR12,SkewTune: mitigating skew in mapreduce applications,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
-    "conf/sigmod/MeliouS12,Tiresias: the database oracle for how-to queries,Alexandra Meliou and Dan Suciu\n" +
-    "journals/cacm/Suciu12,SQL on an encrypted database: technical perspective,Dan Suciu\n" +
-    "journals/debu/HoweH12,Advancing Declarative Query in the Long Tail of Science,Bill Howe and Daniel Halperin\n" +
-    "journals/pvldb/JhaS12,Probabilistic Databases with MarkoViews,Abhay Kumar Jha and Dan Suciu\n" +
-    "journals/vldb/BuHBE12,The HaLoop approach to large-scale iterative data analysis,Yingyi Bu and Bill Howe and Magdalena Balazinska and Michael D. Ernst\n" +
-    "conf/apsys/WangCCJZK12,Undefined behavior: what happened to my code?,Xi Wang and Haogang Chen and Alvin Cheung and Zhihao Jia and Nickolai Zeldovich and M. Frans Kaashoek\n" +
-    "conf/datalog/ShawKHS12,Optimizing Large-Scale Semi-Naive Datalog Evaluation in Hadoop,Marianne Shaw and Paraschos Koutris and Bill Howe and Dan Suciu\n" +
-    "conf/sigmod/MeliouSS12,Tiresias: a demonstration of how-to queries,Alexandra Meliou and Yisong Song and Dan Suciu\n" +
-    "journals/jacm/DalviS12,The dichotomy of probabilistic inference for unions of conjunctive queries,Nilesh N. Dalvi and Dan Suciu\n" +
-    "conf/pods/KoutrisUBHS12,Query-based data pricing,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "conf/cloud/AfratiBSHSU12,Designing good algorithms for MapReduce and beyond,Foto N. Afrati and Magdalena Balazinska and Anish Das Sarma and Bill Howe and Semih Salihoglu and Jeffrey D. Ullman\n" +
-    "journals/pvldb/KwonBHR12,SkewTune in Action: Mitigating Skew in MapReduce Applications,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
-    "journals/pvldb/CheungAMM12,Automatic Partitioning of Database Applications,Alvin Cheung and Owen Arden and Samuel Madden and Andrew C. Myers\n" +
-    "journals/pvldb/KoutrisUBHS12,QueryMarket Demonstration: Pricing for Online Data Markets,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu}\n" +
-    "journals/pvldb/UpadhyayaBS12,How to Price Shared Optimizations in the Cloud,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
-    "journals/pvldb/KhoussainovaBS12,PerfXplain: Debugging MapReduce Job Performance,Nodira Khoussainova and Magdalena Balazinska and Dan Suciu\n" +
-    "conf/icdt/JhaS11,Knowledge compilation meets database theory: compiling queries to decision diagrams,Abhay Kumar Jha and Dan Suciu\n" +
-    "conf/icdt/Suciu11,Tractability in probabilistic databases,Dan Suciu\n" +
-    "conf/edbt/2011array,Proceedings of the 2011 EDBT/ICDT Workshop on Array Databases, Uppsala, Sweden, March 25, 2011,Peter Baumann and Bill Howe and Kjell Orsborn and Silvia Stefanova\n" +
-    "conf/edbt/SoroushB11,Hybrid merge/overlap execution technique for parallel array processing,Emad Soroush and Magdalena Balazinska\n" +
-    "conf/pods/KoutrisS11,Parallel evaluation of conjunctive queries,Paraschos Koutris and Dan Suciu\n" +
-    "conf/tapp/MeliouGS11,Bringing Provenance to Its Full Potential Using Causal Reasoning,Alexandra Meliou and Wolfgang Gatterbauer and Dan Suciu\n" +
-    "conf/ldav/VoBSCFHPS11,Parallel visualization on large clusters using MapReduce,Huy T. Vo and Jonathan Bronson and Brian Summa and Joao Luiz Dihl Comba and Juliana Freire and Bill Howe and Valerio Pascucci and Claudio T. Silva\n" +
-    "conf/sigmod/HoweCKB11,Automatic example queries for ad hoc databases,Bill Howe and Garrett Cole and Nodira Khoussainova and Leilani Battle\n" +
-    "conf/sensys/CheungTM11,Automatically generating interesting events with LifeJoin,Alvin Cheung and Arvind Thiagarajan and Samuel Madden\n" +
-    "conf/mobide/LetchnerB11,Lineage for Markovian stream event queries,Julie Letchner and Magdalena Balazinska\n" +
-    "conf/sigmod/MeliouGNS11,Tracing data errors with view-conditioned causality,Alexandra Meliou and Wolfgang Gatterbauer and Suman Nath and Dan Suciu\n" +
-    "conf/sigmod/SoroushBW11,ArrayStore: a storage manager for complex parallel array processing,Emad Soroush and Magdalena Balazinska and Daniel L. Wang\n" +
-    "conf/sigsoft/CheungSM11,Partial replay of long-running applications,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
-    "conf/ssdbm/HoweCSKKKB11,Database-as-a-Service for Long-Tail Science,Bill Howe and Garrett Cole and Emad Souroush and Paraschos Koutris and Alicia Key and Nodira Khoussainova and Leilani Battle\n" +
-    "journals/jbi/ShawDNBS11,vSPARQL: A view definition language for the semantic web,Marianne Shaw and Landon Fridman Detwiler and Natalya Fridman Noy and James F. Brinkley and Dan Suciu\n" +
-    "journals/jcss/DalviRS11,Queries and materialized views on probabilistic databases,Nilesh N. Dalvi and Christopher Re and Dan Suciu\n" +
-    "conf/cidr/GatterbauerS11,Managing Structured Collections of Community Data,Wolfgang Gatterbauer and Dan Suciu\n" +
-    "conf/sigmod/UpadhyayaKB11,A latency and fault-tolerance optimizer for online parallel query plans,Prasang Upadhyaya and YongChul Kwon and Magdalena Balazinska\n" +
-    "conf/tapp/GatterbauerMS11,Default-all is dangerous!,Wolfgang Gatterbauer and Alexandra Meliou and Dan Suciu\n" +
-    "eries/synthesis/2011Suciu,Probabilistic Databases,Dan Suciu and Dan Olteanu and Christopher Re and Christoph Koch\n" +
-    "journals/pvldb/MeliouGS11,Reverse Data Management,Alexandra Meliou and Wolfgang Gatterbauer and Dan Suciu\n" +
-    "conf/ssdbm/AlSayyadKHCBJ11,Towards Efficient and Precise Queries over Ten Million Asteroid Trajectory Models,Yusra AlSayyad and K. Simon Krughoff and Bill Howe and Andrew J. Connolly and Magdalena Balazinska and Lynne Jones\n" +
-    "journals/pvldb/MeliouGMS11,The Complexity of Causality and Responsibility for Query Answers and non-Answers,Alexandra Meliou and Wolfgang Gatterbauer and Katherine F. Moore and Dan Suciu\n" +
-    "journals/pvldb/BalazinskaHS11,Data Markets in the Cloud: An Opportunity for the Database Community,Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "conf/ssdbm/KhoussainovaKLBGS11,Session-Based Browsing for More Effective Query Reuse,Nodira Khoussainova and YongChul Kwon and Wei-Ting Liao and Magdalena Balazinska and Wolfgang Gatterbauer and Dan Suciu\n" +
-    "conf/pods/ReS10,Understanding cardinality estimation using entropy maximization,Christopher Re and Dan Suciu\n" +
-    "conf/edbt/JhaOS10,Bridging the gap between intensional and extensional query evaluation in probabilistic databases,Abhay Kumar Jha and Dan Olteanu and Dan Suciu\n" +
-    "conf/edbtw/Suciu10,Definitions matter: reconciling differential and adversarial privacy: invited talk,Dan Suciu\n" +
-    "conf/nips/JhaGMS10,Lifted Inference Seen from the Other Side : The Tractable Features,Abhay Kumar Jha and Vibhav Gogate and Alexandra Meliou and Dan Suciu\n" +
-    "conf/pods/DalviSS10,Computing query probability with incidence algebras,Nilesh N. Dalvi and Karl Schnaitter and Dan Suciu\n" +
-    "conf/cloud/KwonBHR10,Skew-resistant parallel processing of feature-extracting scientific user-defined functions,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
-    "conf/mud/MeliouGMS10,WHY SO? or WHY NO? Functional Causality for Explaining Query Answers,Alexandra Meliou and Wolfgang Gatterbauer and Katherine F. Moore and Dan Suciu\n" +
-    "conf/icde/MortonFBG10,Estimating the progress of MapReduce pipelines,Kristi Morton and Abram L. Friesen and Magdalena Balazinska and Dan Grossman\n" +
-    "conf/sigmod/MortonBG10,ParaTimer: a progress indicator for MapReduce DAGs,Kristi Morton and Magdalena Balazinska and Dan Grossman\n" +
-    "conf/ssdbm/KwonNGBHL10,Scalable Clustering Algorithm for N-Body Simulations in a Shared-Nothing Cluster,YongChul Kwon and Dylan Nunley and Jeffrey P. Gardner and Magdalena Balazinska and Bill Howe and Sarah Loebman\n" +
-    "journals/pvldb/BuHBE10,HaLoop: Efficient Iterative Data Processing on Large Clusters,Yingyi Bu and Bill Howe and Magdalena Balazinska and Michael D. Ernst\n" +
-    "conf/icde/LetchnerRBP10,Approximation trade-offs in Markovian stream processing: An empirical study,Julie Letchner and Christopher Re and Magdalena Balazinska and Matthai Philipose\n" +
-    "journals/pvldb/HayRMS10,Boosting the Accuracy of Differentially Private Histograms Through Consistency,Michael Hay and Vibhor Rastogi and Gerome Miklau and Dan Suciu\n" +
-    "conf/mud/GatterbauerJS10,Dissociation and Propagation for Efficient Query Evaluation over Probabilistic Databases,Wolfgang Gatterbauer and Abhay Kumar Jha and Dan Suciu\n" +
-    "conf/sigmod/GatterbauerS10,Data conflict resolution using trust mappings,Wolfgang Gatterbauer and Dan Suciu\n" +
-    "journals/debu/MeliouGHKMS10,Causality in Databases,Alexandra Meliou and Wolfgang Gatterbauer and Joseph Y. Halpern and Christoph Koch and Katherine F. Moore and Dan Suciu\n" +
-    "conf/pervasive/WelbourneBBF10,Specification and Verification of Complex Location Events with Panoramic,Evan Welbourne and Magdalena Balazinska and Gaetano Borriello and James Fogarty\n" +
-    "journals/pvldb/KhoussainovaKBS11,SnipSuggest: Context-Aware Autocompletion for SQL,Nodira Khoussainova and YongChul Kwon and Magdalena Balazinska and Dan Suciu\n" +
-    "conf/ssdbm/GrochowHSBL10,Client + Cloud: Evaluating Seamless Architectures for Visual Data Analytics in the Ocean Sciences,Keith Grochow and Bill Howe and Mark Stoermer and Roger S. Barga and Edward D. Lazowska\n" +
-    "conf/eScience/GrochowSFLHL10,COVE: A Visual Environment for Multidisciplinary Ocean Science Collaboration,Keith Grochow and Mark Stoermer and James Fogarty and Charlotte Lee and Bill Howe and Edward D. Lazowska\n";
+    "0,QueryMarket Demonstration: Pricing for Online Data Markets,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu}\n" +
+    "1,Elastic Memory Management for Cloud Data Analytics,Jingjing Wang and Magdalena Balazinska\n" +
+    "2,Profiling a GPU database implementation: a holistic view of GPU resource utilization on TPC-H queries,Emily Furst and Mark Oskin and Bill Howe\n" +
+    "3,Sloth: Being Lazy Is a Virtue (When Issuing Database Queries),Alvin Cheung and Samuel Madden and Armando Solar-Lezama\n" +
+    "4,Query-Based Data Pricing,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "5,Managing Skew in Hadoop,YongChul Kwon and Kai Ren and Magdalena Balazinska and Bill Howe\n" +
+    "6,A theory of pricing private data,Chao Li and Daniel Yang Li and Gerome Miklau and Dan Suciu\n" +
+    "7,Toward elastic memory management for cloud data analytics,Jingjing Wang and Magdalena Balazinska\n" +
+    "8,Big Data Science Needs Big Data Middleware,Bill Howe\n" +
+    "9,Worst-Case Optimal Algorithms for Parallel Query Processing,Paraschos Koutris and Paul Beame and Dan Suciu\n" +
+    "10,Communication Steps for Parallel Query Processing,Paul Beame and Paraschos Koutris and Dan Suciu\n" +
+    "11,Tiresias: the database oracle for how-to queries,Alexandra Meliou and Dan Suciu\n" +
+    "12,Dissociation and propagation for approximate lifted inference with standard relational database management systems,Wolfgang Gatterbauer and Dan Suciu\n" +
+    "13,Lifted Inference in Probabilistic Databases,Dan Suciu\n" +
+    "14,Communication Cost in Parallel Query Processing,Dan Suciu\n" +
+    "15,From Theory to Practice: Efficient Join Query Evaluation in a Parallel Database System,Shumo Chu and Magdalena Balazinska and Dan Suciu\n" +
+    "16,Approximate Lifted Inference with Probabilistic Databases,Wolfgang Gatterbauer and Dan Suciu\n" +
+    "17,A formal approach to finding explanations for database queries,Sudeepa Roy and Dan Suciu\n" +
+    "18,Understanding the Complexity of Lifted Inference and Asymmetric Weighted Model Counting,Eric Gribkoff and Guy Van den Broeck and Dan Suciu\n" +
+    "19,Should we all be teaching \"intro to data science\" instead of \"intro to databases\"?,Bill Howe and Michael J. Franklin and Juliana Freire and James Frew and Tim Kraska and Raghu Ramakrishnan\n" +
+    "20,Causality and Explanations in Databases,Alexandra Meliou and Sudeepa Roy and Dan Suciu\n" +
+    "21,Lifted Probabilistic Inference: A Guide for the Database Researcher,Eric Gribkoff and Dan Suciu and Guy Van den Broeck\n" +
+    "22,Knowledge Compilation Meets Database Theory: Compiling Queries to Decision Diagrams,Abhay Kumar Jha and Dan Suciu\n" +
+    "23,A Discussion on Pricing Relational Data,Magdalena Balazinska and Bill Howe and Paraschos Koutris and Dan Suciu and Prasang Upadhyaya\n" +
+    "24,The Myria Big Data Management and Analytics System and Cloud Services,Jingjing Wang and Tobin Baker and Magdalena Balazinska and Daniel Halperin and Brandon Haynes and Bill Howe and Dylan Hutchison and Andrew Whitaker and Shengliang Xu\n" +
+    "25,Automatic example queries for ad hoc databases,Bill Howe and Garrett Cole and Nodira Khoussainova and Leilani Battle\n" +
+    "26,Tracing data errors with view-conditioned causality,Alexandra Meliou and Wolfgang Gatterbauer and Suman Nath and Dan Suciu\n" +
+    "27,Queries and materialized views on probabilistic databases,Nilesh N. Dalvi and Christopher Re and Dan Suciu\n" +
+    "28,A latency and fault-tolerance optimizer for online parallel query plans,Prasang Upadhyaya and YongChul Kwon and Magdalena Balazinska\n" +
+    "29,The Complexity of Causality and Responsibility for Query Answers and non-Answers,Alexandra Meliou and Wolfgang Gatterbauer and Katherine F. Moore and Dan Suciu\n" +
+    "30,Lifted Inference Seen from the Other Side : The Tractable Features,Abhay Kumar Jha and Vibhav Gogate and Alexandra Meliou and Dan Suciu\n" +
+    "31,Communication Cost in Parallel Query Evaluation: A Tutorial,Dan Suciu\n" +
+    "32,WHY SO? or WHY NO? Functional Causality for Explaining Query Answers,Alexandra Meliou and Wolfgang Gatterbauer and Katherine F. Moore and Dan Suciu\n" +
+    "33,Causality in Databases,Alexandra Meliou and Wolfgang Gatterbauer and Joseph Y. Halpern and Christoph Koch and Katherine F. Moore and Dan Suciu\n" +
+    "34,Client + Cloud: Evaluating Seamless Architectures for Visual Data Analytics in the Ocean Sciences,Keith Grochow and Bill Howe and Mark Stoermer and Roger S. Barga and Edward D. Lazowska\n" +
+    "35,9th USENIX Workshop on the Theory and Practice of Provenance, TaPP 2017, Seattle, WA, USA, June 23, 2017,Adam M. Bates and Bill Howe\n" +
+    "36,Proceedings of the 2017 ACM International Conference on Management of Data, SIGMOD Conference 2017, Chicago, IL, USA, May 14-19, 2017,Semih Salihoglu and Wenchao Zhou and Rada Chirkova and Jun Yang and Dan Suciu\n" +
+    "37,Cosette: An Automated Prover for SQL,Shumo Chu and Chenglong Wang and Konstantin Weitz and Alvin Cheung\n" +
+    "38,Understanding Database Performance Inefficiencies in Real-world Web Applications,Cong Yan and Alvin Cheung and Junwen Yang and Shan Lu\n" +
+    "39,HoTTSQL: proving query rewrites with univalent SQL semantics,Shumo Chu and Konstantin Weitz and Alvin Cheung and Dan Suciu\n" +
+    "40,Synthesizing highly expressive SQL queries from input-output examples,Chenglong Wang and Alvin Cheung and Rastislav Bodik\n" +
+    "41,Learning a Neural Semantic Parser from User Feedback,Srinivasan Iyer and Ioannis Konstas and Alvin Cheung and Jayant Krishnamurthy and Luke Zettlemoyer\n" +
+    "42,DataSynthesizer: Privacy-Preserving Synthetic Datasets,Haoyue Ping and Julia Stoyanovich and Bill Howe\n" +
+    "43,Deep Mapping of the Visual Literature,Bill Howe and Po-Shen Lee and Maxim Grechkin and Sean T. Yang and Jevin D. West\n" +
+    "44,Data Science Education: We're Missing the Boat, Again,Bill Howe and Michael J. Franklin and Laura M. Haas and Tim Kraska and Jeffrey D. Ullman\n" +
+    "45,A Worst-Case Optimal Multi-Round Algorithm for Parallel Computation of Conjunctive Queries,Bas Ketsman and Dan Suciu\n" +
+    "46,What Do Shannon-type Inequalities, Submodular Width, and Disjunctive Datalog Have to Do with One Another?,Mahmoud Abo Khamis and Hung Q. Ngo and Dan Suciu\n" +
+    "47,Optimizing Data-Intensive Applications Automatically By Leveraging Parallel Data Processing Frameworks,Maaz Bin Safeer Ahmad and Alvin Cheung\n" +
+    "48,Interactive Query Synthesis from Input-Output Examples,Chenglong Wang and Alvin Cheung and Rastislav Bodik\n" +
+    "49,Demonstration of the Cosette Automated SQL Prover,Shumo Chu and Daniel Li and Chenglong Wang and Alvin Cheung and Dan Suciu\n" +
+    "50,Probabilistic Database Summarization for Interactive Data Exploration,Laurel Orr and Dan Suciu and Magdalena Balazinska\n" +
+    "51,Query Processing on Probabilistic Data: A Survey,Guy Van den Broeck and Dan Suciu\n" +
+    "52,Scalable and Efficient Flow-Based Community Detection for Large-Scale Graph Analysis,Seung-Hee Bae and Daniel Halperin and Jevin D. West and Martin Rosvall and Bill Howe\n" +
+    "53,VisualCloud Demonstration: A DBMS for Virtual Reality,Brandon Haynes and Artem Minyaylov and Magdalena Balazinska and Luis Ceze and Alvin Cheung\n" +
+    "54,Exact Model Counting of Query Expressions: Limitations of Propositional Methods,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
+    "55,LaraDB: A Minimalist Kernel for Linear and Relational Algebra Computation,Dylan Hutchison and Bill Howe and Dan Suciu\n" +
+    "56,Answering Conjunctive Queries with Inequalities,Paraschos Koutris and Tova Milo and Sudeepa Roy and Dan Suciu\n" +
+    "57,Voyager 2: Augmenting Visual Analysis with Partial View Specifications,Kanit Wongsuphasawat and Zening Qu and Dominik Moritz and Riley Chang and Felix Ouk and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
+    "58,A Visual Cloud for Virtual Reality Applications,Magdalena Balazinska and Luis Ceze and Alvin Cheung and Brian Curless and Steven M. Seitz\n" +
+    "59,ZaliQL: Causal Inference from Observational Data at Scale,Babak Salimi and Corey Cole and Dan R. K. Ports and Dan Suciu\n" +
+    "60,Fides: Towards a Platform for Responsible Data Science,Julia Stoyanovich and Bill Howe and Serge Abiteboul and Gerome Miklau and Arnaud Sahuguet and Gerhard Weikum\n" +
+    "61,A Demonstration of Interactive Analysis of Performance Measurements with Viska,Helga Gudmundsdottir and Babak Salimi and Magdalena Balazinska and Dan R. K. Ports and Dan Suciu\n" +
+    "62,Comparative Evaluation of Big-Data Systems on Scientific Image Analytics Workloads,Parmita Mehta and Sven Dorkenwald and Dongfang Zhao and Tomer Kaftan and Alvin Cheung and Magdalena Balazinska and Ariel Rokem and Andrew J. Connolly and Jacob VanderPlas and Yusra AlSayyad\n" +
+    "63,VizioMetrix: A Platform for Analyzing the Visual Information in Big Scholarly Data,Po-Shen Lee and Jevin D. West and Bill Howe\n" +
+    "64,Summarizing Source Code using a Neural Attention Model,Srinivasan Iyer and Ioannis Konstas and Alvin Cheung and Luke Zettlemoyer\n" +
+    "65,High variety cloud databases,Shrainik Jain and Dominik Moritz and Bill Howe\n" +
+    "66,MusicDB: A Platform for Longitudinal Music Analytics,Jeremy Hyrkas and Bill Howe\n" +
+    "67,Verified lifting of stencil computations,Shoaib Kamil and Alvin Cheung and Shachar Itzhaky and Armando Solar-Lezama\n" +
+    "68,Computing Join Queries with Functional Dependencies,Mahmoud Abo Khamis and Hung Q. Ngo and Dan Suciu\n" +
+    "69,SlimShot: Probabilistic Inference for Web-Scale Knowledge Bases,Eric Gribkoff and Dan Suciu\n" +
+    "70,PipeGen: Data Pipe Generator for Hybrid Analytics,Brandon Haynes and Alvin Cheung and Magdalena Balazinska\n" +
+    "71,PerfEnforce Demonstration: Data Analytics with Performance Guarantees,Jennifer Ortiz and Brendan Lee and Magdalena Balazinska\n" +
+    "72,Quantifying Causal Effects on Query Answering in Databases,Babak Salimi and Leopoldo E. Bertossi and Dan Suciu and Guy Van den Broeck\n" +
+    "73,Leveraging Lock Contention to Improve OLTP Application Performance,Cong Yan and Alvin Cheung\n" +
+    "74,SQLShare: Results from a Multi-Year SQL-as-a-Service Experiment,Shrainik Jain and Dominik Moritz and Daniel Halperin and Bill Howe and Ed Lazowska\n" +
+    "75,Leveraging Parallel Data Processing Frameworks with Verified Lifting,Maaz Bin Safeer Ahmad and Alvin Cheung\n" +
+    "76,Computer-Assisted Query Formulation,Alvin Cheung and Armando Solar-Lezama\n" +
+    "77,From NoSQL Accumulo to NewSQL Graphulo: Design and utility of graph algorithms inside a BigTable database,Dylan Hutchison and Jeremy Kepner and Vijay Gadepally and Bill Howe\n" +
+    "78,SlimShot: In-Database Probabilistic Inference for Knowledge Bases,Eric Gribkoff and Dan Suciu\n" +
+    "79,A Guide to Formal Analysis of Join Processing in Massively Parallel Systems,Paraschos Koutris and Dan Suciu\n" +
+    "80,Price-Optimal Querying with Data APIs,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
+    "81,Towards a general-purpose query language for visualization recommendation,Kanit Wongsuphasawat and Dominik Moritz and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
+    "82,Packet Transactions: High-Level Programming for Line-Rate Switches,Anirudh Sivaraman and Alvin Cheung and Mihai Budiu and Changhoon Kim and Mohammad Alizadeh and Hari Balakrishnan and George Varghese and Nick McKeown and Steve Licking\n" +
+    "83,The Beckman report on database research,Daniel Abadi and Rakesh Agrawal and Anastasia Ailamaki and Magdalena Balazinska and Philip A. Bernstein and Michael J. Carey and Dan Suciu and Michael Stonebraker and Todd Walter and Jennifer Widom\n" +
+    "84,Voyager: Exploratory Analysis via Faceted Browsing of Visualization Recommendations,Kanit Wongsuphasawat and Dominik Moritz and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
+    "85,Research Directions for Principles of Data Management (Abridged),Serge Abiteboul and Marcelo Arenas and Pablo Barcelo and Meghyn Bienvenu and Diego Calvanese and Claire David and Richard Hull and Dan Suciu and Victor Vianu and Ke Yi\n" +
+    "86,Scalable clustering algorithms for continuous environmental flow cytometry,Jeremy Hyrkas and Sophie Clayton and Francois Ribalet and Daniel Halperin and E. Virginia Armbrust and Bill Howe\n" +
+    "87,The Aurora and Borealis Stream Processing Engines,Ugur Cetintemel and Daniel J. Abadi and Yanif Ahmad and Hari Balakrishnan and Magdalena Balazinska and Mitch Cherniack and Ying Xing and Stan Zdonik\n" +
+    "88,GossipMap: a distributed community detection algorithm for billion-edge directed graphs,Seung-Hee Bae and Bill Howe\n" +
+    "89,Proceedings of the Sixth {ACM} Symposium on Cloud Computing, SoCC 2015, Kohala Coast, Hawaii, USA, August 27-29, 2015,Shahram Ghandeharizadeh and Sumita Barahmand and  Magdalena Balazinska and  Michael J. Freedman\n" +
+    "90,Towards Generating Application-Specific Data Management Systems,Alvin Cheung\n" +
+    "91,Dismantling Composite Visualizations in the Scientific Literature,Po-Shen Lee and Bill Howe\n" +
+    "92,Rethinking the application-database interface,Alvin Cheung\n" +
+    "93,Changing the Face of Database Cloud Services with Personalized Service Level Agreements,Jennifer Ortiz and Victor Teixeira de Almeida and Magdalena Balazinska\n" +
+    "94,Detecting and Dismantling Composite Visualizations in the Scientific Literature,Po-Shen Lee and Bill Howe\n" +
+    "95,Time-Varying Clusters in Large-Scale Flow Cytometry,Jeremy Hyrkas and Daniel Halperin and Bill Howe\n" +
+    "96,The ACM PODS Alberto O. Mendelzon Test-of-Time Award 2015,Foto N. Afrati and Frank Neven and Dan Suciu\n" +
+    "97,Symmetric Weighted First-Order Model Counting,Paul Beame and Guy Van den Broeck and Eric Gribkoff and Dan Suciu\n" +
+    "98,Bridging the Gap Between General-Purpose and Domain-Specific Compilers with Synthesis,Alvin Cheung and Shoaib Kamil and Armando Solar-Lezama\n" +
+    "99,Gaussian Mixture Models Use-Case: In-Memory Analysis with Myria,Ryan Maas and Jeremy Hyrkas and Olivia Grace Telford and Magdalena Balazinska and Andrew J. Connolly and Bill Howe\n" +
+    "100,Machine Learning and Databases: The Sound of Things to Come or a Cacophony of Hype?,Christopher Re and Divy Agrawal and Magdalena Balazinska and Michael J. Cafarella and Michael I. Jordan and Tim Kraska and Raghu Ramakrishnan\n" +
+    "101,Automated Analysis of Muscle X-ray Diffraction Imaging with MCMC,C. David Williams and Magdalena Balazinska and Thomas L. Daniel\n" +
+    "102,Explaining Query Answers with Explanation-Ready Databases,Sudeepa Roy and Laurel Orr and Dan Suciu\n" +
+    "103,Efficient iterative processing in the SciDB parallel array engine,Emad Soroush and Magdalena Balazinska and K. Simon Krughoff and Andrew J. Connolly\n" +
+    "104,Asynchronous and Fault-Tolerant Recursive Datalog Evaluation in Shared-Nothing Engines,Jingjing Wang and Magdalena Balazinska and Daniel Halperin\n" +
+    "105,Towards automated prediction of relationships among scientific datasets,Abdussalam Alawini and David Maier and Kristin Tufte and Bill Howe and Rashmi Nandikur\n" +
+    "106,Perfopticon: Visual Query Analysis for Distributed Databases,Dominik Moritz and Daniel Halperin and Bill Howe and Jeffrey Heer\n" +
+    "107,Parallel Skyline Queries,Foto N. Afrati and Paraschos Koutris and Dan Suciu and Jeffrey D. Ullman\n" +
+    "108,Automatic Enforcement of Data Use Policies with DataLawyer,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
+    "109,Front Matter,Magdalena Balazinska\n" +
+    "110,Big Data Research: Will Industry Solve all the Problems?,Magdalena Balazinska\n" +
+    "111,A Demonstration of the BigDAWG Polystore System,Aaron J. Elmore and Jennie Duggan and Mike Stonebraker and Magdalena Balazinska and Ugur Cetintemel and Vijay Gadepally and Nesime Tatbul and Manasi Vartak and Stan Zdonik\n" +
+    "112,The BigDAWG Polystore System,Jennie Duggan and Aaron J. Elmore and Michael Stonebraker and Magdalena Balazinska and Bill Howe and Jeremy Kepner and Sam Madden and David Maier and Tim Mattson and Stanley B. Zdonik\n" +
+    "113,Counting of Query Expressions: Limitations of Propositional Methods,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
+    "114,A Dichotomy on the Complexity of Consistent Query Answering for Atoms with Simple Keys,Paraschos Koutris and Dan Suciu\n" +
+    "115,Helping scientists reconnect their datasets,Abdussalam Alawini and David Maier and Kristin Tufte and Bill Howe\n" +
+    "116,Affordable Analytics on Expensive Data,Prasang Upadhyaya and Martina Unutzer and Magdalena Balazinska and Dan Suciu and Hakan Hacigumus\n" +
+    "117,Approximation trade-offs in a Markovian stream warehouse: An empirical study,Julie Letchner and Magdalena Balazinska and Christopher Re and Matthai Philipose\n" +
+    "118,Using Program Analysis to Improve Database Applications,Alvin Cheung and Samuel Madden and Armando Solar-Lezama and Owen Arden and Andrew C. Myers\n" +
+    "119,Support the Data Enthusiast: Challenges for Next-Generation Data-Analysis Systems,Kristi Morton and Magdalena Balazinska and Dan Grossman and Jock D. Mackinlay\n" +
+    "120,Public Data and Visualizations: How are Many Eyes and Tableau Public Used for Collaborative Analytics?,Kristi Morton and Magdalena Balazinska and Dan Grossman and Robert Kosara and Jock D. Mackinlay\n" +
+    "121,Oblivious bounds on the probability of boolean functions,Wolfgang Gatterbauer and Dan Suciu\n" +
+    "122,Big-Data Management Use-Case: A Cloud Service for Creating and Analyzing Galactic Merger Trees,Sarah Loebman and Jennifer Ortiz and Lee Lee Choo and Laurel Orr and Lauren Anderson and Daniel Halperin and Magdalena Balazinska and Thomas Quinn and Fabio Governato\n" +
+    "123,The database group at the University of Washington,Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "124,Demonstration of the Myria big data management service,Daniel Halperin and Victor Teixeira de Almeida and Lee Lee Choo and Shumo Chu and Paraschos Koutris and Dominik Moritz and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "125,Conference on Scientific and Statistical Database Management, SSDBM '13, Baltimore, MD, USA, July 29 - 31, 2013,Alex Szalay and Tamas Budavari and Magdalena Balazinska and Alexandra Meliou and Ahmet Sacan\n" +
+    "126,Big Data Begets Big Database Theory,Dan Suciu\n" +
+    "127,Scalable Flow-Based Community Detection for Large-Scale Network Analysis,Seung-Hee Bae and Daniel Halperin and Jevin D. West and Martin Rosvall and Bill Howe\n" +
+    "128,Lower Bounds for Exact Model Counting and Applications in Probabilistic Databases,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
+    "129,Time travel in a scientific array database,Emad Soroush and Magdalena Balazinska\n" +
+    "130,Optimizing database-backed applications with query synthesis,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
+    "131,Compiled Plans for In-Memory Path-Counting Queries,Brandon Myers and Jeremy Hyrkas and Daniel Halperin and Bill Howe\n" +
+    "132,StatusQuo: Making Familiar Abstractions Perform Using Program Analysis,Alvin Cheung and Owen Arden and Samuel Madden and Armando Solar-Lezama and Andrew C. Myers\n" +
+    "133,Mobile applications need targeted micro-updates,Alvin Cheung and Lenin Ravindranath and Eugene Wu and Samuel Madden and Hari Balakrishnan\n" +
+    "134,Speeding up database applications with Pyxis,Alvin Cheung and Owen Arden and Samuel Madden and Andrew C. Myers\n" +
+    "135,Collaborative Science Workflows in SQL,Bill Howe and Daniel Halperin and Francois Ribalet and Sagar Chitnis and E. Virginia Armbrust\n" +
+    "136,Hadoop's Adolescence,Kai Ren and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
+    "137,Massive scale cyber traffic analysis: a driver for graph database research,Cliff Joslyn and Sutanay Choudhury and David Haglin and Bill Howe and Bill Nickless and Bryan Olsen\n" +
+    "138,Toward practical query pricing with QueryMarket,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "139,Education and career paths for data scientists,Magdalena Balazinska and Susan B. Davidson and Bill Howe and Alexandros Labrinidis\n" +
+    "140,Real-time collaborative analysis with (almost) pure SQL: a case study in biogeochemical oceanography,Daniel Halperin and Francois Ribalet and Konstantin Weitz and Mak A. Saito and Bill Howe and E. Virginia Armbrust\n" +
+    "141,Stop That Query! The Need for Managing Data Use,Prasang Upadhyaya and Nick R. Anderson and Magdalena Balazinska and Bill Howe and Raghav Kaushik and Ravishankar Ramamurthy and Dan Suciu\n" +
+    "142,The power of data use management in action,Prasang Upadhyaya and Nick R. Anderson and Magdalena Balazinska and Bill Howe and Raghav Kaushik and Ravishankar Ramamurthy and Dan Suciu\n" +
+    "143,Squeezing a Big Orange into Little Boxes: The AscotDB System for Parallel Processing of Data on a Sphere,Jacob VanderPlas and Emad Soroush and K. Simon Krughoff and Magdalena Balazinska\n" +
+    "144,A Demonstration of Iterative Parallel Array Processing in Support of Telescope Image Analysis,Matthew Moyers and Emad Soroush and Spencer Wallace and K. Simon Krughoff and Jake VanderPlas and Magdalena Balazinska and Andrew J. Connolly\n" +
+    "145,Proceedings of the 6th Alberto Mendelzon International Workshop on Foundations of Data Management, Ouro Preto, Brazil, June 27-30, 2012,Juliana Freire and Dan Suciu\n" +
+    "146,On the tractability of query compilation and bounded treewidth,Abhay Kumar Jha and Dan Suciu\n" +
+    "147,Abstract: Hadoop's Adolescence; A Comparative Workloads Analysis from Three Research Clusters,Kai Ren and Garth Gibson and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
+    "148,VizDeck: a card game metaphor for fast visual data exploration,Bill Howe and Alicia Key and Daniel Perry and Cecilia R. Aragon\n" +
+    "149,Poster: Hadoop's Adolescence; A Comparative Workloads Analysis from Three Research Clusters,Kai Ren and Garth Gibson and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
+    "150,Virtual Appliances, Cloud Computing, and Reproducible Research,Bill Howe\n" +
+    "151,Understanding cardinality estimation using entropy maximization,Christopher Re and Dan Suciu\n" +
+    "152,Using program synthesis for social recommendations,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
+    "153,VizDeck: self-organizing dashboards for visual analytics,Bill Howe and Alicia Key and Daniel Perry and Cecilia R. Aragon\n" +
+    "154,A Dataflow Graph Transformation Language and Query Rewriting System for RDF Ontologies,Marianne Shaw and Landon Detwiler and James F. Brinkley and Dan Suciu\n" +
+    "155,SkewTune: mitigating skew in mapreduce applications,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
+    "156,SQL on an encrypted database: technical perspective,Dan Suciu\n" +
+    "157,COVE: A Visual Environment for Multidisciplinary Ocean Science Collaboration,Keith Grochow and Mark Stoermer and James Fogarty and Charlotte Lee and Bill Howe and Edward D. Lazowska\n" +
+    "158,Advancing Declarative Query in the Long Tail of Science,Bill Howe and Daniel Halperin\n" +
+    "159,Probabilistic Databases with MarkoViews,Abhay Kumar Jha and Dan Suciu\n" +
+    "160,The HaLoop approach to large-scale iterative data analysis,Yingyi Bu and Bill Howe and Magdalena Balazinska and Michael D. Ernst\n" +
+    "161,Undefined behavior: what happened to my code?,Xi Wang and Haogang Chen and Alvin Cheung and Zhihao Jia and Nickolai Zeldovich and M. Frans Kaashoek\n" +
+    "162,Optimizing Large-Scale Semi-Naive Datalog Evaluation in Hadoop,Marianne Shaw and Paraschos Koutris and Bill Howe and Dan Suciu\n" +
+    "163,Tiresias: a demonstration of how-to queries,Alexandra Meliou and Yisong Song and Dan Suciu\n" +
+    "164,The dichotomy of probabilistic inference for unions of conjunctive queries,Nilesh N. Dalvi and Dan Suciu\n" +
+    "165,Designing good algorithms for MapReduce and beyond,Foto N. Afrati and Magdalena Balazinska and Anish Das Sarma and Bill Howe and Semih Salihoglu and Jeffrey D. Ullman\n" +
+    "166,SkewTune in Action: Mitigating Skew in MapReduce Applications,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
+    "167,Automatic Partitioning of Database Applications,Alvin Cheung and Owen Arden and Samuel Madden and Andrew C. Myers\n" +
+    "168,How to Price Shared Optimizations in the Cloud,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
+    "169,PerfXplain: Debugging MapReduce Job Performance,Nodira Khoussainova and Magdalena Balazinska and Dan Suciu\n" +
+    "170,Tractability in probabilistic databases,Dan Suciu\n" +
+    "171,Proceedings of the 2011 EDBT/ICDT Workshop on Array Databases, Uppsala, Sweden, March 25, 2011,Peter Baumann and Bill Howe and Kjell Orsborn and Silvia Stefanova\n" +
+    "172,Hybrid merge/overlap execution technique for parallel array processing,Emad Soroush and Magdalena Balazinska\n" +
+    "173,Parallel evaluation of conjunctive queries,Paraschos Koutris and Dan Suciu\n" +
+    "174,Bringing Provenance to Its Full Potential Using Causal Reasoning,Alexandra Meliou and Wolfgang Gatterbauer and Dan Suciu\n" +
+    "175,Parallel visualization on large clusters using MapReduce,Huy T. Vo and Jonathan Bronson and Brian Summa and Joao Luiz Dihl Comba and Juliana Freire and Bill Howe and Valerio Pascucci and Claudio T. Silva\n" +
+    "176,Automatically generating interesting events with LifeJoin,Alvin Cheung and Arvind Thiagarajan and Samuel Madden\n" +
+    "177,Lineage for Markovian stream event queries,Julie Letchner and Magdalena Balazinska\n" +
+    "178,ArrayStore: a storage manager for complex parallel array processing,Emad Soroush and Magdalena Balazinska and Daniel L. Wang\n" +
+    "179,Partial replay of long-running applications,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
+    "180,Database-as-a-Service for Long-Tail Science,Bill Howe and Garrett Cole and Emad Souroush and Paraschos Koutris and Alicia Key and Nodira Khoussainova and Leilani Battle\n" +
+    "181,vSPARQL: A view definition language for the semantic web,Marianne Shaw and Landon Fridman Detwiler and Natalya Fridman Noy and James F. Brinkley and Dan Suciu\n" +
+    "182,Managing Structured Collections of Community Data,Wolfgang Gatterbauer and Dan Suciu\n" +
+    "183,Default-all is dangerous!,Wolfgang Gatterbauer and Alexandra Meliou and Dan Suciu\n" +
+    "184,Probabilistic Databases,Dan Suciu and Dan Olteanu and Christopher Re and Christoph Koch\n" +
+    "185,Reverse Data Management,Alexandra Meliou and Wolfgang Gatterbauer and Dan Suciu\n" +
+    "186,Towards Efficient and Precise Queries over Ten Million Asteroid Trajectory Models,Yusra AlSayyad and K. Simon Krughoff and Bill Howe and Andrew J. Connolly and Magdalena Balazinska and Lynne Jones\n" +
+    "187,Data Markets in the Cloud: An Opportunity for the Database Community,Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
+    "188,Session-Based Browsing for More Effective Query Reuse,Nodira Khoussainova and YongChul Kwon and Wei-Ting Liao and Magdalena Balazinska and Wolfgang Gatterbauer and Dan Suciu\n" +
+    "189,Bridging the gap between intensional and extensional query evaluation in probabilistic databases,Abhay Kumar Jha and Dan Olteanu and Dan Suciu\n" +
+    "190,Definitions matter: reconciling differential and adversarial privacy: invited talk,Dan Suciu\n" +
+    "191,Computing query probability with incidence algebras,Nilesh N. Dalvi and Karl Schnaitter and Dan Suciu\n" +
+    "192,Skew-resistant parallel processing of feature-extracting scientific user-defined functions,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
+    "193,Estimating the progress of MapReduce pipelines,Kristi Morton and Abram L. Friesen and Magdalena Balazinska and Dan Grossman\n" +
+    "194,ParaTimer: a progress indicator for MapReduce DAGs,Kristi Morton and Magdalena Balazinska and Dan Grossman\n" +
+    "195,Scalable Clustering Algorithm for N-Body Simulations in a Shared-Nothing Cluster,YongChul Kwon and Dylan Nunley and Jeffrey P. Gardner and Magdalena Balazinska and Bill Howe and Sarah Loebman\n" +
+    "196,HaLoop: Efficient Iterative Data Processing on Large Clusters,Yingyi Bu and Bill Howe and Magdalena Balazinska and Michael D. Ernst\n" +
+    "197,Approximation trade-offs in Markovian stream processing: An empirical study,Julie Letchner and Christopher Re and Magdalena Balazinska and Matthai Philipose\n" +
+    "198,Boosting the Accuracy of Differentially Private Histograms Through Consistency,Michael Hay and Vibhor Rastogi and Gerome Miklau and Dan Suciu\n" +
+    "199,Dissociation and Propagation for Efficient Query Evaluation over Probabilistic Databases,Wolfgang Gatterbauer and Abhay Kumar Jha and Dan Suciu\n" +
+    "200,Data conflict resolution using trust mappings,Wolfgang Gatterbauer and Dan Suciu\n" +
+    "201,Specification and Verification of Complex Location Events with Panoramic,Evan Welbourne and Magdalena Balazinska and Gaetano Borriello and James Fogarty\n" +
+    "202,SnipSuggest: Context-Aware Autocompletion for SQL,Nodira Khoussainova and YongChul Kwon and Magdalena Balazinska and Dan Suciu\n";
 
 var yelp_search_text = "business_id,name,full_address\n" +
     "C59Gr3A35GMqKs593mfxVA,Grand Canyon University,3300 W Camelback Rd Phoenix, AZ 85017\n" +

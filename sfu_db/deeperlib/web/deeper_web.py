@@ -93,7 +93,10 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
     if 'header' in crawldata_csv:
         result['local_header'] = localdata_csv['header']
         result['hidden_header'] = crawldata_csv['header']
-        matchpair = sorted(hiddendata.getMatchPair().items(), key=lambda item: item[0], reverse=False)
+        try:
+            matchpair = sorted(hiddendata.getMatchPair().items(), key=lambda item: int(item[0]), reverse=False)
+        except (ValueError):
+            matchpair = sorted(hiddendata.getMatchPair().items(), key=lambda item: item[0], reverse=False)
         for m in matchpair:
             temp_record = []
             local_id = m[0]
@@ -106,20 +109,20 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
 
     if api_msg == 'dblp Publ API':
         search_term = 'q'
-        parameters = {'h': 10}
-        api = PublApi(top_k=10, delay=5, search_term=search_term, **parameters)
+        parameters = {'h': 1}
+        api = PublApi(top_k=1, delay=5, search_term=search_term, **parameters)
         hiddendata = HiddenData(uniqueid="info.key", matchlist=["info.title"])
     elif api_msg == 'aminer Publ API':
         search_term = 'term'
-        parameters = {'size': 10, 'sort': 'relevance'}
-        api = AdvancedPublApi(top_k=10, delay=5, search_term=search_term, **parameters)
+        parameters = {'size': 1, 'sort': 'relevance'}
+        api = AdvancedPublApi(top_k=1, delay=5, search_term=search_term, **parameters)
         hiddendata = HiddenData(uniqueid="id", matchlist=["title"])
     elif api_msg == 'yelp Search API':
         client_id = "kCe2YbZePXsPnC204ZrXoQ"
         client_secret = "s9KnvEEQW7jaA2wlrBi4X2fnDQ0F7asdklXVvJUidWp8i50ov24E8EjkHX2AUhoL"
         search_term = 'term'
-        parameters = {'limit': 20, 'location': 'AZ'}
-        api = SearchApi(client_id=client_id, client_secret=client_secret, top_k=20, delay=5,
+        parameters = {'limit': 1, 'location': 'AZ'}
+        api = SearchApi(client_id=client_id, client_secret=client_secret, top_k=1, delay=5,
                         search_term=search_term,
                         **parameters)
         hiddendata = HiddenData(uniqueid="id", matchlist=["name", "location.display_address.*"])
