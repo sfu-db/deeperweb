@@ -84,9 +84,11 @@ def SmartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jacc
     hiddendata.setMatchPair(curmat)
 
 
-def NaiveCrawl(budget, api, localdata, hiddendata, jaccard_thre=0.85, threads=4):
+def NaiveCrawl(budget, api, localdata, hiddendata, typo_ids, jaccard_thre=0.85, threads=4):
     D1_ids, D1_query, D1_er = localdata.getlocalData()
-    naive_ids = random.sample(D1_ids, budget)
+    naive_ids = copy.deepcopy(typo_ids)
+    if len(naive_ids) < budget:
+        naive_ids.extend(random.sample(D1_ids, budget - len(naive_ids)))
     curcov = set()
 
     while len(naive_ids) != 0:

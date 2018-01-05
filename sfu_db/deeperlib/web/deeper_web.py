@@ -12,9 +12,20 @@ from webcrawl import SmartCrawl, NaiveCrawl
 from local_data import LocalData
 from hidden_data import HiddenData
 from json2csv import Json2csv
+from deeper_htmlparser import Deeper_HTMLParser
 
 
 def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
+    typo_ids = []
+    parser = Deeper_HTMLParser()
+    for i in range(1, len(original_csv)):
+        for j in range(1, len(original_csv[i])):
+            if '</span>' in original_csv[i][j]:
+                parser.feed(original_csv[i][j])
+                original_csv[i][j] = parser.get_text()
+                typo_ids.append(original_csv[i][0])
+                break
+
     if api_msg == 'dblp Publ API':
         search_term = 'q'
         parameters = {'h': 1000}
@@ -126,6 +137,6 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
                         search_term=search_term,
                         **parameters)
         hiddendata = HiddenData(uniqueid="id", matchlist=["name", "location.display_address.*"])
-    result['naive'] = NaiveCrawl(4, api, localdata, hiddendata)
+    result['naive'] = NaiveCrawl(4, api, localdata, hiddendata, typo_ids)
 
     return result
