@@ -434,9 +434,8 @@ function smart_crawl() {
                 'api_msg': api_msg
             },
             success: function (response) {
-                var join_keys = "";
-                var join_tbody = "";
-                var join_thead = "<tr>";
+                var join_keys = "<a class='tag' style='display: none'></a>";
+                var join_thead = "<tr><th></th>";
                 $.each(response['local_header'], function (index, element) {
                     join_thead += "<th>" + element + "</th>";
                     join_keys += "<a class='tag'>" + element + "</a>";
@@ -447,29 +446,33 @@ function smart_crawl() {
                 });
                 join_thead += "</tr>";
 
+                var join_tbody = "";
+                var temp_local;
+                var temp_row;
                 $.each(response['record'], function (index, element) {
-                    var local_record = "";
+                    temp_local = "";
                     for (var i = 0; i < element[0].length; i++) {
-                        local_record += "<td>" + element[0][i] + "</td>";
+                        temp_local += "<td>" + element[0][i] + "</td>";
                     }
 
-                    join_tbody += "<tr>" + local_record;
+                    temp_row = temp_local;
                     for (var j = 0; j < element[1].length; j++) {
-                        join_tbody += "<td>" + element[1][j] + "</td>";
+                        temp_row += "<td>" + element[1][j] + "</td>";
                     }
 
                     if (element.length > 2) {
-                        join_tbody += "<td style='cursor: pointer;'><div class='table-expandable-arrow'></div></td></tr>";
+                        temp_row = "<tr><td style='cursor: pointer;'><div class='table-expandable-arrow'></div></td>" + temp_row + "</tr>";
                         for (var m = 2; m < element.length; m++) {
-                            join_tbody += "<tr style='display: none'>" + local_record;
+                            temp_row += "<tr style='display: none'><td style='cursor: pointer;'><span class=\"glyphicon glyphicon-retweet\"></span></td>" + temp_local;
                             for (var n = 0; n < element[m].length; n++) {
-                                join_tbody += "<td>" + element[m][n] + "</td>";
+                                temp_row += "<td>" + element[m][n] + "</td>";
                             }
-                            join_tbody += "<td style='cursor: pointer;'><span class=\"glyphicon glyphicon-retweet\"></span></td></tr>";
+                            temp_row += "</tr>";
                         }
                     } else {
-                        join_tbody += "<td><div></div></td></tr>";
+                        temp_row = "<tr><td><div></div></td>" + temp_row + "</tr>";
                     }
+                    join_tbody += temp_row;
                 });
                 var join_schema = $("div#join_schema");
                 join_schema.children().remove();
@@ -483,23 +486,28 @@ function smart_crawl() {
 
                 $(hidden_match).each(function (index, element) {
                     $(join_schema.children('a.tag')).each(function () {
-                        if ($(this).text() === element) {
-                            $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
-                            $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
-                            $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
+                        if ($(this).index() > local_match.length) {
+                            if ($(this).text() === element) {
+                                $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
+                                $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
+                                $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
+                            }
                         }
                     });
                 });
                 $(local_match).each(function (index, element) {
                     $(join_schema.children('a.tag')).each(function () {
-                        if ($(this).text() === element) {
-                            $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
-                            $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
-                            $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
+                        if ($(this).index() <= local_match.length) {
+                            if ($(this).text() === element) {
+                                $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
+                                $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
+                                $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
+                            }
                         }
                     });
                 });
-                $('table#table_result tbody tr').find('td:last').show();
+                $('table#table_result thead tr th:first').show();
+                $('table#table_result tbody tr').find('td:first').show();
                 $("div#topLoader").hide();
                 $("table#table_result").show();
 
@@ -524,7 +532,7 @@ function init_table() {
         var element = $(this).closest('tr');
         element.find(".table-expandable-arrow").toggleClass("up");
         temp = element.next('tr');
-        while (!temp.find("td:last div").length) {
+        while (temp.find("td:first span").length) {
             temp.toggle('fast');
             temp = temp.next('tr');
         }
@@ -544,12 +552,13 @@ function re_enrich() {
                 $(this).remove();
             }
         });
+        result_head.find("th:first").remove();
         join_schema.children().remove();
         $(result_body).each(function () {
-            if ($(this).find("td:last div").length) {
-                $(this).find("td:last").remove();
-            } else {
+            if ($(this).find("td:first span").length) {
                 $(this).remove();
+            } else {
+                $(this).find("td:first").remove();
             }
         });
 
@@ -574,14 +583,14 @@ function download_csv() {
                 if (index === 0) {
                     var header = [];
                     var table_header = $(element).children('th');
-                    for (var i = 0; i < table_header.length; i++) {
+                    for (var i = 1; i < table_header.length; i++) {
                         header.push(table_header.eq(i).text());
                     }
                     original_data[index] = header;
                 } else {
                     var row = [];
                     var table_row = $(element).children('td');
-                    for (var i = 0; i < table_row.length - 1; i++) {
+                    for (var i = 1; i < table_row.length; i++) {
                         row.push(table_row.eq(i).text());
                     }
                     original_data[index] = row;
@@ -720,11 +729,11 @@ function record_replace() {
     $("table#table_result tbody").delegate("tr td span.glyphicon", "click", function () {
         var alter_row = $(this.closest('tr'));
         var current_row = alter_row.prev('tr');
-        while (!current_row.find("td:last div").length) {
+        while (current_row.find("td:first span").length) {
             current_row = current_row.prev('tr');
         }
-        alter_row.find("td:last").html("<div class='table-expandable-arrow'></div>");
-        current_row.find("td:last").html("<span class=\"glyphicon glyphicon-retweet\"></span>");
+        alter_row.find("td:first").html("<div class='table-expandable-arrow'></div>");
+        current_row.find("td:first").html("<span class=\"glyphicon glyphicon-retweet\"></span>");
         current_row.before(alter_row);
         current_row.addClass('bg-sand');
         alter_row.removeClass('bg-sand');
