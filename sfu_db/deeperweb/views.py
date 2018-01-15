@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
+from django.http import HttpResponse, JsonResponse, StreamingHttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.core.files.uploadedfile import UploadedFile
 from models import Subscriber
@@ -113,3 +113,7 @@ def exportCSV(request):
     response['Content-Disposition'] = 'attachment; filename="extended_table.csv"'
     del request.session['original_data']
     return response
+
+
+def paper(request):
+    return HttpResponseRedirect('/static/deeperweb/pdf/deeper 0.0.1.pdf')

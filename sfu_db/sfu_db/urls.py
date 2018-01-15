@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^uploadCSV/$', views.uploadCSV, name='uploadCSV'),
     url(r'^importTable/$', views.importTable, name='importTable'),
     url(r'^exportCSV/$', views.exportCSV, name='exportCSV'),
+    url(r'^DeepER/$', views.paper, name='paper'),
     url(r'^admin/', admin.site.urls),
 ]
