@@ -116,4 +116,4 @@ def exportCSV(request):
 
 
 def paper(request):
-    return HttpResponseRedirect('/static/deeperweb/pdf/deeper 0.0.1.pdf')
+    return HttpResponseRedirect('/static/deeperweb/pdf/deeper-vldb-v0.1.pdf')

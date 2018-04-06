@@ -8,9 +8,9 @@ from deeperlib.api.dblp.publapi import PublApi
 from deeperlib.api.yelp.searchapi import SearchApi
 from deeperlib.api.aminer.advanced_publapi import AdvancedPublApi
 from deeperlib.data_processing.sample_data import SampleData
-from webcrawl import SmartCrawl, NaiveCrawl
 from local_data import LocalData
 from hidden_data import HiddenData
+from webcrawl import SmartCrawl, NaiveCrawl
 from json2csv import Json2csv
 from deeper_htmlparser import Deeper_HTMLParser
 
@@ -69,8 +69,8 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
                                   querylist=[local_match[hidden_match.index("title")]],
                                   matchlist=[local_match[hidden_match.index("title")]], data_raw=original_csv)
     elif api_msg == 'yelp Search API':
-        client_id = "kCe2YbZePXsPnC204ZrXoQ"
-        client_secret = "s9KnvEEQW7jaA2wlrBi4X2fnDQ0F7asdklXVvJUidWp8i50ov24E8EjkHX2AUhoL"
+        client_id = "QhqrWe9agsd0Ad6Gs0qgMQ"
+        client_secret = "6WQWRMV8edOhaThyWgm96wAJkIzJ1pHOhm5N0AD20edrnzv0lwi3wfgZAFp0IqQ6WIc-pZki83kjpViwptlcsiV0-Ij3HI6AJxhOTE4jsjNOoZOHZI3823twg8yZWXYx"
         search_term = 'term'
         parameters = {'limit': 50, 'location': 'AZ'}
         api = SearchApi(client_id=client_id, client_secret=client_secret, top_k=300, delay=5, search_term=search_term,

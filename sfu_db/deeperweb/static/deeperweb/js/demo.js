@@ -112,7 +112,7 @@ function api_choose() {
             }
         } else if ($(this).parent().is($("ul#yelp"))) {
             if ($(this).text() === 'Search API') {
-                var yelp_search_schema = ['id', 'name', 'location.display_address.*', 'rating', 'review_count', 'transactions.*', 'url', 'price', 'distance', 'coordinates.latitude', 'coordinates.longitude', 'phone', 'image_url', 'categories.*.alias', 'categories.*.title', 'display_phone', 'is_closed', 'location.city', 'location.country', 'location.address2', 'location.address3', 'location.state', 'location.address1', 'location.zip_code'];
+                var yelp_search_schema = ['id', 'name', 'location.display_address.*', 'rating', 'review_count', 'transactions.*', 'url', 'price', 'distance', 'coordinates.latitude', 'coordinates.longitude', 'phone', 'image_url', 'categories.*.alias', 'categories.*.title', 'display_phone', 'is_closed', 'location.city', 'location.country', 'location.address1', 'location.address2', 'location.address3', 'location.state', 'location.zip_code'];
                 $.each(yelp_search_schema, function (index, element) {
                     hidden_schema.append("<a class='tag'>" + element + "</a>");
                     if (index < 3) {

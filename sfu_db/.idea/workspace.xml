@@ -10,53 +10,95 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/sfu_db$Nosetests_for_test_aminer_advanced_publapi_AminerAdvancedPublapiTestCase_test_callMulApi.coverage" NAME="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi Coverage Results" MODIFIED="1514966819420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/api/aminer" />
-    <SUITE FILE_PATH="coverage/sfu_db$Nosetests_in_test_aminer_advanced_publapi_py.coverage" NAME="Nosetests in test_aminer_advanced_publapi.py Coverage Results" MODIFIED="1514966874235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/api/aminer" />
     <SUITE FILE_PATH="coverage/sfu_db$deeper_htmlparser.coverage" NAME="deeper_htmlparser Coverage Results" MODIFIED="1514963109792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/web" />
+    <SUITE FILE_PATH="coverage/sfu_db$google_details_test.coverage" NAME="google_details_test Coverage Results" MODIFIED="1523019380443" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/web" />
+    <SUITE FILE_PATH="coverage/sfu_db$new_test.coverage" NAME="new_test Coverage Results" MODIFIED="1523006363566" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib" />
+    <SUITE FILE_PATH="coverage/sfu_db$google_test.coverage" NAME="google_test Coverage Results" MODIFIED="1523019249729" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib" />
+    <SUITE FILE_PATH="coverage/sfu_db$Nosetests_for_test_aminer_advanced_publapi_AminerAdvancedPublapiTestCase_test_callMulApi.coverage" NAME="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi Coverage Results" MODIFIED="1514966819420" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/api/aminer" />
     <SUITE FILE_PATH="coverage/sfu_db$Nosetests_for_test_aminer_advanced_publapi_AminerAdvancedPublapiTestCase.coverage" NAME="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase Coverage Results" MODIFIED="1514966772524" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/api/aminer" />
     <SUITE FILE_PATH="coverage/sfu_db$deeperHTMLParser.coverage" NAME="deeperHTMLParser Coverage Results" MODIFIED="1514884327171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/web" />
+    <SUITE FILE_PATH="coverage/sfu_db$yelp_test.coverage" NAME="yelp_test Coverage Results" MODIFIED="1523015330657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib" />
+    <SUITE FILE_PATH="coverage/sfu_db$Nosetests_in_test_aminer_advanced_publapi_py.coverage" NAME="Nosetests in test_aminer_advanced_publapi.py Coverage Results" MODIFIED="1522929310956" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/api/aminer" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sfu_db/settings.py">
+      <file leaf-file-name="yelp_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deeperlib/yelp_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="308">
+              <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deeperweb/views.py">
+      <file leaf-file-name="searchapi.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deeperlib/api/yelp/searchapi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="118" column="31" lean-forward="false" selection-start-line="118" selection-start-column="31" selection-end-line="118" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="footer.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/includes/footer.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="70" column="50" lean-forward="false" selection-start-line="70" selection-start-column="50" selection-end-line="70" selection-end-column="50" />
+            <state relative-caret-position="252">
+              <caret line="78" selection-start-line="78" selection-end-line="84" selection-end-column="41" />
               <folding>
-                <element signature="e#3419#3425#0" expanded="true" />
-                <element signature="e#3426#3432#0" expanded="true" />
+                <element signature="e#0#30#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/sfu_db/urls.py">
+      <file leaf-file-name="deeper_web.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_web.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
-              <caret line="29" column="46" lean-forward="false" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
-              <folding />
+            <state relative-caret-position="-392">
+              <caret line="70" column="26" selection-start-line="70" selection-start-column="26" selection-end-line="70" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="textsearchapi.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deeperlib/api/google/textsearchapi.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-812">
+              <caret line="40" column="32" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="webcrawl.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deeperlib/web/webcrawl.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="644">
+              <caret line="66" column="22" lean-forward="true" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="google_textsearch_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deeperlib/google_textsearch_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="237">
+              <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detailsapi.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deeperlib/api/google/detailsapi.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="644">
+              <caret line="71" column="41" selection-start-line="71" selection-start-column="41" selection-end-line="71" selection-end-column="41" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="google_details_test.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/deeperlib/web/google_details_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="125">
+              <caret line="10" column="101" selection-start-line="10" selection-start-column="101" selection-end-line="10" selection-end-column="101" />
             </state>
           </provider>
         </entry>
@@ -108,16 +150,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/css/bootstrap.css" />
-        <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/smartcrawl.html" />
-        <option value="$PROJECT_DIR$/deeperweb/dblp_example.py" />
-        <option value="$PROJECT_DIR$/deeperlib/data_processing/local_data.py" />
-        <option value="$PROJECT_DIR$/deeperweb/smartcrawl_web.py" />
-        <option value="$PROJECT_DIR$/deeperlib/core/smartcrawl.py" />
-        <option value="$PROJECT_DIR$/deeperlib/web/smartcrawl_web.py" />
-        <option value="$PROJECT_DIR$/deeperlib/data_processing/json2csv.py" />
-        <option value="$PROJECT_DIR$/netdisk/fadfa.py" />
-        <option value="$PROJECT_DIR$/deeperlib/core/utils.py" />
         <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/js/tableExport.js" />
         <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/advance.html" />
         <option value="$PROJECT_DIR$/filebrowser/templates/filebrowser/upload.html" />
@@ -151,14 +183,24 @@
         <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/css/bootstrap-table-expandable.css" />
         <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css" />
         <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html" />
-        <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js" />
-        <option value="$PROJECT_DIR$/deeperlib/web/deeper_web.py" />
         <option value="$PROJECT_DIR$/deeperlib/web/webcrawl.py" />
         <option value="$PROJECT_DIR$/netdisk/settings.py" />
-        <option value="$PROJECT_DIR$/deeperweb/views.py" />
         <option value="$PROJECT_DIR$/sfu_db/settings.py" />
         <option value="$PROJECT_DIR$/sfu_db/urls.py" />
         <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/includes/footer.html" />
+        <option value="$PROJECT_DIR$/deeperweb/views.py" />
+        <option value="$PROJECT_DIR$/deeperlib/new_test.py" />
+        <option value="$PROJECT_DIR$/deeperlib/web/deeper_web.py" />
+        <option value="$PROJECT_DIR$/deeperlib/api/yelp/searchapi.py" />
+        <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js" />
+        <option value="$PROJECT_DIR$/deeperlib/api/google/placeapi.py" />
+        <option value="$PROJECT_DIR$/deeperlib/yelp_test.py" />
+        <option value="$PROJECT_DIR$/deeperlib/google_test.py" />
+        <option value="$PROJECT_DIR$/deeperlib/api/google/details.py" />
+        <option value="$PROJECT_DIR$/deeperlib/api/google/textsearchapi.py" />
+        <option value="$PROJECT_DIR$/deeperlib/api/google/detailsapi.py" />
+        <option value="$PROJECT_DIR$/deeperlib/google_textsearch_test.py" />
+        <option value="$PROJECT_DIR$/deeperlib/web/google_details_test.py" />
       </list>
     </option>
   </component>
@@ -168,28 +210,17 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-8" />
-    <option name="y" value="27" />
-    <option name="width" value="1600" />
-    <option name="height" value="710" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -200,59 +231,32 @@
             <path>
               <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
               <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
+              <item name="deeperlib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
               <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="deeperlib" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
               <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
+              <item name="deeperlib" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -275,8 +279,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Nosetests in test_aminer_advanced_publapi.py">
-    <configuration name="deeperHTMLParser" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.google_details_test">
+    <configuration name="google_details_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="sfu_db" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -287,100 +292,101 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sfu_db" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\PycharmProjects\sfu_db\deeperlib\web\deeper_htmlparser.py" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\PycharmProjects\sfu_db\deeperlib\google_details_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="deeper_htmlparser" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="google_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="sfu_db" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperlib/web" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperlib" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sfu_db" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/deeperlib/web/deeper_htmlparser.py" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\PycharmProjects\sfu_db\deeperlib\google_textsearch_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
+    <configuration name="new_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="sfu_db" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperlib/api/aminer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperlib" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sfu_db" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="_new_regexPattern" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="C:\PycharmProjects\sfu_db\deeperlib\yelp_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
+    <configuration name="yelp_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="sfu_db" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperlib/api/aminer" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperlib" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sfu_db" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="_new_regexPattern" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/deeperlib/yelp_test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="Nosetests in test_aminer_advanced_publapi.py" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
+    <configuration name="Nosetests in C:/PycharmProjects/sfu_db/deeperlib/api/aminer/test_aminer_advanced_publapi.py" type="tests" factoryName="Nosetests" temporary="true" nameIsGenerated="true">
+      <module name="sfu_db" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs />
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/deeperlib/api/aminer" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="sfu_db" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_regexPattern" value="&quot;&quot;" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;$PROJECT_DIR$/deeperlib/api/aminer/test_aminer_advanced_publapi.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
-    <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.deeperHTMLParser" />
-      <item index="1" class="java.lang.String" itemvalue="Python.deeper_htmlparser" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase" />
-      <item index="3" class="java.lang.String" itemvalue="Python tests.Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi" />
-      <item index="4" class="java.lang.String" itemvalue="Python tests.Nosetests in test_aminer_advanced_publapi.py" />
+    <list>
+      <item itemvalue="Python tests.Nosetests in C:/PycharmProjects/sfu_db/deeperlib/api/aminer/test_aminer_advanced_publapi.py" />
+      <item itemvalue="Python.new_test" />
+      <item itemvalue="Python.google_test" />
+      <item itemvalue="Python.yelp_test" />
+      <item itemvalue="Python.google_details_test" />
     </list>
     <recent_temporary>
-      <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.Nosetests in test_aminer_advanced_publapi.py" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase.test_callMulApi" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Nosetests for test_aminer_advanced_publapi.AminerAdvancedPublapiTestCase" />
-        <item index="3" class="java.lang.String" itemvalue="Python.deeper_htmlparser" />
-        <item index="4" class="java.lang.String" itemvalue="Python.deeperHTMLParser" />
+      <list>
+        <item itemvalue="Python.google_details_test" />
+        <item itemvalue="Python.google_test" />
+        <item itemvalue="Python.yelp_test" />
+        <item itemvalue="Python.new_test" />
+        <item itemvalue="Python tests.Nosetests in C:/PycharmProjects/sfu_db/deeperlib/api/aminer/test_aminer_advanced_publapi.py" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -408,6 +414,9 @@
     <history-entry file="Nosetests_in_test_aminer_advanced_publapi_py - 2018.01.03 at 16h 08m 22s.xml">
       <configuration name="Nosetests in test_aminer_advanced_publapi.py" configurationId="tests" />
     </history-entry>
+    <history-entry file="Nosetests_in_test_aminer_advanced_publapi_py - 2018.04.05 at 19h 55m 13s.xml">
+      <configuration name="Nosetests in test_aminer_advanced_publapi.py" configurationId="tests" />
+    </history-entry>
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -419,29 +428,31 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900944" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900944" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38089624" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18025751" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Python Console" order="8" weight="0.32900944" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32890856" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.26696166" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11058981" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="SciView" order="5" side_tool="true" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" id="Data View" order="4" weight="0.3299356" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -454,70 +465,53 @@
     <breakpoint-manager>
       <option name="time" value="5" />
     </breakpoint-manager>
-    <watches-manager />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1353">
-          <caret line="41" column="47" lean-forward="false" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
+          <caret line="41" column="47" selection-start-line="41" selection-start-column="47" selection-end-line="41" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_web.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1419">
-          <caret line="43" column="37" lean-forward="false" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="37" />
+          <caret line="43" column="37" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/script.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="49929">
-          <caret line="1513" column="38" lean-forward="false" selection-start-line="1513" selection-start-column="38" selection-end-line="1513" selection-end-column="38" />
+          <caret line="1513" column="38" selection-start-line="1513" selection-start-column="38" selection-end-line="1513" selection-end-column="38" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1089">
-          <caret line="43" column="53" lean-forward="false" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+          <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9042">
-          <caret line="274" column="42" lean-forward="false" selection-start-line="274" selection-start-column="42" selection-end-line="274" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/json2csv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="274" column="42" selection-start-line="274" selection-start-column="42" selection-end-line="274" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/apps.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="99">
-          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/migrations/0001_initial.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-396">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+        <state relative-caret-position="-396" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/script.js">
@@ -529,93 +523,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/entity_resolution/simjoin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3349">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+        <state relative-caret-position="-3349" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/bootstrap-table-expandable.js" />
-    <entry file="file://$PROJECT_DIR$/deeperlib/api/dblp/authorapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3450">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/web/json2csv.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
-          <caret line="8" column="6" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://D:/Anaconda2/Lib/HTMLParser.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-513">
-          <caret line="74" column="6" lean-forward="false" selection-start-line="74" selection-start-column="6" selection-end-line="74" selection-end-column="6" />
+          <caret line="74" column="6" selection-start-line="74" selection-start-column="6" selection-end-line="74" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.PyCharm2017.3/system/python_stubs/2129268673/__builtin__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="4339" column="8" lean-forward="false" selection-start-line="4339" selection-start-column="8" selection-end-line="4339" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Anaconda2/Lib/ast.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/core/smartcrawl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_htmlparser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="40" column="0" lean-forward="true" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <caret line="4339" column="8" selection-start-line="4339" selection-start-column="8" selection-end-line="4339" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/core/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-141">
-          <caret line="195" column="4" lean-forward="false" selection-start-line="195" selection-start-column="4" selection-end-line="195" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/api/yelp/searchapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1617">
-          <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/api/simapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/api/simthread.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="8" column="8" lean-forward="false" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/api/aminer/advanced_personapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="130" column="0" lean-forward="true" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+          <caret line="195" column="4" selection-start-line="195" selection-start-column="4" selection-end-line="195" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -627,17 +563,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/api/aminer/advanced_publapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1478">
-          <caret line="98" column="20" lean-forward="false" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/contact.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-660">
-          <caret line="37" column="66" lean-forward="false" selection-start-line="37" selection-start-column="66" selection-end-line="37" selection-end-column="66" />
+          <caret line="37" column="66" selection-start-line="37" selection-start-column="66" selection-end-line="37" selection-end-column="66" />
         </state>
       </provider>
     </entry>
@@ -651,63 +580,47 @@
     <entry file="file://$PROJECT_DIR$/deeperlib/web/local_data.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-32">
-          <caret line="66" column="18" lean-forward="false" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/css/bootstrap-switch.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="66" column="18" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/css/bootstrap-table-expandable.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
-          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17754">
-          <caret line="538" column="0" lean-forward="false" selection-start-line="538" selection-start-column="0" selection-end-line="538" selection-end-column="0" />
+          <caret line="538" selection-start-line="538" selection-end-line="538" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/data_process.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="528">
-          <caret line="32" column="4" lean-forward="false" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
+          <caret line="32" column="4" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/local_data.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-362">
-          <caret line="63" column="27" lean-forward="false" selection-start-line="63" selection-start-column="27" selection-end-line="63" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/web/webcrawl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3564">
-          <caret line="112" column="0" lean-forward="false" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+          <caret line="63" column="27" selection-start-line="63" selection-start-column="27" selection-end-line="63" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/netdisk/yelp_3000_Arizona.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-198">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+        <state relative-caret-position="-198" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/about.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="33">
-          <caret line="4" column="78" lean-forward="false" selection-start-line="4" selection-start-column="78" selection-end-line="4" selection-end-column="78" />
+          <caret line="4" column="78" selection-start-line="4" selection-start-column="78" selection-end-line="4" selection-end-column="78" />
         </state>
       </provider>
     </entry>
@@ -718,103 +631,185 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/netdisk/dblp_3881.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/hidden_data.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="403">
-          <caret line="34" column="25" lean-forward="false" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_web.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="4" column="29" lean-forward="false" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sfu_db/wsgi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="34" column="25" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/netdisk/wsgi.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-323">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
+        <state relative-caret-position="-323" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/netdisk/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
-          <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2897">
-          <caret line="81" column="95" lean-forward="false" selection-start-line="81" selection-start-column="95" selection-end-line="81" selection-end-column="95" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3333">
-          <caret line="164" column="27" lean-forward="false" selection-start-line="164" selection-start-column="27" selection-end-line="164" selection-end-column="27" />
-          <folding>
-            <marker date="1515121009870" expanded="true" signature="6873:6882" ph="..." />
-            <marker date="1515121009870" expanded="true" signature="17729:17742" ph="..." />
-            <marker date="1515121009870" expanded="true" signature="18969:18985" ph="..." />
-            <marker date="1515121009870" expanded="true" signature="19177:19190" ph="..." />
-            <marker date="1515121009870" expanded="true" signature="19203:19219" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="118" column="31" lean-forward="false" selection-start-line="118" selection-start-column="31" selection-end-line="118" selection-end-column="31" />
-          <folding />
+          <caret line="114" lean-forward="true" selection-start-line="114" selection-end-line="114" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sfu_db/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="308">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_htmlparser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="924">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="7" column="41" selection-start-line="7" selection-start-column="41" selection-end-line="7" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="81" column="95" selection-start-line="81" selection-start-column="95" selection-end-line="81" selection-end-column="95" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/includes/footer.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="70" column="50" lean-forward="false" selection-start-line="70" selection-start-column="50" selection-end-line="70" selection-end-column="50" />
-          <folding>
-            <element signature="e#3419#3425#0" expanded="true" />
-            <element signature="e#3426#3432#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="28">
+          <caret line="70" column="50" selection-start-line="70" selection-start-column="50" selection-end-line="70" selection-end-column="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sfu_db/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
-          <caret line="29" column="46" lean-forward="false" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
-          <folding />
+        <state relative-caret-position="271">
+          <caret line="29" column="46" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/dblp/authorapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-504" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/aminer/publapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-981">
+          <caret line="30" column="29" lean-forward="true" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="114" column="360" selection-start-line="114" selection-start-column="360" selection-end-line="114" selection-end-column="360" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/aminer/advanced_publapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2576">
+          <caret line="98" column="20" selection-start-line="98" selection-start-column="20" selection-end-line="98" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/simapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="62" column="44" selection-start-line="62" selection-start-column="18" selection-end-line="62" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/aminer/advanced_personapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3472">
+          <caret line="130" lean-forward="true" selection-start-line="130" selection-end-line="130" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/aminer/personapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3585">
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_web.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-392">
+          <caret line="70" column="26" selection-start-line="70" selection-start-column="26" selection-end-line="70" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/simthread.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="18" column="39" lean-forward="true" selection-start-line="18" selection-start-column="39" selection-end-line="18" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/yelp_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/web/webcrawl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="66" column="22" lean-forward="true" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/google/detailsapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="71" column="41" selection-start-line="71" selection-start-column="41" selection-end-line="71" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/google_textsearch_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/google/textsearchapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-812">
+          <caret line="40" column="32" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/yelp/searchapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="78" selection-start-line="78" selection-end-line="84" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/web/google_details_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="10" column="101" selection-start-line="10" selection-start-column="101" selection-end-line="10" selection-end-column="101" />
         </state>
       </provider>
     </entry>
