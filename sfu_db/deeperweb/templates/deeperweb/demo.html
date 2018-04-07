@@ -14,58 +14,83 @@
 <div class="content-body" style="background-image:url({% static 'deeperweb/pic/breadcrumbs/bg-2.jpg' %}); no-repeat">
     <div class="container">
         <br/>
-        <div class="row" id="api">
-            <div class="col-md-3 cws-widget">
-                <div class="widget-categories alt">
-                    <div class="accordion style-1">
-                        <div class="content-title"><span>Dblp<i class="accordion_angle fa fa-angle-down"></i></span>
+        <div id="api">
+            <div class="row">
+                <div class="col-md-3 cws-widget">
+                    <div class="widget-categories alt">
+                        <div class="accordion style-1">
+                            <div class="content-title"><span>Dblp<i class="accordion_angle fa fa-angle-down"></i></span>
+                            </div>
+                            <div class="content">
+                                <ul id="dblp">
+                                    <li><a>Publ API</a></li>
+                                    <li><a>Venue API</a></li>
+                                    <li><a>Author API</a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="content">
-                            <ul id="dblp">
-                                <li><a>Publ API</a></li>
-                                <li><a>Venue API</a></li>
-                                <li><a>Author API</a></li>
-                            </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 cws-widget">
+                    <div class="widget-categories alt">
+                        <div class="accordion style-1">
+                            <div class="content-title"><span>Yelp<i class="accordion_angle fa fa-angle-down"></i></span>
+                            </div>
+                            <div class="content">
+                                <ul id="yelp">
+                                    <li><a>Search API</a></li>
+                                </ul>
+                                <select name="state">
+                                    <option value="default">Choose your state</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="Toronto">Toronto</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 cws-widget">
+                    <div class="widget-categories alt">
+                        <div class="accordion style-1">
+                            <div class="content-title"><span>AMiner<i
+                                    class="accordion_angle fa fa-angle-down"></i></span></div>
+                            <div class="content">
+                                <ul id="aminer">
+                                    <li><a>Publ API</a></li>
+                                    <li><a>Search API</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 cws-widget">
+                    <input id="fileupload" type="file" name="files[]" style="display:none">
+                    <button type="button" class="btn btn-primary" id="upload"><a>Upload csv</a></button>
+                    <button type="button" class="btn btn-primary" id="try"><a>Try it now</a></button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 cws-widget">
+                    <div class="widget-categories alt">
+                        <div class="accordion style-1">
+                            <div class="content-title"><span>Google<i
+                                    class="accordion_angle fa fa-angle-down"></i></span>
+                            </div>
+                            <div class="content">
+                                <ul id="google">
+                                    <li><a>Place API</a></li>
+                                </ul>
+                                <select name="state">
+                                    <option value="default">Choose your state</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="Toronto">Toronto</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 cws-widget">
-                <div class="widget-categories alt">
-                    <div class="accordion style-1">
-                        <div class="content-title"><span>Yelp<i class="accordion_angle fa fa-angle-down"></i></span>
-                        </div>
-                        <div class="content">
-                            <ul id="yelp">
-                                <li><a>Search API</a></li>
-                            </ul>
-                            <select name="state">
-                                <option value="menu_order">Choose your state</option>
-                                <option value="popularity">Arizona</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 cws-widget">
-                <div class="widget-categories alt">
-                    <div class="accordion style-1">
-                        <div class="content-title"><span>AMiner<i
-                                class="accordion_angle fa fa-angle-down"></i></span></div>
-                        <div class="content">
-                            <ul id="aminer">
-                                <li><a>Publ API</a></li>
-                                <li><a>Search API</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 cws-widget">
-                <input id="fileupload" type="file" name="files[]" style="display:none">
-                <button type="button" class="btn btn-primary" id="upload"><a>Upload csv</a></button>
-                <button type="button" class="btn btn-primary" id="try"><a>Try it now</a></button>
-            </div>
+            <br/>
         </div>
         <div class="row">
             <div class="bootstrap-switch" id="format">
@@ -114,7 +139,8 @@
         <div style="overflow:scroll; height: 488px">
             <div id="topLoader"
                  style="position:absolute;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);}"></div>
-            <table class="table table-hover table-bordered table table-expandable" style="display: none; background:#f8f5f0" id="table_result">
+            <table class="table table-hover table-bordered table table-expandable"
+                   style="display: none; background:#f8f5f0" id="table_result">
                 <thead>
                 </thead>
                 <tbody>

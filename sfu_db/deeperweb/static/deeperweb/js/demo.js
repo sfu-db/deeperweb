@@ -1,6 +1,7 @@
 $(document).ready(function () {
     switch_button_init();
     api_choose();
+    location_choose();
     schema_matching();
     upload_csv();
     popup_news_init();
@@ -87,7 +88,8 @@ function api_choose() {
                 }
             } else {
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("Sorry, this api is not supported now.");
+                $(".alert-popup p:first").html("Info!");
+                $(".alert-popup p:last").html("Sorry, this api is not supported now.");
             }
         } else if ($(this).parent().is($("ul#aminer"))) {
             if ($(this).text() === 'Publ API') {
@@ -108,11 +110,12 @@ function api_choose() {
                 }
             } else {
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("Sorry, this api is not supported now.");
+                $(".alert-popup p:first").html("Info!");
+                $(".alert-popup p:last").html("Sorry, this api is not supported now.");
             }
         } else if ($(this).parent().is($("ul#yelp"))) {
             if ($(this).text() === 'Search API') {
-                var yelp_search_schema = ['id', 'name', 'location.display_address.*', 'rating', 'review_count', 'transactions.*', 'url', 'price', 'distance', 'coordinates.latitude', 'coordinates.longitude', 'phone', 'image_url', 'categories.*.alias', 'categories.*.title', 'display_phone', 'is_closed', 'location.city', 'location.country', 'location.address1', 'location.address2', 'location.address3', 'location.state', 'location.zip_code'];
+                var yelp_search_schema = ['id', 'name', 'location.display_address.*', 'url', 'coordinates.latitude', 'coordinates.longitude', 'phone', 'categories.*.alias', 'categories.*.title', 'display_phone', 'location.city', 'location.country', 'location.address1', 'location.address2', 'location.address3', 'location.state', 'location.zip_code'];
                 $.each(yelp_search_schema, function (index, element) {
                     hidden_schema.append("<a class='tag'>" + element + "</a>");
                     if (index < 3) {
@@ -124,16 +127,60 @@ function api_choose() {
                         hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
                     }
                 });
-                if ($('.bootstrap-switch#example input').bootstrapSwitch('state')) {
-                    $("div#text_input textarea").val(yelp_search_text);
-                }
             } else {
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("Sorry, this api is not supported now.");
+                $(".alert-popup p:first").html("Info!");
+                $(".alert-popup p:last").html("Sorry, this api is not supported now.");
+            }
+        } else if ($(this).parent().is($("ul#google"))) {
+            if ($(this).text() === 'Place API') {
+                var google_place_schema = ['place_id', 'name', 'formatted_address', 'formatted_phone_number', 'geometry.location.lat', 'geometry.location.lng', 'vicinity', 'website'];
+                $.each(google_place_schema, function (index, element) {
+                    hidden_schema.append("<a class='tag'>" + element + "</a>");
+                    if (index < 3) {
+                        hidden_schema.find("a:last").css({
+                            'color': '#ffffff',
+                            'background': '#237dc8',
+                            'border-color': '#237dc8'
+                        });
+                        hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
+                    }
+                });
+            } else {
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p:first").html("Info!");
+                $(".alert-popup p:last").html("Sorry, this api is not supported now.");
             }
         } else {
             $(".alert-popup").addClass("open");
-            $(".alert-popup p").html("Sorry, this api is not supported now.");
+            $(".alert-popup p:first").html("Info!");
+            $(".alert-popup p:last").html("Sorry, this api is not supported now.");
+        }
+
+        $('.bootstrap-switch#typos input').bootstrapSwitch('state', false);
+        if ($('.bootstrap-switch#format input').bootstrapSwitch('state')) {
+            if ($('.bootstrap-switch#example input').bootstrapSwitch('state')) {
+                text2table();
+            } else {
+                $("div#text_input").hide();
+                $("div#table_input").show();
+            }
+        } else {
+            $("div#text_input").show();
+            $("div#table_input").hide();
+        }
+    });
+}
+
+/*choose location*/
+function location_choose() {
+    $("div#api select").change(function () {
+        if ($('.bootstrap-switch#example input').bootstrapSwitch('state')) {
+            if ($(this).children('option:selected').val() === "AZ") {
+                $("div#text_input textarea").val(yelp_search_text_AZ);
+            } else if ($(this).children('option:selected').val() === "Toronto") {
+                $("div#text_input textarea").val(yelp_search_text_Toronto);
+            }
         }
 
         $('.bootstrap-switch#typos input').bootstrapSwitch('state', false);
@@ -305,13 +352,13 @@ function upload_csv() {
                     local_tbody += "</tr>";
                 }
             });
+            $('.bootstrap-switch#format input').bootstrapSwitch('state', true);
             $("div#text_input").hide();
             $("div#table_input table thead").html(local_thead);
             $("div#table_input table tbody").html(local_tbody);
             $("div#table_input").show();
             $("button#upload").attr("disabled", false);
             $("button#upload a").text("Upload csv");
-            $('.bootstrap-switch#format input').bootstrapSwitch('state', true);
         }
     });
 }
@@ -350,33 +397,63 @@ function smart_crawl() {
             }
         });
         var api = $('div#api ul li.active');
-        var api_msg = api.parent().attr('id') + ' ' + api.text();
+        var api_msg = [];
+        api_msg.push(api.parent().attr('id') + ' ' + api.text());
         /*judge the correctness of schema and api*/
         if (local_match.length !== hidden_match.length) {
-            alert("Please match the schema correctly.");
+            $(".alert-popup").addClass("open");
+            $(".alert-popup p:first").html("Warning!");
+            $(".alert-popup p:last").html("Please match the schema correctly.");
             return false;
         }
-        if (api_msg === "dblp Publ API") {
+        if (api_msg[0].indexOf("dblp Publ API") !== -1) {
             if ($.inArray("info.title", hidden_match) === -1) {
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("info.title is necessary.");
+                $(".alert-popup p:first").html("Warning!");
+                $(".alert-popup p:last").html("info.title is necessary.");
                 return false;
             }
-        } else if (api_msg === "aminer Publ API") {
+        } else if (api_msg[0].indexOf("aminer Publ API") !== -1) {
             if ($.inArray("title", hidden_match) === -1) {
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("info.title is necessary.");
+                $(".alert-popup p:first").html("Warning!");
+                $(".alert-popup p:last").html("info.title is necessary.");
                 return false;
             }
-        } else if (api_msg === "yelp Search API") {
+        } else if (api_msg[0].indexOf("yelp Search API") !== -1) {
             if ($.inArray("name", hidden_match) === -1 || $.inArray("location.display_address.*", hidden_match) === -1) {
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("name and location.display_address.* is necessary.");
+                $(".alert-popup p:first").html("Warning!");
+                $(".alert-popup p:last").html("name and location.display_address.* is necessary.");
+                return false;
+            }
+            if (api.parent().next().get(0).selectedIndex !== 0) {
+                api_msg.push(api.parent().next().find('option:selected').val());
+            } else {
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p:first").html("Warning!");
+                $(".alert-popup p:last").html("state is necessary.");
+                return false;
+            }
+        } else if (api_msg[0].indexOf("google Place API") !== -1) {
+            if ($.inArray("name", hidden_match) === -1 || $.inArray("formatted_address", hidden_match) === -1) {
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p:first").html("Warning!");
+                $(".alert-popup p:last").html("name and formatted_address is necessary.");
+                return false;
+            }
+            if (api.parent().next().get(0).selectedIndex !== 0) {
+                api_msg.push(api.parent().next().find('option:selected').val());
+            } else {
+                $(".alert-popup").addClass("open");
+                $(".alert-popup p:first").html("Warning!");
+                $(".alert-popup p:last").html("state is necessary.");
                 return false;
             }
         } else {
             $(".alert-popup").addClass("open");
-            $(".alert-popup p").html("Sorry, this api is not supported now.");
+            $(".alert-popup p:first").html("Info!");
+            $(".alert-popup p:last").html("Sorry, this api is not supported now.");
             return false;
         }
         /*pre-process the local record*/
@@ -384,12 +461,14 @@ function smart_crawl() {
             var original_data = $("div#text_input textarea").val();
             if (original_data.length > 5242880) {
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("Maximum file size is 5MB");
+                $(".alert-popup p:first").html("Error!");
+                $(".alert-popup p:last").html("Maximum file size is 5MB");
                 return false;
             }
             if (original_data.split('\n').length > 20000) {
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("Maximum number of rows for file is 20000");
+                $(".alert-popup p:first").html("Error!");
+                $(".alert-popup p:last").html("Maximum number of rows for file is 20000");
                 return false;
             }
         } else {
@@ -517,7 +596,8 @@ function smart_crawl() {
             },
             error: function () {
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p").html("Incorrect Format.");
+                $(".alert-popup p:first").html("Error!");
+                $(".alert-popup p:last").html("Incorrect Format.");
             }
         });
     });
@@ -946,7 +1026,7 @@ var dblp_publ_text = "ID,title,author\n" +
     "201,Specification and Verification of Complex Location Events with Panoramic,Evan Welbourne and Magdalena Balazinska and Gaetano Borriello and James Fogarty\n" +
     "202,SnipSuggest: Context-Aware Autocompletion for SQL,Nodira Khoussainova and YongChul Kwon and Magdalena Balazinska and Dan Suciu\n";
 
-var yelp_search_text = "business_id,name,full_address\n" +
+var yelp_search_text_AZ = "business_id,name,full_address\n" +
     "C59Gr3A35GMqKs593mfxVA,Grand Canyon University,3300 W Camelback Rd Phoenix, AZ 85017\n" +
     "z9RjkAPe-00LGoBJjQadOw,Princess Pro Nail,13216 N 7th St Phoenix, AZ 85022\n" +
     "BMjggIgOghBMEXPo8q7q3w,LaBella Pizzeria and Restaurant,6505 N 7th St Phoenix, AZ 85014\n" +
@@ -1006,7 +1086,7 @@ var yelp_search_text = "business_id,name,full_address\n" +
     "zj0BkAi54BGU_AK6AyvJDQ,Rusconi's American Kitchen,10637 N Tatum Blvd Phoenix, AZ 85028\n" +
     "33zsO72VkYVnW2l5ZA16Cg,Mine Nails,7827 N 19th Ave Phoenix, AZ 85021\n" +
     "CCInhPbQLOBRHOYfFAZ4GA,Tag The Auto Guy,1401 E Camelback Rd Phoenix, AZ 85014\n" +
-    "-_jLCD1NWODEXfgEAKfUAg,La Pi帽ata,5521 N 7th Ave Phoenix, AZ 85013\n" +
+    "-_jLCD1NWODEXfgEAKfUAg,La Pinata,5521 N 7th Ave Phoenix, AZ 85013\n" +
     "4zitC1IPRLvHfQVinRSKew,Johnnie's Chicago Style Pizza,15443 N Cave Creek Rd Phoenix, AZ 85034\n" +
     "lnX2gaGdO0fNtykyFrp1AA,Mel's Diner,1747 Grand Ave Phoenix, AZ 85007\n" +
     "4YjDL9M47wdfBWzSOrR1Vg,Independent Automotive Services,3800 N 7th St Phoenix, AZ 85014\n" +
@@ -1018,3 +1098,74 @@ var yelp_search_text = "business_id,name,full_address\n" +
     "A1_MJ2Z7yBGG2vHYw7fphw,We Buy Cars For Cash,2942 N 24th St Ste 114 Phoenix, AZ 85016\n" +
     "1vl4-5il_LGtDRxUCy9ldw,Vovomeena,1515 N 7th Ave Ste 170 Phoenix, AZ 85003\n" +
     "WfW8DbPRfd0bzjBDCfXEqw,Kt's Nails & Spa,7607 E Mcdowell Rd Ste 104 Scottsdale, AZ 85257\n";
+
+var yelp_search_text_Toronto = "business_id,name,full_address\n" +
+    "X5e3xIixJUN3OMagh0_oLQ,Tropical Thai Cuisine,993 Kingston Road Toronto ON M4E 1T3\n" +
+    "0JqPI6mv7xHloURlf0L4Mg,Thai On Yonge,370 Yonge Street Toronto ON M5B 1S5\n" +
+    "SucJwTrxbA0ko8V0HddGzg,Thai Chef Cuisine,233 Roncesvalles Avenue Toronto ON M6R 2L6\n" +
+    "YlVgpTsLGrzZNJ039psmIA,Thai Express,150 King W Toronto ON M5X 2A2\n" +
+    "xwPKDhVW_eHqvrbL8C34KQ,Thai Lime,1551 Dupont Street Toronto ON M6P 3S6\n" +
+    "UjN6x14j9Tj9QbDYy-TzAg,Thai Room,243 Carlton Street Toronto ON M5A 2L2\n" +
+    "Pwjo1kXWk4dyldClSNfyag,Hungary Thai Bar & Eatery Restaurant,196 Augusta Avenue Toronto ON M5T 2L6\n" +
+    "2b6wzKSliV3hsRkNpHtQOg,Thai Everest,1656 Victoria Park Avenue Toronto ON M1R 1P2\n" +
+    "RJxkhoGxTsz545_sTlDdFA,Thai Express,21 St Clair Ave E Toronto ON M4T 1L8\n" +
+    "4ucJBvnGR3wa2kEgMz0C2Q,The Thai Grill,961 Eglinton Ave W Toronto ON M6C 2C4\n" +
+    "Et9tn7nEpEs043pQVa2HZg,Flip Toss & Thai Kitchen,141 Harbord St Toronto ON M5S 1H1\n" +
+    "1w0Tko5c-8HxsAdOUX81lg,QQ Thai Ice Cream,3278 Midland Avenue Unit D117 Toronto ON M1V\n" +
+    "Bal9D1fzSgPvQPMzrvJF8g,California Thai,200 Wellington Street W Toronto ON M5V 3G2\n" +
+    "oS0CnUbyv0GUoD3L8_3UPQ,Thai Fantasy,578 Yonge Street Toronto ON M4Y 1Z3\n" +
+    "3OtwI9usuWqdqSiHTewKlQ,King Thai Massage Health Care Centre,15 Saint Clair Avenue W 2nd Floor Toronto ON M4V\n" +
+    "J7vdscHQEfpSTMiJb3i5ww,Ruby Thai,1 First Canadian Place Mezzanine Level Toronto ON M5X 1C1\n" +
+    "SWpJG44iX0fw18zYZifcRA,Thai One On,2070 Avenue Road Toronto ON M5M 4A4\n" +
+    "lK7WSyUMq6w6pjOhlFqODQ,Metta Thai Massage,65 Bellwoods Ave Unit 3 Toronto ON M6J 3N4\n" +
+    "9_CGhHMz8698M9-PkVf0CQ,Little Coxwell Vietnamese & Thai Cuisine,986 Coxwell Avenue Toronto ON M4C 3G5\n" +
+    "3MZ_H6D9jQFX1tBUIh_Iiw,Simply Thai Cuisine,2253 Bloor St W Toronto ON M6S 1N8\n" +
+    "IxDYVpjEeCxZ8HsZnthvdw,Thai Basil,467 Bloor Street W Toronto ON M5S 1X9\n" +
+    "oKCzSZV0JkKsJenyaEfk4w,Golden Pineapple Viet Thai Cuisine,254 Spadina Avenue Toronto ON M5T\n" +
+    "4_GIJk0tX3k0x0FcUv4sNA,Basil Thai Kitchen,2326 Danforth Ave Toronto ON M4C 1K7\n" +
+    "JQHCYP41w1agPZ3MlwnrhQ,Pattaya Thai Kitchen,2326 Queen Street E Toronto ON M4E 1G9\n" +
+    "ELt26I6N0VqVywR5J4TMlw,Mong-Kut Thai,471 Danforth Ave Toronto ON M4K 1P1\n" +
+    "3hI6dSt3PiF0y6aXA0QeHw,Pho 88 Viet Thai Cuisine,Milliken Wellss Shopping Plaza 250 Alton Tower Circle Suite C6 Toronto ON M1R\n" +
+    "MsUI2BgJjptqa1YEAqBXuA,Just Thai,534 Church Street Toronto ON M4Y 2E1\n" +
+    "pxYfu0tqD6Dm7w3YJtlcJw,Thai One On,791 King Street W Toronto ON M5V 1N4\n" +
+    "8I2XBrjf4rOEWx7pnKpVeg,Kub Khao Thai Eatery,3561 Sheppard E Toronto ON M1T 3K7\n" +
+    "vh1tPEaPioD78QmoqnWXpw,Sukho Thai,52 Wellington Street E Toronto ON M5E 1C9\n" +
+    "uaCYXxCsZSD3KMg8XiOdwg,Lee's Thai Spring Roll,1512 Queen Street W Toronto ON M6R 1A4\n" +
+    "6l73cxX_tol8RsvTZZIvPg,Thai Express,32 Weston Road Toronto ON M6N 5H4\n" +
+    "RETMZPZ-oF-ncO-0IRPfOA,Thai Take-out & Catering,2480 Eglinton Ave E Toronto ON M1K 2R4\n" +
+    "FL601JjpPn_9KylXrU6y1g,Subway,195 College Street Toronto ON M5T 1P9\n" +
+    "FOMPEDx1Y4yw8Zyeww9zJQ,Subway,607 Yonge Street Toronto ON M4Y 1Z5\n" +
+    "CPVCdsx8deq0EHXKbMajBw,Subway,717 Bay Street Toronto ON M5G 2J9\n" +
+    "f8YPC7K4UUTkKatE5ga8Ig,Subway,331 Carlaw Avenue Unit 103 Toronto ON M4M 2S1\n" +
+    "undz-LtXIta312RP_DqmFQ,Subway,34 Church Street Toronto ON M5E 1T3\n" +
+    "lrhJTOjs0FkhmCn6CVK3JA,Subway,259 King Street E Toronto ON M5A 1K2\n" +
+    "ZX79Grup-CWl_juMTwBoQA,Subway,717 College Street Toronto ON M6G 1C2\n" +
+    "wc8SGVIwLQuDilEiTkv_wA,Subway,121 King Street W Suite 132B Toronto ON M5H 3T9\n" +
+    "2vuAlukfUZf3vbHsexEeDw,McDonald's,630 Keele Street Toronto ON M6N 3E2\n" +
+    "YunsfM_RlOAGClNM_lZFvQ,McDonald's,1787 Bayview Avenue Toronto ON M4G 3C4\n" +
+    "2Z3F0G9UXDsX0fRU9BDoqA,McDonald's,2116 Kipling Ave Toronto ON M9W 4K4\n" +
+    "NtdC-iaMHp8z8tMFOl6VYQ,McDonald's,1571 Sandhurst Circle Toronto ON M1V 1V2\n" +
+    "K5u1029QHG4JkURRx_z7JA,McDonald's,552 Yonge Street Toronto ON M4Y 1Y8\n" +
+    "KFaMIyNmxHeAot5huOiuyg,McDonald's,470 Yonge Street Toronto ON M4Y 1X5\n" +
+    "Ozv8Hi0TP9oWbvsPc1EoCg,McDonald's,2781 Dufferin Street Toronto ON M6B 3R9\n" +
+    "slU5UwPlYVyrz7HhQeqMew,McDonald's,1000 Gerrard Street E Toronto ON M4M 3G6\n" +
+    "OaKWXPZl3yfEbhcGWFGTCw,Tim Hortons,2696-2708 Keele Street Toronto ON M3M 3G5\n" +
+    "7esFF4cro9SasTxXv1FDAw,Tim Horton's,1733 Eglinton Avenue E Toronto ON M4A 1J8\n" +
+    "r6LmPZz1GEVtywLHVbN9LA,Tim Hortons,455 Spadina Avenue Toronto ON M5S 1A1\n" +
+    "KwwbRKtKO8BLQn5nPSpkZw,Tim Horton's,33 Yonge Street Toronto ON M5E 1G4\n" +
+    "Qph2RWhxG-nu5ZkSAgKT0g,Tim Hortons,743 Av Pape Toronto ON M4K 3T1\n" +
+    "_i2KbUK_m3A_2A7ySXYJJw,Tim Horton's,7331 Kingston Road Toronto ON M1B 5S3\n" +
+    "IFLaJq1N5-_fbdNyymbkqw,Tim Hortons,200 Front Street W Toronto ON M5V 3K2\n" +
+    "vF-Q0OcabOsjrJHA3XCCug,Tim Hortons,Royal Bank Plaza 200 Bay Street Toronto ON M5J\n" +
+    "Aj3WZ2Ueyqzq1dIKLxNMMQ,Tim Hortons,481 University Avenue Toronto ON M5G 2E9\n" +
+    "qcOXimJzxK9S1L0OhCwzPg,Tim Hortons,1195 Danforth Avenue Toronto ON M4J 1M7\n" +
+    "22AFh7B89LqoJVEk92AxKg,Tim Hortons,4198 Sheppard Avenue E Toronto ON M1S 1T3\n" +
+    "KE9zSVRiWi0GmZAq5PoimA,Tim Horton's,335 Parliament Toronto ON M5A 2Z3\n" +
+    "hsgtedqml9ZDB2cbTZe_mA,Tim Hortons,73 Front St E Toronto ON M5E 1B8\n" +
+    "SUkZaH4gzgemZ6BZyAo1vw,Tim Hortons,399 Bathurst Street Toronto ON M5T 2S8\n" +
+    "QHH56JTPGjG3R20OJf0EFQ,Tim Hortons,750 Dundas St W Toronto ON M6J 3S3\n" +
+    "pGyv0WO5Ot9L_qgausyorw,Tim Hortons,3300 Bloor Street W Toronto ON M8X 1E9\n" +
+    "FwqGbKV1SAG1iKmHVcRfSQ,Tim Hortons,380 Weston Road Toronto ON M6N 5H1\n" +
+    "1KsT6GAvzYkS-fX7RpwK8g,Tim Hortons,12 Queens Quay W Toronto ON M5J 2V7\n" +
+    "GYNYjwzyDPN3NqbL7_9tow,Tim Horton's,18 King St E Toronto ON M5C 1C4\n" +
+    "QO9cAenMqWXVraYPKT29PA,Tim Horton's,745 College St Toronto ON M6G 1C5\n";
