@@ -42,7 +42,7 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
                                   querylist=[local_match[hidden_match.index("info.title")]],
                                   matchlist=[local_match[hidden_match.index("info.title")]], data_raw=original_csv)
         else:
-            uniqueID = 'ID' + str(int(time.time()))
+            uniqueID = 'AutoID'
             original_csv[0].append(uniqueID)
             for i in range(1, len(original_csv)):
                 original_csv[i].append(i)
@@ -63,7 +63,7 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
                                   querylist=[local_match[hidden_match.index("title")]],
                                   matchlist=[local_match[hidden_match.index("title")]], data_raw=original_csv)
         else:
-            uniqueID = 'ID' + str(int(time.time()))
+            uniqueID = 'AutoID'
             original_csv[0].append(uniqueID)
             for i in range(1, len(original_csv)):
                 original_csv[i].append(i)
@@ -88,7 +88,7 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
                                              local_match[hidden_match.index("location.display_address.*")]],
                                   data_raw=original_csv)
         else:
-            uniqueID = 'ID' + str(int(time.time()))
+            uniqueID = 'AutoID'
             original_csv[0].append(uniqueID)
             for i in range(1, len(original_csv)):
                 original_csv[i].append(i)
@@ -112,7 +112,7 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
                                              local_match[hidden_match.index("formatted_address")]],
                                   data_raw=original_csv)
         else:
-            uniqueID = 'ID' + str(int(time.time()))
+            uniqueID = 'AutoID'
             original_csv[0].append(uniqueID)
             for i in range(1, len(original_csv)):
                 original_csv[i].append(i)

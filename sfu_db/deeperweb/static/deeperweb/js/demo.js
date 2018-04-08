@@ -73,12 +73,12 @@ function api_choose() {
             if ($(this).text() === 'Publ API') {
                 var dblp_publ_schema = ['info.key', 'info.title', 'info.authors.author.*', '@score', 'info.url', 'info.venue', 'info.volume', 'info.year', 'info.type', '@id', 'url'];
                 $.each(dblp_publ_schema, function (index, element) {
-                    hidden_schema.append("<a class='tag'>" + element + "</a>");
+                    hidden_schema.append("<a class='orange-tag'>" + element + "</a>");
                     if (index < 3) {
                         hidden_schema.find("a:last").css({
                             'color': '#ffffff',
-                            'background': '#237dc8',
-                            'border-color': '#237dc8'
+                            'background': '#f0ad4e',
+                            'border-color': '#f0ad4e'
                         });
                         hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
                     }
@@ -95,12 +95,12 @@ function api_choose() {
             if ($(this).text() === 'Publ API') {
                 var aminer_search_schema = ['id', 'title', 'authors.*.name', 'issn', 'num_citation', 'urls.*', 'venue.name', 'venue.id', 'year'];
                 $.each(aminer_search_schema, function (index, element) {
-                    hidden_schema.append("<a class='tag'>" + element + "</a>");
+                    hidden_schema.append("<a class='orange-tag'>" + element + "</a>");
                     if (index < 3) {
                         hidden_schema.find("a:last").css({
                             'color': '#ffffff',
-                            'background': '#237dc8',
-                            'border-color': '#237dc8'
+                            'background': '#f0ad4e',
+                            'border-color': '#f0ad4e'
                         });
                         hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
                     }
@@ -115,14 +115,14 @@ function api_choose() {
             }
         } else if ($(this).parent().is($("ul#yelp"))) {
             if ($(this).text() === 'Search API') {
-                var yelp_search_schema = ['id', 'name', 'location.display_address.*', 'url', 'coordinates.latitude', 'coordinates.longitude', 'phone', 'categories.*.alias', 'categories.*.title', 'display_phone', 'location.city', 'location.country', 'location.address1', 'location.address2', 'location.address3', 'location.state', 'location.zip_code'];
+                var yelp_search_schema = ['name', 'location.display_address.*', 'id', 'url', 'coordinates.latitude', 'coordinates.longitude', 'phone', 'categories.*.alias', 'categories.*.title', 'display_phone', 'location.city', 'location.country', 'location.address1', 'location.address2', 'location.address3', 'location.state', 'location.zip_code'];
                 $.each(yelp_search_schema, function (index, element) {
-                    hidden_schema.append("<a class='tag'>" + element + "</a>");
-                    if (index < 3) {
+                    hidden_schema.append("<a class='orange-tag'>" + element + "</a>");
+                    if (index < 2) {
                         hidden_schema.find("a:last").css({
                             'color': '#ffffff',
-                            'background': '#237dc8',
-                            'border-color': '#237dc8'
+                            'background': '#f0ad4e',
+                            'border-color': '#f0ad4e'
                         });
                         hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
                     }
@@ -134,14 +134,14 @@ function api_choose() {
             }
         } else if ($(this).parent().is($("ul#google"))) {
             if ($(this).text() === 'Place API') {
-                var google_place_schema = ['place_id', 'name', 'formatted_address', 'formatted_phone_number', 'geometry.location.lat', 'geometry.location.lng', 'vicinity', 'website'];
+                var google_place_schema = ['name', 'formatted_address', 'place_id', 'formatted_phone_number', 'geometry.location.lat', 'geometry.location.lng', 'vicinity', 'website'];
                 $.each(google_place_schema, function (index, element) {
-                    hidden_schema.append("<a class='tag'>" + element + "</a>");
-                    if (index < 3) {
+                    hidden_schema.append("<a class='orange-tag'>" + element + "</a>");
+                    if (index < 2) {
                         hidden_schema.find("a:last").css({
                             'color': '#ffffff',
-                            'background': '#237dc8',
-                            'border-color': '#237dc8'
+                            'background': '#f0ad4e',
+                            'border-color': '#f0ad4e'
                         });
                         hidden_schema.find("a:last").append("<span class='badge'>" + index + "</span>");
                     }
@@ -262,7 +262,7 @@ function schema_matching() {
             } else {
                 $("a#local_button").after($(this));
             }
-            $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
+            $(this).css({'color': '#ffffff', 'background': '#337ab7', 'border-color': '#337ab7'});
             $(this).append("<span class='badge'></span>");
         }
         var active_tags = $("div#local_schema a[style]");
@@ -272,7 +272,7 @@ function schema_matching() {
     });
 
     /*hidden schema*/
-    $("div#hidden_schema").delegate("a.tag", "click", function () {
+    $("div#hidden_schema").delegate("a.orange-tag", "click", function () {
         if ($(this).attr("style")) {
             $(this).removeAttr("style");
             $(this).children("span").remove();
@@ -283,7 +283,7 @@ function schema_matching() {
             } else {
                 $("a#hidden_button").after($(this));
             }
-            $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
+            $(this).css({'color': '#ffffff', 'background': '#f0ad4e', 'border-color': '#f0ad4e'});
             $(this).append("<span class='badge'></span>");
         }
         var active_tags = $("div#hidden_schema a[style]");
@@ -299,7 +299,18 @@ function schema_matching() {
             $('table thead tr').find('th:eq(' + $(this).index() + ')').hide();
             $('table tbody tr').find('td:eq(' + $(this).index() + ')').hide();
         } else {
-            $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
+            $(this).css({'color': '#ffffff', 'background': '#337ab7', 'border-color': '#337ab7'});
+            $('table thead tr').find('th:eq(' + $(this).index() + ')').show();
+            $('table tbody tr').find('td:eq(' + $(this).index() + ')').show();
+        }
+    });
+    $("div#join_schema").delegate("a.orange-tag", "click", function () {
+        if ($(this).attr("style")) {
+            $(this).removeAttr("style");
+            $('table thead tr').find('th:eq(' + $(this).index() + ')').hide();
+            $('table tbody tr').find('td:eq(' + $(this).index() + ')').hide();
+        } else {
+            $(this).css({'color': '#ffffff', 'background': '#f0ad4e', 'border-color': '#f0ad4e'});
             $('table thead tr').find('th:eq(' + $(this).index() + ')').show();
             $('table tbody tr').find('td:eq(' + $(this).index() + ')').show();
         }
@@ -389,7 +400,7 @@ function smart_crawl() {
                 local_match.push($(this).text().substring(0, $(this).text().length - $(this).children('span').text().length));
             }
         });
-        var hidden_schema = $('div#hidden_schema').children('a.tag');
+        var hidden_schema = $('div#hidden_schema').children('a.orange-tag');
         var hidden_match = [];
         $(hidden_schema).each(function () {
             if ($(this).attr("style")) {
@@ -520,8 +531,8 @@ function smart_crawl() {
                     join_keys += "<a class='tag'>" + element + "</a>";
                 });
                 $.each(response['hidden_header'], function (index, element) {
-                    join_thead += "<th>" + element + "</th>";
-                    join_keys += "<a class='tag'>" + element + "</a>";
+                    join_thead += "<th style=\"background-color:#f0ad4e\">" + element + "</th>";
+                    join_keys += "<a class='orange-tag'>" + element + "</a>";
                 });
                 join_thead += "</tr>";
 
@@ -563,28 +574,25 @@ function smart_crawl() {
                 $('table#table_result thead tr th').hide();
                 $('table#table_result tbody tr td').hide();
 
-                $(hidden_match).each(function (index, element) {
-                    $(join_schema.children('a.tag')).each(function () {
-                        if ($(this).index() > local_match.length) {
-                            if ($(this).text() === element) {
-                                $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
-                                $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
-                                $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
-                            }
-                        }
-                    });
-                });
                 $(local_match).each(function (index, element) {
                     $(join_schema.children('a.tag')).each(function () {
-                        if ($(this).index() <= local_match.length) {
-                            if ($(this).text() === element) {
-                                $(this).css({'color': '#ffffff', 'background': '#237dc8', 'border-color': '#237dc8'});
-                                $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
-                                $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
-                            }
+                        if ($(this).text() === element) {
+                            $(this).css({'color': '#ffffff', 'background': '#337ab7', 'border-color': '#337ab7'});
+                            $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
+                            $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
                         }
                     });
                 });
+                $(hidden_match).each(function (index, element) {
+                    $(join_schema.children('a.orange-tag')).each(function () {
+                        if ($(this).text() === element) {
+                            $(this).css({'color': '#ffffff', 'background': '#f0ad4e', 'border-color': '#f0ad4e'});
+                            $('table#table_result thead tr').find('th:eq(' + $(this).index() + ')').show();
+                            $('table#table_result tbody tr').find('td:eq(' + $(this).index() + ')').show();
+                        }
+                    });
+                });
+
                 $('table#table_result thead tr th:first').show();
                 $('table#table_result tbody tr').find('td:first').show();
                 $("div#topLoader").hide();
@@ -625,7 +633,7 @@ function re_enrich() {
         var join_schema = $("div#join_schema");
         var result_head = $('table#table_result thead tr');
         var result_body = $('table#table_result tbody tr');
-        $(join_schema.children('a.tag')).each(function () {
+        $(join_schema.children('a')).each(function () {
             if (!$(this).attr("style")) {
                 result_head.find('th:eq(' + $(this).index() + ')').remove();
                 result_body.find('td:eq(' + $(this).index() + ')').remove();
@@ -714,7 +722,7 @@ function timer() {
         $topLoader.setProgress(0);
         $topLoader.setValue('0ms');
         var ms = 0;
-        var totalMs = 8000;
+        var totalMs = 15000;
 
         var animateFunc = function () {
             ms += 25;
@@ -1026,146 +1034,146 @@ var dblp_publ_text = "ID,title,author\n" +
     "201,Specification and Verification of Complex Location Events with Panoramic,Evan Welbourne and Magdalena Balazinska and Gaetano Borriello and James Fogarty\n" +
     "202,SnipSuggest: Context-Aware Autocompletion for SQL,Nodira Khoussainova and YongChul Kwon and Magdalena Balazinska and Dan Suciu\n";
 
-var yelp_search_text_AZ = "business_id,name,full_address\n" +
-    "C59Gr3A35GMqKs593mfxVA,Grand Canyon University,3300 W Camelback Rd Phoenix, AZ 85017\n" +
-    "z9RjkAPe-00LGoBJjQadOw,Princess Pro Nail,13216 N 7th St Phoenix, AZ 85022\n" +
-    "BMjggIgOghBMEXPo8q7q3w,LaBella Pizzeria and Restaurant,6505 N 7th St Phoenix, AZ 85014\n" +
-    "BPi1Q5wX0_o5VlO_XRyYuQ,Pizzeria Bianco,4743 N 20th St Phoenix, AZ 85016\n" +
-    "DmuvQmligwF6sJc81DoioA,Mindy Nails,18413 N Cave Creek Rd Phoenix, AZ 85032\n" +
-    "zDBSgJJIGKKS8XDaE6Ycfw,Automatic Transmission Experts,4422 N 7th Ave Phoenix, AZ 85013\n" +
-    "Fj73x68afXtA388ajOe3qw,US Egg,2957 W Bell Rd Phoenix, AZ 85053\n" +
-    "4kV8BO6FHQTrxf9txJBt-Q,D & W Auto Service,3039 E Thomas Rd Phoenix, AZ 85008\n" +
-    "7R8De0e3-pv6D-HhWlLRFA,Polished Nail Spa,10243 N Scottsdale Rd Ste 1 Scottsdale, AZ 85253\n" +
-    "xI_iG7X6BcdLtj57bkUOqQ,Sun Valley Stereo,2809 E Thomas Rd Phoenix, AZ 85016\n" +
-    "dSQh1Hx2BiSrYog4ad740A,Starbucks,3110 N Central Ave Ste 185 Phoenix, AZ 85012\n" +
-    "VsgKeTyebDemed6V2N28GQ,Network Alignment & Brakes,12639 N Cave Creek Rd Phoenix, AZ 85022\n" +
-    "sBgB9OLYOOewtw2RdHitzQ,Johnston's Automotive,3445 N 24th St Phoenix, AZ 85016\n" +
-    "6-O63QoQA7mCVVAH-MMtuA,Wild Tuna Sushi and Spirits,805 E Thunderbird Rd Phoenix, AZ 85022\n" +
-    "y24OBeSMK8MwOrpGtIJWpg,602 Auto Sports,331 N 16th St Phoenix, AZ 85006\n" +
-    "NR_8LIX-oG50jUQpziBnWQ,Steak 44,5101 N 44th St Phoenix, AZ 85018\n" +
-    "3DMvGD8ZmlMQmhwV66hdSA,China Village,2710 E Indian School Rd Phoenix, AZ 85016\n" +
-    "LrPG6AgIomIrSNTcwJU5Hw,World Class Car Wash,3232 E McDowell Rd Phoenix, AZ 85008\n" +
-    "DOx9ahD39IA8blUwF1fEhQ,Base Pizzeria,3115 E Lincoln Dr Phoenix, AZ 85016\n" +
-    "RyUIcbNgIjzTE01rguyXUg,Chic Nails,4290 E Indian School Rd Phoenix, AZ 85018\n" +
-    "BM0-dgPJMBMmcmO9PVCJfQ,Los Compadres Mexican Food,4414 N 7th Ave Phoenix, AZ 85013\n" +
-    "IvLEvpC0oZHj7E0XHhxWMQ,Nails Trend,515 N 35th Ave Ste 127 Phoenix, AZ 85009\n" +
-    "iJPG0GPcIirjOMlmzZWxBQ,Casa Filipina Bakeshop & Restaurant,3531 W Thunderbird Rd Phoenix, AZ 85053\n" +
-    "eYwTptN9P3D_qagXxTOv-A,Sole Serenity,7024 E Osborn Rd Ste C-5 Scottsdale, AZ 85251\n" +
-    "vvMR0jgDoBA-g1XgZy8sEg,Tryst Cafe,21050 N Tatum Blvd Phoenix, AZ 85050\n" +
-    "DOGkXmX-okozRen6p2gURg,Superior Nails,2620 83rd Ave Ste 106 Phoenix, AZ 85043\n" +
-    "8o-NLKy_XfbJtqljX9XLCA,Mrs White's Golden Rule Cafe,808 E Jefferson St Phoenix, AZ 85034\n" +
-    "e9QRvkzssPNRmBLlDem9ZQ,Zookz Sandwiches,100 E Camelback Rd Phoenix, AZ 85012\n" +
-    "dMLMz_lTNNFwCLzAl8j7WQ,Starbucks,125 N 2nd St Phoenix, AZ 85004\n" +
-    "-HK-Lh9UIHjCnKAAePr7GQ,3D Nails and Spa,9620 N Metro Pkwy W Ste 25 Phoenix, AZ 85051\n" +
-    "5jqqVt-A8bwwJDj7Ii7tvw,Mad Hatter Mufflers & Brakes,525 E Dunlap Ave Phoenix, AZ 85020\n" +
-    "1Atqla4KsuE-YpaCKaSS_g,Tammy's La Nails,731 E Union Hills Dr Phoenix, AZ 85024\n" +
-    "e1OD-zIxBjJXPlnYQvhdpw,Jack's Auto Alignment & Brakes,2902 E Thomas Rd Phoenix, AZ 85016\n" +
-    "fFPJHOV1pTGoK-Gqf5QBSQ,WY Market,1819 W Buckeye Rd Phoenix, AZ 85007\n" +
-    "QdcVJJhIG8MX6I4tIqpzgQ,Exclusive Nails,8808 N Central Ave Ste 258 Phoenix, AZ 85020\n" +
-    "DkSFrA_iU97PmBdjLnIwqA,Kona 13 Coffee & Tea,1845 E University Dr Tempe, AZ 85281\n" +
-    "UimUu5Q1m2mYEmAvreZQig,Welcome Chicken + Donuts,1535 E Buckeye Rd Phoenix, AZ 85034\n" +
-    "T-AAN0CizEBOTtHinTuvrQ,Dunkin' Donuts,4130 E Thomas Rd Phoenix, AZ 85018\n" +
-    "VapdXuC8X-Q3T_wgA6yCAg,Pizza People Pub,1326 N Central Ave Phoenix, AZ 85004\n" +
-    "b9Cx4-vn8S8-OnYTfFcMzQ,US Nails,5243 W Indian School Rd Phoenix, AZ 85031\n" +
-    "bOWm_Du7AN2j1Mdti38lcg,Above and Beyond Nails,4707 E Bell Rd Ste 2 Phoenix, AZ 85032\n" +
-    "0IZjvddcvjEG09doKiFYAQ,Donut Parlor,1245 W Elliot Rd Ste 103 Tempe, AZ 85284\n" +
-    "pcoaUpxsgtMuiGzNm2Ashw,Munich Motors,4809 N 7th Ave Phoenix, AZ 85013\n" +
-    "Ax11wyp-FudujeU9nejQbw,Phoenix Public Market,14 E Pierce St Phoenix, AZ 85004\n" +
-    "IoFggnoj1P4EcmNEP2K6Ng,Xtreme Bean Coffee,1707 E Southern Ave Tempe, AZ 85282\n" +
-    "9SBU0aZbR2Tr3QTklUbbyg,Sweet Sunshine Nails,6990 E Shea Blvd Scottsdale, AZ 85254\n" +
-    "SfVsLCVap7VlF3GLUI8PlQ,RBG Bar & Grill,427 N 44th St Phoenix, AZ 85008\n" +
-    "QVMpwcjWzC01q_wZDI07cw,Smooth Brew Coffee,1447 E Mcdowell Rd Phoenix, AZ 85006\n" +
-    "7WDzDGiWeAN9CdsC1nIGeA,Capitol Collision,5154 N 27th Ave Phoenix, AZ 85017\n" +
-    "qJVECj6MCPaioYUae1a9gA,The Auto Shop,901 N Central Ave Phoenix, AZ 85004\n" +
-    "MiajUnwoG7RGoaolO1rPaw,Ranch House Grille,5618 E Thomas Rd Phoenix, AZ 85018\n" +
-    "iHpkhFcy7MwbDLB_joqPPQ,Kream Coffee,5102 N Central Ave Phoenix, AZ 85012\n" +
-    "bA_5N0pODfQr1gnpO8RqQg,Elevens' Paint & Fiber,4131 E University Dr Phoenix, AZ 85034\n" +
-    "TgxDGx7L_JICWbuBUCGVqw,Fajitas A Sizzlin Celebration,9841 N Black Canyon Hwy Phoenix, AZ 85021\n" +
-    "_5HeuYqf2pEYFkjEI_dvKQ,Community Tire Pros & Auto Repair,123 E Durango St Phoenix, AZ 85004\n" +
-    "PmPOuRvuN3CoNOi1nBj_TQ,Pappadeaux Seafood Kitchen,11051 N Black Canyon Hwy Phoenix, AZ 85029\n" +
-    "zj0BkAi54BGU_AK6AyvJDQ,Rusconi's American Kitchen,10637 N Tatum Blvd Phoenix, AZ 85028\n" +
-    "33zsO72VkYVnW2l5ZA16Cg,Mine Nails,7827 N 19th Ave Phoenix, AZ 85021\n" +
-    "CCInhPbQLOBRHOYfFAZ4GA,Tag The Auto Guy,1401 E Camelback Rd Phoenix, AZ 85014\n" +
-    "-_jLCD1NWODEXfgEAKfUAg,La Pinata,5521 N 7th Ave Phoenix, AZ 85013\n" +
-    "4zitC1IPRLvHfQVinRSKew,Johnnie's Chicago Style Pizza,15443 N Cave Creek Rd Phoenix, AZ 85034\n" +
-    "lnX2gaGdO0fNtykyFrp1AA,Mel's Diner,1747 Grand Ave Phoenix, AZ 85007\n" +
-    "4YjDL9M47wdfBWzSOrR1Vg,Independent Automotive Services,3800 N 7th St Phoenix, AZ 85014\n" +
-    "qXQ3ZBdwI3GlbR5-eYWqNA,Saba's Mediterranean Kitchen,4747 E Bell Rd Phoenix, AZ 85032\n" +
-    "e2oXHln1dux2ACR0QQGoeQ,Ingo's Tasty Food,4502 N 40th St Phoenix, AZ 85018\n" +
-    "Hgbxen9iKGL4AH6kKgC8YQ,Cartel Coffee Lab,7124 E 5th Ave Scottsdale, AZ 85251\n" +
-    "ZRJwVLyzEJq1VAihDhYiow,Spinato's Pizzeria,4848 E Chandler Blvd Phoenix, AZ 85044\n" +
-    "bzDs0u8I-z231QVdIQWkrA,Los Reyes De La Torta,9230 N 7th St Phoenix, AZ 85020\n" +
-    "A1_MJ2Z7yBGG2vHYw7fphw,We Buy Cars For Cash,2942 N 24th St Ste 114 Phoenix, AZ 85016\n" +
-    "1vl4-5il_LGtDRxUCy9ldw,Vovomeena,1515 N 7th Ave Ste 170 Phoenix, AZ 85003\n" +
-    "WfW8DbPRfd0bzjBDCfXEqw,Kt's Nails & Spa,7607 E Mcdowell Rd Ste 104 Scottsdale, AZ 85257\n";
+var yelp_search_text_AZ = "name,full_address\n" +
+    "Grand Canyon University,3300 W Camelback Rd Phoenix, AZ 85017\n" +
+    "Princess Pro Nail,13216 N 7th St Phoenix, AZ 85022\n" +
+    "LaBella Pizzeria and Restaurant,6505 N 7th St Phoenix, AZ 85014\n" +
+    "Pizzeria Bianco,4743 N 20th St Phoenix, AZ 85016\n" +
+    "Mindy Nails,18413 N Cave Creek Rd Phoenix, AZ 85032\n" +
+    "Automatic Transmission Experts,4422 N 7th Ave Phoenix, AZ 85013\n" +
+    "US Egg,2957 W Bell Rd Phoenix, AZ 85053\n" +
+    "D & W Auto Service,3039 E Thomas Rd Phoenix, AZ 85008\n" +
+    "Polished Nail Spa,10243 N Scottsdale Rd Ste 1 Scottsdale, AZ 85253\n" +
+    "Sun Valley Stereo,2809 E Thomas Rd Phoenix, AZ 85016\n" +
+    "Starbucks,3110 N Central Ave Ste 185 Phoenix, AZ 85012\n" +
+    "Network Alignment & Brakes,12639 N Cave Creek Rd Phoenix, AZ 85022\n" +
+    "Johnston's Automotive,3445 N 24th St Phoenix, AZ 85016\n" +
+    "Wild Tuna Sushi and Spirits,805 E Thunderbird Rd Phoenix, AZ 85022\n" +
+    "602 Auto Sports,331 N 16th St Phoenix, AZ 85006\n" +
+    "Steak 44,5101 N 44th St Phoenix, AZ 85018\n" +
+    "China Village,2710 E Indian School Rd Phoenix, AZ 85016\n" +
+    "World Class Car Wash,3232 E McDowell Rd Phoenix, AZ 85008\n" +
+    "Base Pizzeria,3115 E Lincoln Dr Phoenix, AZ 85016\n" +
+    "Chic Nails,4290 E Indian School Rd Phoenix, AZ 85018\n" +
+    "Los Compadres Mexican Food,4414 N 7th Ave Phoenix, AZ 85013\n" +
+    "Nails Trend,515 N 35th Ave Ste 127 Phoenix, AZ 85009\n" +
+    "Casa Filipina Bakeshop & Restaurant,3531 W Thunderbird Rd Phoenix, AZ 85053\n" +
+    "Sole Serenity,7024 E Osborn Rd Ste C-5 Scottsdale, AZ 85251\n" +
+    "Tryst Cafe,21050 N Tatum Blvd Phoenix, AZ 85050\n" +
+    "Superior Nails,2620 83rd Ave Ste 106 Phoenix, AZ 85043\n" +
+    "Mrs White's Golden Rule Cafe,808 E Jefferson St Phoenix, AZ 85034\n" +
+    "Zookz Sandwiches,100 E Camelback Rd Phoenix, AZ 85012\n" +
+    "Starbucks,125 N 2nd St Phoenix, AZ 85004\n" +
+    "3D Nails and Spa,9620 N Metro Pkwy W Ste 25 Phoenix, AZ 85051\n" +
+    "Mad Hatter Mufflers & Brakes,525 E Dunlap Ave Phoenix, AZ 85020\n" +
+    "Tammy's La Nails,731 E Union Hills Dr Phoenix, AZ 85024\n" +
+    "Jack's Auto Alignment & Brakes,2902 E Thomas Rd Phoenix, AZ 85016\n" +
+    "WY Market,1819 W Buckeye Rd Phoenix, AZ 85007\n" +
+    "Exclusive Nails,8808 N Central Ave Ste 258 Phoenix, AZ 85020\n" +
+    "Kona 13 Coffee & Tea,1845 E University Dr Tempe, AZ 85281\n" +
+    "Welcome Chicken + Donuts,1535 E Buckeye Rd Phoenix, AZ 85034\n" +
+    "Dunkin' Donuts,4130 E Thomas Rd Phoenix, AZ 85018\n" +
+    "Pizza People Pub,1326 N Central Ave Phoenix, AZ 85004\n" +
+    "US Nails,5243 W Indian School Rd Phoenix, AZ 85031\n" +
+    "Above and Beyond Nails,4707 E Bell Rd Ste 2 Phoenix, AZ 85032\n" +
+    "Donut Parlor,1245 W Elliot Rd Ste 103 Tempe, AZ 85284\n" +
+    "Munich Motors,4809 N 7th Ave Phoenix, AZ 85013\n" +
+    "Phoenix Public Market,14 E Pierce St Phoenix, AZ 85004\n" +
+    "Xtreme Bean Coffee,1707 E Southern Ave Tempe, AZ 85282\n" +
+    "Sweet Sunshine Nails,6990 E Shea Blvd Scottsdale, AZ 85254\n" +
+    "RBG Bar & Grill,427 N 44th St Phoenix, AZ 85008\n" +
+    "Smooth Brew Coffee,1447 E Mcdowell Rd Phoenix, AZ 85006\n" +
+    "Capitol Collision,5154 N 27th Ave Phoenix, AZ 85017\n" +
+    "The Auto Shop,901 N Central Ave Phoenix, AZ 85004\n" +
+    "Ranch House Grille,5618 E Thomas Rd Phoenix, AZ 85018\n" +
+    "Kream Coffee,5102 N Central Ave Phoenix, AZ 85012\n" +
+    "Elevens' Paint & Fiber,4131 E University Dr Phoenix, AZ 85034\n" +
+    "Fajitas A Sizzlin Celebration,9841 N Black Canyon Hwy Phoenix, AZ 85021\n" +
+    "Community Tire Pros & Auto Repair,123 E Durango St Phoenix, AZ 85004\n" +
+    "Pappadeaux Seafood Kitchen,11051 N Black Canyon Hwy Phoenix, AZ 85029\n" +
+    "Rusconi's American Kitchen,10637 N Tatum Blvd Phoenix, AZ 85028\n" +
+    "Mine Nails,7827 N 19th Ave Phoenix, AZ 85021\n" +
+    "Tag The Auto Guy,1401 E Camelback Rd Phoenix, AZ 85014\n" +
+    "La Pinata,5521 N 7th Ave Phoenix, AZ 85013\n" +
+    "Johnnie's Chicago Style Pizza,15443 N Cave Creek Rd Phoenix, AZ 85034\n" +
+    "Mel's Diner,1747 Grand Ave Phoenix, AZ 85007\n" +
+    "Independent Automotive Services,3800 N 7th St Phoenix, AZ 85014\n" +
+    "Saba's Mediterranean Kitchen,4747 E Bell Rd Phoenix, AZ 85032\n" +
+    "Ingo's Tasty Food,4502 N 40th St Phoenix, AZ 85018\n" +
+    "Cartel Coffee Lab,7124 E 5th Ave Scottsdale, AZ 85251\n" +
+    "Spinato's Pizzeria,4848 E Chandler Blvd Phoenix, AZ 85044\n" +
+    "Los Reyes De La Torta,9230 N 7th St Phoenix, AZ 85020\n" +
+    "We Buy Cars For Cash,2942 N 24th St Ste 114 Phoenix, AZ 85016\n" +
+    "Vovomeena,1515 N 7th Ave Ste 170 Phoenix, AZ 85003\n" +
+    "Kt's Nails & Spa,7607 E Mcdowell Rd Ste 104 Scottsdale, AZ 85257\n";
 
-var yelp_search_text_Toronto = "business_id,name,full_address\n" +
-    "X5e3xIixJUN3OMagh0_oLQ,Tropical Thai Cuisine,993 Kingston Road Toronto ON M4E 1T3\n" +
-    "0JqPI6mv7xHloURlf0L4Mg,Thai On Yonge,370 Yonge Street Toronto ON M5B 1S5\n" +
-    "SucJwTrxbA0ko8V0HddGzg,Thai Chef Cuisine,233 Roncesvalles Avenue Toronto ON M6R 2L6\n" +
-    "YlVgpTsLGrzZNJ039psmIA,Thai Express,150 King W Toronto ON M5X 2A2\n" +
-    "xwPKDhVW_eHqvrbL8C34KQ,Thai Lime,1551 Dupont Street Toronto ON M6P 3S6\n" +
-    "UjN6x14j9Tj9QbDYy-TzAg,Thai Room,243 Carlton Street Toronto ON M5A 2L2\n" +
-    "Pwjo1kXWk4dyldClSNfyag,Hungary Thai Bar & Eatery Restaurant,196 Augusta Avenue Toronto ON M5T 2L6\n" +
-    "2b6wzKSliV3hsRkNpHtQOg,Thai Everest,1656 Victoria Park Avenue Toronto ON M1R 1P2\n" +
-    "RJxkhoGxTsz545_sTlDdFA,Thai Express,21 St Clair Ave E Toronto ON M4T 1L8\n" +
-    "4ucJBvnGR3wa2kEgMz0C2Q,The Thai Grill,961 Eglinton Ave W Toronto ON M6C 2C4\n" +
-    "Et9tn7nEpEs043pQVa2HZg,Flip Toss & Thai Kitchen,141 Harbord St Toronto ON M5S 1H1\n" +
-    "1w0Tko5c-8HxsAdOUX81lg,QQ Thai Ice Cream,3278 Midland Avenue Unit D117 Toronto ON M1V\n" +
-    "Bal9D1fzSgPvQPMzrvJF8g,California Thai,200 Wellington Street W Toronto ON M5V 3G2\n" +
-    "oS0CnUbyv0GUoD3L8_3UPQ,Thai Fantasy,578 Yonge Street Toronto ON M4Y 1Z3\n" +
-    "3OtwI9usuWqdqSiHTewKlQ,King Thai Massage Health Care Centre,15 Saint Clair Avenue W 2nd Floor Toronto ON M4V\n" +
-    "J7vdscHQEfpSTMiJb3i5ww,Ruby Thai,1 First Canadian Place Mezzanine Level Toronto ON M5X 1C1\n" +
-    "SWpJG44iX0fw18zYZifcRA,Thai One On,2070 Avenue Road Toronto ON M5M 4A4\n" +
-    "lK7WSyUMq6w6pjOhlFqODQ,Metta Thai Massage,65 Bellwoods Ave Unit 3 Toronto ON M6J 3N4\n" +
-    "9_CGhHMz8698M9-PkVf0CQ,Little Coxwell Vietnamese & Thai Cuisine,986 Coxwell Avenue Toronto ON M4C 3G5\n" +
-    "3MZ_H6D9jQFX1tBUIh_Iiw,Simply Thai Cuisine,2253 Bloor St W Toronto ON M6S 1N8\n" +
-    "IxDYVpjEeCxZ8HsZnthvdw,Thai Basil,467 Bloor Street W Toronto ON M5S 1X9\n" +
-    "oKCzSZV0JkKsJenyaEfk4w,Golden Pineapple Viet Thai Cuisine,254 Spadina Avenue Toronto ON M5T\n" +
-    "4_GIJk0tX3k0x0FcUv4sNA,Basil Thai Kitchen,2326 Danforth Ave Toronto ON M4C 1K7\n" +
-    "JQHCYP41w1agPZ3MlwnrhQ,Pattaya Thai Kitchen,2326 Queen Street E Toronto ON M4E 1G9\n" +
-    "ELt26I6N0VqVywR5J4TMlw,Mong-Kut Thai,471 Danforth Ave Toronto ON M4K 1P1\n" +
-    "3hI6dSt3PiF0y6aXA0QeHw,Pho 88 Viet Thai Cuisine,Milliken Wellss Shopping Plaza 250 Alton Tower Circle Suite C6 Toronto ON M1R\n" +
-    "MsUI2BgJjptqa1YEAqBXuA,Just Thai,534 Church Street Toronto ON M4Y 2E1\n" +
-    "pxYfu0tqD6Dm7w3YJtlcJw,Thai One On,791 King Street W Toronto ON M5V 1N4\n" +
-    "8I2XBrjf4rOEWx7pnKpVeg,Kub Khao Thai Eatery,3561 Sheppard E Toronto ON M1T 3K7\n" +
-    "vh1tPEaPioD78QmoqnWXpw,Sukho Thai,52 Wellington Street E Toronto ON M5E 1C9\n" +
-    "uaCYXxCsZSD3KMg8XiOdwg,Lee's Thai Spring Roll,1512 Queen Street W Toronto ON M6R 1A4\n" +
-    "6l73cxX_tol8RsvTZZIvPg,Thai Express,32 Weston Road Toronto ON M6N 5H4\n" +
-    "RETMZPZ-oF-ncO-0IRPfOA,Thai Take-out & Catering,2480 Eglinton Ave E Toronto ON M1K 2R4\n" +
-    "FL601JjpPn_9KylXrU6y1g,Subway,195 College Street Toronto ON M5T 1P9\n" +
-    "FOMPEDx1Y4yw8Zyeww9zJQ,Subway,607 Yonge Street Toronto ON M4Y 1Z5\n" +
-    "CPVCdsx8deq0EHXKbMajBw,Subway,717 Bay Street Toronto ON M5G 2J9\n" +
-    "f8YPC7K4UUTkKatE5ga8Ig,Subway,331 Carlaw Avenue Unit 103 Toronto ON M4M 2S1\n" +
-    "undz-LtXIta312RP_DqmFQ,Subway,34 Church Street Toronto ON M5E 1T3\n" +
-    "lrhJTOjs0FkhmCn6CVK3JA,Subway,259 King Street E Toronto ON M5A 1K2\n" +
-    "ZX79Grup-CWl_juMTwBoQA,Subway,717 College Street Toronto ON M6G 1C2\n" +
-    "wc8SGVIwLQuDilEiTkv_wA,Subway,121 King Street W Suite 132B Toronto ON M5H 3T9\n" +
-    "2vuAlukfUZf3vbHsexEeDw,McDonald's,630 Keele Street Toronto ON M6N 3E2\n" +
-    "YunsfM_RlOAGClNM_lZFvQ,McDonald's,1787 Bayview Avenue Toronto ON M4G 3C4\n" +
-    "2Z3F0G9UXDsX0fRU9BDoqA,McDonald's,2116 Kipling Ave Toronto ON M9W 4K4\n" +
-    "NtdC-iaMHp8z8tMFOl6VYQ,McDonald's,1571 Sandhurst Circle Toronto ON M1V 1V2\n" +
-    "K5u1029QHG4JkURRx_z7JA,McDonald's,552 Yonge Street Toronto ON M4Y 1Y8\n" +
-    "KFaMIyNmxHeAot5huOiuyg,McDonald's,470 Yonge Street Toronto ON M4Y 1X5\n" +
-    "Ozv8Hi0TP9oWbvsPc1EoCg,McDonald's,2781 Dufferin Street Toronto ON M6B 3R9\n" +
-    "slU5UwPlYVyrz7HhQeqMew,McDonald's,1000 Gerrard Street E Toronto ON M4M 3G6\n" +
-    "OaKWXPZl3yfEbhcGWFGTCw,Tim Hortons,2696-2708 Keele Street Toronto ON M3M 3G5\n" +
-    "7esFF4cro9SasTxXv1FDAw,Tim Horton's,1733 Eglinton Avenue E Toronto ON M4A 1J8\n" +
-    "r6LmPZz1GEVtywLHVbN9LA,Tim Hortons,455 Spadina Avenue Toronto ON M5S 1A1\n" +
-    "KwwbRKtKO8BLQn5nPSpkZw,Tim Horton's,33 Yonge Street Toronto ON M5E 1G4\n" +
-    "Qph2RWhxG-nu5ZkSAgKT0g,Tim Hortons,743 Av Pape Toronto ON M4K 3T1\n" +
-    "_i2KbUK_m3A_2A7ySXYJJw,Tim Horton's,7331 Kingston Road Toronto ON M1B 5S3\n" +
-    "IFLaJq1N5-_fbdNyymbkqw,Tim Hortons,200 Front Street W Toronto ON M5V 3K2\n" +
-    "vF-Q0OcabOsjrJHA3XCCug,Tim Hortons,Royal Bank Plaza 200 Bay Street Toronto ON M5J\n" +
-    "Aj3WZ2Ueyqzq1dIKLxNMMQ,Tim Hortons,481 University Avenue Toronto ON M5G 2E9\n" +
-    "qcOXimJzxK9S1L0OhCwzPg,Tim Hortons,1195 Danforth Avenue Toronto ON M4J 1M7\n" +
-    "22AFh7B89LqoJVEk92AxKg,Tim Hortons,4198 Sheppard Avenue E Toronto ON M1S 1T3\n" +
-    "KE9zSVRiWi0GmZAq5PoimA,Tim Horton's,335 Parliament Toronto ON M5A 2Z3\n" +
-    "hsgtedqml9ZDB2cbTZe_mA,Tim Hortons,73 Front St E Toronto ON M5E 1B8\n" +
-    "SUkZaH4gzgemZ6BZyAo1vw,Tim Hortons,399 Bathurst Street Toronto ON M5T 2S8\n" +
-    "QHH56JTPGjG3R20OJf0EFQ,Tim Hortons,750 Dundas St W Toronto ON M6J 3S3\n" +
-    "pGyv0WO5Ot9L_qgausyorw,Tim Hortons,3300 Bloor Street W Toronto ON M8X 1E9\n" +
-    "FwqGbKV1SAG1iKmHVcRfSQ,Tim Hortons,380 Weston Road Toronto ON M6N 5H1\n" +
-    "1KsT6GAvzYkS-fX7RpwK8g,Tim Hortons,12 Queens Quay W Toronto ON M5J 2V7\n" +
-    "GYNYjwzyDPN3NqbL7_9tow,Tim Horton's,18 King St E Toronto ON M5C 1C4\n" +
-    "QO9cAenMqWXVraYPKT29PA,Tim Horton's,745 College St Toronto ON M6G 1C5\n";
+var yelp_search_text_Toronto = "name,full_address\n" +
+    "Tropical Thai Cuisine,993 Kingston Road Toronto ON M4E 1T3\n" +
+    "Thai On Yonge,370 Yonge Street Toronto ON M5B 1S5\n" +
+    "Thai Chef Cuisine,233 Roncesvalles Avenue Toronto ON M6R 2L6\n" +
+    "Thai Express,150 King W Toronto ON M5X 2A2\n" +
+    "Thai Lime,1551 Dupont Street Toronto ON M6P 3S6\n" +
+    "Thai Room,243 Carlton Street Toronto ON M5A 2L2\n" +
+    "Hungary Thai Bar & Eatery Restaurant,196 Augusta Avenue Toronto ON M5T 2L6\n" +
+    "Thai Everest,1656 Victoria Park Avenue Toronto ON M1R 1P2\n" +
+    "Thai Express,21 St Clair Ave E Toronto ON M4T 1L8\n" +
+    "The Thai Grill,961 Eglinton Ave W Toronto ON M6C 2C4\n" +
+    "Flip Toss & Thai Kitchen,141 Harbord St Toronto ON M5S 1H1\n" +
+    "QQ Thai Ice Cream,3278 Midland Avenue Unit D117 Toronto ON M1V\n" +
+    "California Thai,200 Wellington Street W Toronto ON M5V 3G2\n" +
+    "Thai Fantasy,578 Yonge Street Toronto ON M4Y 1Z3\n" +
+    "King Thai Massage Health Care Centre,15 Saint Clair Avenue W 2nd Floor Toronto ON M4V\n" +
+    "Ruby Thai,1 First Canadian Place Mezzanine Level Toronto ON M5X 1C1\n" +
+    "Thai One On,2070 Avenue Road Toronto ON M5M 4A4\n" +
+    "Metta Thai Massage,65 Bellwoods Ave Unit 3 Toronto ON M6J 3N4\n" +
+    "Little Coxwell Vietnamese & Thai Cuisine,986 Coxwell Avenue Toronto ON M4C 3G5\n" +
+    "Simply Thai Cuisine,2253 Bloor St W Toronto ON M6S 1N8\n" +
+    "Thai Basil,467 Bloor Street W Toronto ON M5S 1X9\n" +
+    "Golden Pineapple Viet Thai Cuisine,254 Spadina Avenue Toronto ON M5T\n" +
+    "Basil Thai Kitchen,2326 Danforth Ave Toronto ON M4C 1K7\n" +
+    "Pattaya Thai Kitchen,2326 Queen Street E Toronto ON M4E 1G9\n" +
+    "Mong-Kut Thai,471 Danforth Ave Toronto ON M4K 1P1\n" +
+    "Pho 88 Viet Thai Cuisine,Milliken Wellss Shopping Plaza 250 Alton Tower Circle Suite C6 Toronto ON M1R\n" +
+    "Just Thai,534 Church Street Toronto ON M4Y 2E1\n" +
+    "Thai One On,791 King Street W Toronto ON M5V 1N4\n" +
+    "Kub Khao Thai Eatery,3561 Sheppard E Toronto ON M1T 3K7\n" +
+    "Sukho Thai,52 Wellington Street E Toronto ON M5E 1C9\n" +
+    "Lee's Thai Spring Roll,1512 Queen Street W Toronto ON M6R 1A4\n" +
+    "Thai Express,32 Weston Road Toronto ON M6N 5H4\n" +
+    "Thai Take-out & Catering,2480 Eglinton Ave E Toronto ON M1K 2R4\n" +
+    "Subway,195 College Street Toronto ON M5T 1P9\n" +
+    "Subway,607 Yonge Street Toronto ON M4Y 1Z5\n" +
+    "Subway,717 Bay Street Toronto ON M5G 2J9\n" +
+    "Subway,331 Carlaw Avenue Unit 103 Toronto ON M4M 2S1\n" +
+    "Subway,34 Church Street Toronto ON M5E 1T3\n" +
+    "Subway,259 King Street E Toronto ON M5A 1K2\n" +
+    "Subway,717 College Street Toronto ON M6G 1C2\n" +
+    "Subway,121 King Street W Suite 132B Toronto ON M5H 3T9\n" +
+    "McDonald's,630 Keele Street Toronto ON M6N 3E2\n" +
+    "McDonald's,1787 Bayview Avenue Toronto ON M4G 3C4\n" +
+    "McDonald's,2116 Kipling Ave Toronto ON M9W 4K4\n" +
+    "McDonald's,1571 Sandhurst Circle Toronto ON M1V 1V2\n" +
+    "McDonald's,552 Yonge Street Toronto ON M4Y 1Y8\n" +
+    "McDonald's,470 Yonge Street Toronto ON M4Y 1X5\n" +
+    "McDonald's,2781 Dufferin Street Toronto ON M6B 3R9\n" +
+    "McDonald's,1000 Gerrard Street E Toronto ON M4M 3G6\n" +
+    "Tim Hortons,2696-2708 Keele Street Toronto ON M3M 3G5\n" +
+    "Tim Horton's,1733 Eglinton Avenue E Toronto ON M4A 1J8\n" +
+    "Tim Hortons,455 Spadina Avenue Toronto ON M5S 1A1\n" +
+    "Tim Horton's,33 Yonge Street Toronto ON M5E 1G4\n" +
+    "Tim Hortons,743 Av Pape Toronto ON M4K 3T1\n" +
+    "Tim Horton's,7331 Kingston Road Toronto ON M1B 5S3\n" +
+    "Tim Hortons,200 Front Street W Toronto ON M5V 3K2\n" +
+    "Tim Hortons,Royal Bank Plaza 200 Bay Street Toronto ON M5J\n" +
+    "Tim Hortons,481 University Avenue Toronto ON M5G 2E9\n" +
+    "Tim Hortons,1195 Danforth Avenue Toronto ON M4J 1M7\n" +
+    "Tim Hortons,4198 Sheppard Avenue E Toronto ON M1S 1T3\n" +
+    "Tim Horton's,335 Parliament Toronto ON M5A 2Z3\n" +
+    "Tim Hortons,73 Front St E Toronto ON M5E 1B8\n" +
+    "Tim Hortons,399 Bathurst Street Toronto ON M5T 2S8\n" +
+    "Tim Hortons,750 Dundas St W Toronto ON M6J 3S3\n" +
+    "Tim Hortons,3300 Bloor Street W Toronto ON M8X 1E9\n" +
+    "Tim Hortons,380 Weston Road Toronto ON M6N 5H1\n" +
+    "Tim Hortons,12 Queens Quay W Toronto ON M5J 2V7\n" +
+    "Tim Horton's,18 King St E Toronto ON M5C 1C4\n" +
+    "Tim Horton's,745 College St Toronto ON M6G 1C5\n";
