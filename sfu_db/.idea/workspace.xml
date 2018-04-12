@@ -25,50 +25,24 @@
     <SUITE FILE_PATH="coverage/sfu_db$deeperHTMLParser.coverage" NAME="deeperHTMLParser Coverage Results" MODIFIED="1514884327171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/deeperlib/web" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="demo.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="724" column="24" selection-start-line="724" selection-start-column="24" selection-end-line="724" selection-end-column="24" />
-              <folding>
-                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#th#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#tr#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="deeper_web.py" pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="deeper_web.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_web.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="531">
-              <caret line="171" column="47" lean-forward="true" selection-start-line="171" selection-start-column="47" selection-end-line="171" selection-end-column="47" />
+            <state relative-caret-position="265">
+              <caret line="159" column="154" selection-start-line="159" selection-start-column="154" selection-end-line="159" selection-end-column="154" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="demo.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html">
+      <file leaf-file-name="searchapi.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/deeperlib/api/yelp/searchapi.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1637">
-              <caret line="181" column="47" selection-start-line="181" selection-start-column="47" selection-end-line="181" selection-end-column="47" />
+            <state relative-caret-position="-1176">
+              <caret line="78" selection-start-line="78" selection-end-line="84" selection-end-column="41" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#0#30#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="55">
-              <caret line="8066" column="8" selection-start-line="8066" selection-start-column="8" selection-end-line="8066" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -167,10 +141,10 @@
         <option value="$PROJECT_DIR$/deeperlib/backend_test.py" />
         <option value="$PROJECT_DIR$/deeperweb/views.py" />
         <option value="$PROJECT_DIR$/deeperlib/google_details_test.py" />
-        <option value="$PROJECT_DIR$/deeperlib/web/deeper_web.py" />
         <option value="$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html" />
         <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css" />
         <option value="$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js" />
+        <option value="$PROJECT_DIR$/deeperlib/web/deeper_web.py" />
       </list>
     </option>
   </component>
@@ -183,8 +157,8 @@
   <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
-    <option name="width" value="1940" />
-    <option name="height" value="1050" />
+    <option name="width" value="1600" />
+    <option name="height" value="710" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -201,24 +175,6 @@
             <path>
               <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
               <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperlib" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sfu_db" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sfu_db" type="462c0819:PsiDirectoryNode" />
-              <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="deeperweb" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -231,7 +187,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../deeperlib" />
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.web.browsers" />
   </component>
   <component name="RecentsManager">
@@ -421,7 +377,7 @@
       <window_info anchor="bottom" id="Python Console" order="8" weight="0.32900944" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32890856" />
       <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.26696166" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17292225" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17493297" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="5" side_tool="true" />
@@ -450,6 +406,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225848">
+          <caret line="8066" column="8" selection-start-line="8066" selection-start-column="8" selection-end-line="8066" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="9042">
@@ -634,33 +597,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/api/yelp/searchapi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="78" selection-start-line="78" selection-end-line="84" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/sample_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="43" selection-start-line="43" selection-end-line="44" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/web/local_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="66" column="18" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/web/json2csv.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
@@ -697,13 +633,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/backend_test.py" />
     <entry file="file://$PROJECT_DIR$/deeperlib/retrieve_data.py" />
-    <entry file="file://$PROJECT_DIR$/deeperweb/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="79" column="70" selection-start-line="79" selection-start-column="70" selection-end-line="79" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/web/webcrawl.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -723,30 +652,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/deeperlib/google_details_test.py" />
     <entry file="file://$PROJECT_DIR$/deeperlib/google_textsearch_test.py" />
-    <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1637">
-          <caret line="181" column="47" selection-start-line="181" selection-start-column="47" selection-end-line="181" selection-end-column="47" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
-          <caret line="8066" column="8" selection-start-line="8066" selection-start-column="8" selection-end-line="8066" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_web.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="531">
-          <caret line="171" column="47" lean-forward="true" selection-start-line="171" selection-start-column="47" selection-end-line="171" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/js/demo.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -759,6 +664,64 @@
             <element signature="n#style#0;n#tr#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#td#0;n#tr#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/templates/deeperweb/demo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="181" column="47" selection-start-line="181" selection-start-column="47" selection-end-line="181" selection-end-column="47" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/static/deeperweb/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="8066" column="8" selection-start-line="8066" selection-start-column="8" selection-end-line="8066" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/data_processing/sample_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-112">
+          <caret line="74" column="38" lean-forward="true" selection-start-line="74" selection-start-column="38" selection-end-line="74" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperweb/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1623">
+          <caret line="79" column="41" lean-forward="true" selection-start-line="79" selection-start-column="41" selection-end-line="79" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/web/local_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1484">
+          <caret line="66" column="18" selection-start-line="66" selection-start-column="11" selection-end-line="66" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/api/yelp/searchapi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1176">
+          <caret line="78" selection-start-line="78" selection-end-line="84" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/deeperlib/web/deeper_web.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="159" column="154" selection-start-line="159" selection-start-column="154" selection-end-line="159" selection-end-column="154" />
         </state>
       </provider>
     </entry>
