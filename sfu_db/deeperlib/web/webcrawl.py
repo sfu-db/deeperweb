@@ -38,10 +38,11 @@ def SmartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jacc
     ##### biased #####
     D1_ids_deeper = copy.deepcopy(D1_ids)
     query_pool = utils.initScore_biased(sampleindex, top_k, sample_rate, Dratio, initQueries)
-    flagNum = len(initQueries) - budget
+    flagNum = len(query_pool) - budget
     curcov = set()
     curmat = []
     updateList = utils.updateList(D1index)
+    queryList = []
 
     while len(query_pool) > flagNum and len(query_pool) != 0 and len(curcov) < len(D1_ids):
         queries = []
@@ -64,6 +65,7 @@ def SmartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jacc
             else:
                 break
 
+        queryList.extend(queries)
         cur_raw_result = api.callMulAPI(queries)
         cur_er_result = hiddendata.proResult(cur_raw_result)
         matched_ids, matched_pair = utils.results_simjoin(cur_er_result, D1_er, jaccard_thre)
@@ -81,21 +83,27 @@ def SmartCrawl(budget, api, sampledata, localdata, hiddendata, pool_thre=2, jacc
             len(hiddendata.getMergeResult()), 'different results returned, ', \
             len(curcov), 'local records covered totally.'
     api.getSession().close()
+    hiddendata.setQueryList(queryList)
     hiddendata.setMatchPair(curmat)
 
 
 def NaiveCrawl(budget, api, localdata, hiddendata, typo_ids, jaccard_thre=0.85, threads=4):
     D1_ids, D1_query, D1_er = localdata.getlocalData()
     naive_ids = copy.deepcopy(typo_ids)
-    if len(naive_ids) < budget:
-        naive_ids.extend(random.sample(D1_ids, budget - len(naive_ids)))
+    while len(naive_ids) < budget:
+        temp_id = random.sample(D1_ids, 1)
+        if temp_id not in naive_ids:
+            naive_ids.extend(temp_id)
     curcov = set()
+    queryList = []
 
     while len(naive_ids) != 0:
         queries = []
         for i in range(0, threads):
             if len(naive_ids):
                 queries.append(D1_query[naive_ids.pop()])
+
+        queryList.extend(queries)
         cur_raw_result = api.callMulAPI(queries)
         cur_er_result = hiddendata.proResult(cur_raw_result)
         matched_ids, matched_pair = utils.results_simjoin(cur_er_result, D1_er, jaccard_thre)
@@ -105,6 +113,7 @@ def NaiveCrawl(budget, api, localdata, hiddendata, typo_ids, jaccard_thre=0.85, 
             len(matched_ids), 'local records covered at this iteration. ', \
             len(hiddendata.getMergeResult()), 'different results returned, ', \
             len(curcov), 'local records covered totally.'
+    hiddendata.setQueryList(queryList)
     api.getSession().close()
 
     if len(curcov) > budget:

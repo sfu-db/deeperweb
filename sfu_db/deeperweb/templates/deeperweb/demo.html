@@ -139,7 +139,7 @@
         <div style="overflow:scroll; height: 488px">
             <div id="topLoader"
                  style="position:absolute;left:50%;-webkit-transform:translateX(-50%);transform:translateX(-50%);}"></div>
-            <table class="table table-hover table-bordered table table-expandable"
+            <table class="table table-hover table-bordered table-expandable"
                    style="display: none; background:#f8f5f0" id="table_result">
                 <thead>
                 </thead>
@@ -149,8 +149,8 @@
         </div>
     </div>
 </div>
-{% if cookies_expired %}
-<div class="login-popup open">
+    {% if cookies_expired %}
+    <div class="login-popup open">
     {% else %}
     <div class="login-popup">
         {% endif %}
@@ -197,6 +197,20 @@
             <div class="alert-content">
                 <p></p>
                 <p></p>
+            </div>
+            <div class="cws-button gray alt full-width">OK</div>
+        </div>
+    </div>
+    <div class="query-popup">
+        <div class="query-popup-wrap">
+            <div class="title-wrap">
+                <h2>Queries</h2><i class="close-button flaticon-cross"></i>
+            </div>
+            <div style="overflow:scroll; height: 230px; width: 450px">
+                <table class="table table-hover table-bordered">
+                    <thead><tr><th>SmartCrawl</th><th>NaiveCrawl</th></tr></thead>
+                    <tbody></tbody>
+                </table>
             </div>
             <div class="cws-button gray alt full-width">OK</div>
         </div>

@@ -5,6 +5,7 @@ class HiddenData:
     def __init__(self, uniqueid, matchlist):
         self.setUniqueId(uniqueid)
         self.setMatchList(matchlist)
+        self.setQueryList([])
         self.setMergeResult({})
 
     def proResult(self, result_raw):
@@ -37,6 +38,12 @@ class HiddenData:
 
     def getMatchList(self):
         return self.__matchList
+
+    def setQueryList(self, querylist):
+        self.__queryList = querylist
+
+    def getQueryList(self):
+        return self.__queryList
 
     def setMatchPair(self, matchpair):
         matchPair = {}

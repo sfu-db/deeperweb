@@ -10,6 +10,7 @@ $(document).ready(function () {
     re_enrich();
     download_csv();
     record_replace();
+    show_queries();
 });
 
 /*switch button*/
@@ -599,8 +600,14 @@ function smart_crawl() {
                 $("table#table_result").show();
 
                 $(".alert-popup").addClass("open");
-                $(".alert-popup p:first").html("SmartCrawl   Queries: 4   Cover: " + response['record'].length);
-                $(".alert-popup p:last").html("NaiveCrawl   Queries: 4   Cover: " + response['naive']);
+                $(".alert-popup p:first").html("SmartCrawl   <a>Queries</a>: 4   Cover: " + response['record'].length);
+                $(".alert-popup p:last").html("NaiveCrawl   <a>Queries</a>: 4   Cover: " + response['naive']);
+
+                query_tbody = "";
+                for (var i = 0; i < response['smart_queries'].length; i++) {
+                    query_tbody += "<tr><td>"+response['smart_queries'][i]+"</td><td>"+response['naive_queries'][i]+"</td></tr>";
+                }
+                $(".query-popup table tbody").html(query_tbody);
             },
             error: function () {
                 $(".alert-popup").addClass("open");
@@ -694,12 +701,14 @@ function download_csv() {
                 },
                 error: function () {
                     $(".alert-popup").addClass("open");
-                    $(".alert-popup p").html("Download Error.");
+                    $(".alert-popup p:first").html("Error!");
+                    $(".alert-popup p:last").html("Failed to Download.");
                 }
             });
         } else {
             $(".alert-popup").addClass("open");
-            $(".alert-popup p").html("Empty Table.");
+            $(".alert-popup p:first").html("Warning!");
+            $(".alert-popup p:last").html("Empty Table.");
         }
     });
 }
@@ -722,7 +731,7 @@ function timer() {
         $topLoader.setProgress(0);
         $topLoader.setValue('0ms');
         var ms = 0;
-        var totalMs = 15000;
+        var totalMs = 6000;
 
         var animateFunc = function () {
             ms += 25;
@@ -829,210 +838,214 @@ function record_replace() {
     });
 }
 
+function show_queries() {
+    $(".alert-popup p").delegate("a", "click", function () {
+        $(".query-popup").addClass("open");
+    });
+}
+
 var dblp_publ_text = "ID,title,author\n" +
-    "0,QueryMarket Demonstration: Pricing for Online Data Markets,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu}\n" +
-    "1,Elastic Memory Management for Cloud Data Analytics,Jingjing Wang and Magdalena Balazinska\n" +
-    "2,Profiling a GPU database implementation: a holistic view of GPU resource utilization on TPC-H queries,Emily Furst and Mark Oskin and Bill Howe\n" +
-    "3,Sloth: Being Lazy Is a Virtue (When Issuing Database Queries),Alvin Cheung and Samuel Madden and Armando Solar-Lezama\n" +
-    "4,Query-Based Data Pricing,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "5,Managing Skew in Hadoop,YongChul Kwon and Kai Ren and Magdalena Balazinska and Bill Howe\n" +
-    "6,A theory of pricing private data,Chao Li and Daniel Yang Li and Gerome Miklau and Dan Suciu\n" +
-    "7,Toward elastic memory management for cloud data analytics,Jingjing Wang and Magdalena Balazinska\n" +
-    "8,Big Data Science Needs Big Data Middleware,Bill Howe\n" +
-    "9,Worst-Case Optimal Algorithms for Parallel Query Processing,Paraschos Koutris and Paul Beame and Dan Suciu\n" +
-    "10,Communication Steps for Parallel Query Processing,Paul Beame and Paraschos Koutris and Dan Suciu\n" +
-    "11,Tiresias: the database oracle for how-to queries,Alexandra Meliou and Dan Suciu\n" +
-    "12,Dissociation and propagation for approximate lifted inference with standard relational database management systems,Wolfgang Gatterbauer and Dan Suciu\n" +
-    "13,Lifted Inference in Probabilistic Databases,Dan Suciu\n" +
-    "14,Communication Cost in Parallel Query Processing,Dan Suciu\n" +
-    "15,From Theory to Practice: Efficient Join Query Evaluation in a Parallel Database System,Shumo Chu and Magdalena Balazinska and Dan Suciu\n" +
-    "16,Approximate Lifted Inference with Probabilistic Databases,Wolfgang Gatterbauer and Dan Suciu\n" +
-    "17,A formal approach to finding explanations for database queries,Sudeepa Roy and Dan Suciu\n" +
-    "18,Understanding the Complexity of Lifted Inference and Asymmetric Weighted Model Counting,Eric Gribkoff and Guy Van den Broeck and Dan Suciu\n" +
-    "19,Should we all be teaching \"intro to data science\" instead of \"intro to databases\"?,Bill Howe and Michael J. Franklin and Juliana Freire and James Frew and Tim Kraska and Raghu Ramakrishnan\n" +
-    "20,Causality and Explanations in Databases,Alexandra Meliou and Sudeepa Roy and Dan Suciu\n" +
-    "21,Lifted Probabilistic Inference: A Guide for the Database Researcher,Eric Gribkoff and Dan Suciu and Guy Van den Broeck\n" +
-    "22,Knowledge Compilation Meets Database Theory: Compiling Queries to Decision Diagrams,Abhay Kumar Jha and Dan Suciu\n" +
-    "23,A Discussion on Pricing Relational Data,Magdalena Balazinska and Bill Howe and Paraschos Koutris and Dan Suciu and Prasang Upadhyaya\n" +
-    "24,The Myria Big Data Management and Analytics System and Cloud Services,Jingjing Wang and Tobin Baker and Magdalena Balazinska and Daniel Halperin and Brandon Haynes and Bill Howe and Dylan Hutchison and Andrew Whitaker and Shengliang Xu\n" +
-    "25,Automatic example queries for ad hoc databases,Bill Howe and Garrett Cole and Nodira Khoussainova and Leilani Battle\n" +
-    "26,Tracing data errors with view-conditioned causality,Alexandra Meliou and Wolfgang Gatterbauer and Suman Nath and Dan Suciu\n" +
-    "27,Queries and materialized views on probabilistic databases,Nilesh N. Dalvi and Christopher Re and Dan Suciu\n" +
-    "28,A latency and fault-tolerance optimizer for online parallel query plans,Prasang Upadhyaya and YongChul Kwon and Magdalena Balazinska\n" +
-    "29,The Complexity of Causality and Responsibility for Query Answers and non-Answers,Alexandra Meliou and Wolfgang Gatterbauer and Katherine F. Moore and Dan Suciu\n" +
-    "30,Lifted Inference Seen from the Other Side : The Tractable Features,Abhay Kumar Jha and Vibhav Gogate and Alexandra Meliou and Dan Suciu\n" +
-    "31,Communication Cost in Parallel Query Evaluation: A Tutorial,Dan Suciu\n" +
-    "32,WHY SO? or WHY NO? Functional Causality for Explaining Query Answers,Alexandra Meliou and Wolfgang Gatterbauer and Katherine F. Moore and Dan Suciu\n" +
-    "33,Causality in Databases,Alexandra Meliou and Wolfgang Gatterbauer and Joseph Y. Halpern and Christoph Koch and Katherine F. Moore and Dan Suciu\n" +
-    "34,Client + Cloud: Evaluating Seamless Architectures for Visual Data Analytics in the Ocean Sciences,Keith Grochow and Bill Howe and Mark Stoermer and Roger S. Barga and Edward D. Lazowska\n" +
-    "35,9th USENIX Workshop on the Theory and Practice of Provenance, TaPP 2017, Seattle, WA, USA, June 23, 2017,Adam M. Bates and Bill Howe\n" +
-    "36,Proceedings of the 2017 ACM International Conference on Management of Data, SIGMOD Conference 2017, Chicago, IL, USA, May 14-19, 2017,Semih Salihoglu and Wenchao Zhou and Rada Chirkova and Jun Yang and Dan Suciu\n" +
-    "37,Cosette: An Automated Prover for SQL,Shumo Chu and Chenglong Wang and Konstantin Weitz and Alvin Cheung\n" +
-    "38,Understanding Database Performance Inefficiencies in Real-world Web Applications,Cong Yan and Alvin Cheung and Junwen Yang and Shan Lu\n" +
-    "39,HoTTSQL: proving query rewrites with univalent SQL semantics,Shumo Chu and Konstantin Weitz and Alvin Cheung and Dan Suciu\n" +
-    "40,Synthesizing highly expressive SQL queries from input-output examples,Chenglong Wang and Alvin Cheung and Rastislav Bodik\n" +
-    "41,Learning a Neural Semantic Parser from User Feedback,Srinivasan Iyer and Ioannis Konstas and Alvin Cheung and Jayant Krishnamurthy and Luke Zettlemoyer\n" +
-    "42,DataSynthesizer: Privacy-Preserving Synthetic Datasets,Haoyue Ping and Julia Stoyanovich and Bill Howe\n" +
-    "43,Deep Mapping of the Visual Literature,Bill Howe and Po-Shen Lee and Maxim Grechkin and Sean T. Yang and Jevin D. West\n" +
-    "44,Data Science Education: We're Missing the Boat, Again,Bill Howe and Michael J. Franklin and Laura M. Haas and Tim Kraska and Jeffrey D. Ullman\n" +
-    "45,A Worst-Case Optimal Multi-Round Algorithm for Parallel Computation of Conjunctive Queries,Bas Ketsman and Dan Suciu\n" +
-    "46,What Do Shannon-type Inequalities, Submodular Width, and Disjunctive Datalog Have to Do with One Another?,Mahmoud Abo Khamis and Hung Q. Ngo and Dan Suciu\n" +
-    "47,Optimizing Data-Intensive Applications Automatically By Leveraging Parallel Data Processing Frameworks,Maaz Bin Safeer Ahmad and Alvin Cheung\n" +
-    "48,Interactive Query Synthesis from Input-Output Examples,Chenglong Wang and Alvin Cheung and Rastislav Bodik\n" +
-    "49,Demonstration of the Cosette Automated SQL Prover,Shumo Chu and Daniel Li and Chenglong Wang and Alvin Cheung and Dan Suciu\n" +
-    "50,Probabilistic Database Summarization for Interactive Data Exploration,Laurel Orr and Dan Suciu and Magdalena Balazinska\n" +
-    "51,Query Processing on Probabilistic Data: A Survey,Guy Van den Broeck and Dan Suciu\n" +
-    "52,Scalable and Efficient Flow-Based Community Detection for Large-Scale Graph Analysis,Seung-Hee Bae and Daniel Halperin and Jevin D. West and Martin Rosvall and Bill Howe\n" +
-    "53,VisualCloud Demonstration: A DBMS for Virtual Reality,Brandon Haynes and Artem Minyaylov and Magdalena Balazinska and Luis Ceze and Alvin Cheung\n" +
-    "54,Exact Model Counting of Query Expressions: Limitations of Propositional Methods,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
-    "55,LaraDB: A Minimalist Kernel for Linear and Relational Algebra Computation,Dylan Hutchison and Bill Howe and Dan Suciu\n" +
-    "56,Answering Conjunctive Queries with Inequalities,Paraschos Koutris and Tova Milo and Sudeepa Roy and Dan Suciu\n" +
-    "57,Voyager 2: Augmenting Visual Analysis with Partial View Specifications,Kanit Wongsuphasawat and Zening Qu and Dominik Moritz and Riley Chang and Felix Ouk and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
-    "58,A Visual Cloud for Virtual Reality Applications,Magdalena Balazinska and Luis Ceze and Alvin Cheung and Brian Curless and Steven M. Seitz\n" +
-    "59,ZaliQL: Causal Inference from Observational Data at Scale,Babak Salimi and Corey Cole and Dan R. K. Ports and Dan Suciu\n" +
-    "60,Fides: Towards a Platform for Responsible Data Science,Julia Stoyanovich and Bill Howe and Serge Abiteboul and Gerome Miklau and Arnaud Sahuguet and Gerhard Weikum\n" +
-    "61,A Demonstration of Interactive Analysis of Performance Measurements with Viska,Helga Gudmundsdottir and Babak Salimi and Magdalena Balazinska and Dan R. K. Ports and Dan Suciu\n" +
-    "62,Comparative Evaluation of Big-Data Systems on Scientific Image Analytics Workloads,Parmita Mehta and Sven Dorkenwald and Dongfang Zhao and Tomer Kaftan and Alvin Cheung and Magdalena Balazinska and Ariel Rokem and Andrew J. Connolly and Jacob VanderPlas and Yusra AlSayyad\n" +
-    "63,VizioMetrix: A Platform for Analyzing the Visual Information in Big Scholarly Data,Po-Shen Lee and Jevin D. West and Bill Howe\n" +
-    "64,Summarizing Source Code using a Neural Attention Model,Srinivasan Iyer and Ioannis Konstas and Alvin Cheung and Luke Zettlemoyer\n" +
-    "65,High variety cloud databases,Shrainik Jain and Dominik Moritz and Bill Howe\n" +
-    "66,MusicDB: A Platform for Longitudinal Music Analytics,Jeremy Hyrkas and Bill Howe\n" +
-    "67,Verified lifting of stencil computations,Shoaib Kamil and Alvin Cheung and Shachar Itzhaky and Armando Solar-Lezama\n" +
-    "68,Computing Join Queries with Functional Dependencies,Mahmoud Abo Khamis and Hung Q. Ngo and Dan Suciu\n" +
-    "69,SlimShot: Probabilistic Inference for Web-Scale Knowledge Bases,Eric Gribkoff and Dan Suciu\n" +
-    "70,PipeGen: Data Pipe Generator for Hybrid Analytics,Brandon Haynes and Alvin Cheung and Magdalena Balazinska\n" +
-    "71,PerfEnforce Demonstration: Data Analytics with Performance Guarantees,Jennifer Ortiz and Brendan Lee and Magdalena Balazinska\n" +
-    "72,Quantifying Causal Effects on Query Answering in Databases,Babak Salimi and Leopoldo E. Bertossi and Dan Suciu and Guy Van den Broeck\n" +
-    "73,Leveraging Lock Contention to Improve OLTP Application Performance,Cong Yan and Alvin Cheung\n" +
-    "74,SQLShare: Results from a Multi-Year SQL-as-a-Service Experiment,Shrainik Jain and Dominik Moritz and Daniel Halperin and Bill Howe and Ed Lazowska\n" +
-    "75,Leveraging Parallel Data Processing Frameworks with Verified Lifting,Maaz Bin Safeer Ahmad and Alvin Cheung\n" +
-    "76,Computer-Assisted Query Formulation,Alvin Cheung and Armando Solar-Lezama\n" +
-    "77,From NoSQL Accumulo to NewSQL Graphulo: Design and utility of graph algorithms inside a BigTable database,Dylan Hutchison and Jeremy Kepner and Vijay Gadepally and Bill Howe\n" +
-    "78,SlimShot: In-Database Probabilistic Inference for Knowledge Bases,Eric Gribkoff and Dan Suciu\n" +
-    "79,A Guide to Formal Analysis of Join Processing in Massively Parallel Systems,Paraschos Koutris and Dan Suciu\n" +
-    "80,Price-Optimal Querying with Data APIs,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
-    "81,Towards a general-purpose query language for visualization recommendation,Kanit Wongsuphasawat and Dominik Moritz and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
-    "82,Packet Transactions: High-Level Programming for Line-Rate Switches,Anirudh Sivaraman and Alvin Cheung and Mihai Budiu and Changhoon Kim and Mohammad Alizadeh and Hari Balakrishnan and George Varghese and Nick McKeown and Steve Licking\n" +
-    "83,The Beckman report on database research,Daniel Abadi and Rakesh Agrawal and Anastasia Ailamaki and Magdalena Balazinska and Philip A. Bernstein and Michael J. Carey and Dan Suciu and Michael Stonebraker and Todd Walter and Jennifer Widom\n" +
-    "84,Voyager: Exploratory Analysis via Faceted Browsing of Visualization Recommendations,Kanit Wongsuphasawat and Dominik Moritz and Anushka Anand and Jock D. Mackinlay and Bill Howe and Jeffrey Heer\n" +
-    "85,Research Directions for Principles of Data Management (Abridged),Serge Abiteboul and Marcelo Arenas and Pablo Barcelo and Meghyn Bienvenu and Diego Calvanese and Claire David and Richard Hull and Dan Suciu and Victor Vianu and Ke Yi\n" +
-    "86,Scalable clustering algorithms for continuous environmental flow cytometry,Jeremy Hyrkas and Sophie Clayton and Francois Ribalet and Daniel Halperin and E. Virginia Armbrust and Bill Howe\n" +
-    "87,The Aurora and Borealis Stream Processing Engines,Ugur Cetintemel and Daniel J. Abadi and Yanif Ahmad and Hari Balakrishnan and Magdalena Balazinska and Mitch Cherniack and Ying Xing and Stan Zdonik\n" +
-    "88,GossipMap: a distributed community detection algorithm for billion-edge directed graphs,Seung-Hee Bae and Bill Howe\n" +
-    "89,Proceedings of the Sixth {ACM} Symposium on Cloud Computing, SoCC 2015, Kohala Coast, Hawaii, USA, August 27-29, 2015,Shahram Ghandeharizadeh and Sumita Barahmand and  Magdalena Balazinska and  Michael J. Freedman\n" +
-    "90,Towards Generating Application-Specific Data Management Systems,Alvin Cheung\n" +
-    "91,Dismantling Composite Visualizations in the Scientific Literature,Po-Shen Lee and Bill Howe\n" +
-    "92,Rethinking the application-database interface,Alvin Cheung\n" +
-    "93,Changing the Face of Database Cloud Services with Personalized Service Level Agreements,Jennifer Ortiz and Victor Teixeira de Almeida and Magdalena Balazinska\n" +
-    "94,Detecting and Dismantling Composite Visualizations in the Scientific Literature,Po-Shen Lee and Bill Howe\n" +
-    "95,Time-Varying Clusters in Large-Scale Flow Cytometry,Jeremy Hyrkas and Daniel Halperin and Bill Howe\n" +
-    "96,The ACM PODS Alberto O. Mendelzon Test-of-Time Award 2015,Foto N. Afrati and Frank Neven and Dan Suciu\n" +
-    "97,Symmetric Weighted First-Order Model Counting,Paul Beame and Guy Van den Broeck and Eric Gribkoff and Dan Suciu\n" +
-    "98,Bridging the Gap Between General-Purpose and Domain-Specific Compilers with Synthesis,Alvin Cheung and Shoaib Kamil and Armando Solar-Lezama\n" +
-    "99,Gaussian Mixture Models Use-Case: In-Memory Analysis with Myria,Ryan Maas and Jeremy Hyrkas and Olivia Grace Telford and Magdalena Balazinska and Andrew J. Connolly and Bill Howe\n" +
-    "100,Machine Learning and Databases: The Sound of Things to Come or a Cacophony of Hype?,Christopher Re and Divy Agrawal and Magdalena Balazinska and Michael J. Cafarella and Michael I. Jordan and Tim Kraska and Raghu Ramakrishnan\n" +
-    "101,Automated Analysis of Muscle X-ray Diffraction Imaging with MCMC,C. David Williams and Magdalena Balazinska and Thomas L. Daniel\n" +
-    "102,Explaining Query Answers with Explanation-Ready Databases,Sudeepa Roy and Laurel Orr and Dan Suciu\n" +
-    "103,Efficient iterative processing in the SciDB parallel array engine,Emad Soroush and Magdalena Balazinska and K. Simon Krughoff and Andrew J. Connolly\n" +
-    "104,Asynchronous and Fault-Tolerant Recursive Datalog Evaluation in Shared-Nothing Engines,Jingjing Wang and Magdalena Balazinska and Daniel Halperin\n" +
-    "105,Towards automated prediction of relationships among scientific datasets,Abdussalam Alawini and David Maier and Kristin Tufte and Bill Howe and Rashmi Nandikur\n" +
-    "106,Perfopticon: Visual Query Analysis for Distributed Databases,Dominik Moritz and Daniel Halperin and Bill Howe and Jeffrey Heer\n" +
-    "107,Parallel Skyline Queries,Foto N. Afrati and Paraschos Koutris and Dan Suciu and Jeffrey D. Ullman\n" +
-    "108,Automatic Enforcement of Data Use Policies with DataLawyer,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
-    "109,Front Matter,Magdalena Balazinska\n" +
-    "110,Big Data Research: Will Industry Solve all the Problems?,Magdalena Balazinska\n" +
-    "111,A Demonstration of the BigDAWG Polystore System,Aaron J. Elmore and Jennie Duggan and Mike Stonebraker and Magdalena Balazinska and Ugur Cetintemel and Vijay Gadepally and Nesime Tatbul and Manasi Vartak and Stan Zdonik\n" +
-    "112,The BigDAWG Polystore System,Jennie Duggan and Aaron J. Elmore and Michael Stonebraker and Magdalena Balazinska and Bill Howe and Jeremy Kepner and Sam Madden and David Maier and Tim Mattson and Stanley B. Zdonik\n" +
-    "113,Counting of Query Expressions: Limitations of Propositional Methods,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
-    "114,A Dichotomy on the Complexity of Consistent Query Answering for Atoms with Simple Keys,Paraschos Koutris and Dan Suciu\n" +
-    "115,Helping scientists reconnect their datasets,Abdussalam Alawini and David Maier and Kristin Tufte and Bill Howe\n" +
-    "116,Affordable Analytics on Expensive Data,Prasang Upadhyaya and Martina Unutzer and Magdalena Balazinska and Dan Suciu and Hakan Hacigumus\n" +
-    "117,Approximation trade-offs in a Markovian stream warehouse: An empirical study,Julie Letchner and Magdalena Balazinska and Christopher Re and Matthai Philipose\n" +
-    "118,Using Program Analysis to Improve Database Applications,Alvin Cheung and Samuel Madden and Armando Solar-Lezama and Owen Arden and Andrew C. Myers\n" +
-    "119,Support the Data Enthusiast: Challenges for Next-Generation Data-Analysis Systems,Kristi Morton and Magdalena Balazinska and Dan Grossman and Jock D. Mackinlay\n" +
-    "120,Public Data and Visualizations: How are Many Eyes and Tableau Public Used for Collaborative Analytics?,Kristi Morton and Magdalena Balazinska and Dan Grossman and Robert Kosara and Jock D. Mackinlay\n" +
-    "121,Oblivious bounds on the probability of boolean functions,Wolfgang Gatterbauer and Dan Suciu\n" +
-    "122,Big-Data Management Use-Case: A Cloud Service for Creating and Analyzing Galactic Merger Trees,Sarah Loebman and Jennifer Ortiz and Lee Lee Choo and Laurel Orr and Lauren Anderson and Daniel Halperin and Magdalena Balazinska and Thomas Quinn and Fabio Governato\n" +
-    "123,The database group at the University of Washington,Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "124,Demonstration of the Myria big data management service,Daniel Halperin and Victor Teixeira de Almeida and Lee Lee Choo and Shumo Chu and Paraschos Koutris and Dominik Moritz and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "125,Conference on Scientific and Statistical Database Management, SSDBM '13, Baltimore, MD, USA, July 29 - 31, 2013,Alex Szalay and Tamas Budavari and Magdalena Balazinska and Alexandra Meliou and Ahmet Sacan\n" +
-    "126,Big Data Begets Big Database Theory,Dan Suciu\n" +
-    "127,Scalable Flow-Based Community Detection for Large-Scale Network Analysis,Seung-Hee Bae and Daniel Halperin and Jevin D. West and Martin Rosvall and Bill Howe\n" +
-    "128,Lower Bounds for Exact Model Counting and Applications in Probabilistic Databases,Paul Beame and Jerry Li and Sudeepa Roy and Dan Suciu\n" +
-    "129,Time travel in a scientific array database,Emad Soroush and Magdalena Balazinska\n" +
-    "130,Optimizing database-backed applications with query synthesis,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
-    "131,Compiled Plans for In-Memory Path-Counting Queries,Brandon Myers and Jeremy Hyrkas and Daniel Halperin and Bill Howe\n" +
-    "132,StatusQuo: Making Familiar Abstractions Perform Using Program Analysis,Alvin Cheung and Owen Arden and Samuel Madden and Armando Solar-Lezama and Andrew C. Myers\n" +
-    "133,Mobile applications need targeted micro-updates,Alvin Cheung and Lenin Ravindranath and Eugene Wu and Samuel Madden and Hari Balakrishnan\n" +
-    "134,Speeding up database applications with Pyxis,Alvin Cheung and Owen Arden and Samuel Madden and Andrew C. Myers\n" +
-    "135,Collaborative Science Workflows in SQL,Bill Howe and Daniel Halperin and Francois Ribalet and Sagar Chitnis and E. Virginia Armbrust\n" +
-    "136,Hadoop's Adolescence,Kai Ren and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
-    "137,Massive scale cyber traffic analysis: a driver for graph database research,Cliff Joslyn and Sutanay Choudhury and David Haglin and Bill Howe and Bill Nickless and Bryan Olsen\n" +
-    "138,Toward practical query pricing with QueryMarket,Paraschos Koutris and Prasang Upadhyaya and Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "139,Education and career paths for data scientists,Magdalena Balazinska and Susan B. Davidson and Bill Howe and Alexandros Labrinidis\n" +
-    "140,Real-time collaborative analysis with (almost) pure SQL: a case study in biogeochemical oceanography,Daniel Halperin and Francois Ribalet and Konstantin Weitz and Mak A. Saito and Bill Howe and E. Virginia Armbrust\n" +
-    "141,Stop That Query! The Need for Managing Data Use,Prasang Upadhyaya and Nick R. Anderson and Magdalena Balazinska and Bill Howe and Raghav Kaushik and Ravishankar Ramamurthy and Dan Suciu\n" +
-    "142,The power of data use management in action,Prasang Upadhyaya and Nick R. Anderson and Magdalena Balazinska and Bill Howe and Raghav Kaushik and Ravishankar Ramamurthy and Dan Suciu\n" +
-    "143,Squeezing a Big Orange into Little Boxes: The AscotDB System for Parallel Processing of Data on a Sphere,Jacob VanderPlas and Emad Soroush and K. Simon Krughoff and Magdalena Balazinska\n" +
-    "144,A Demonstration of Iterative Parallel Array Processing in Support of Telescope Image Analysis,Matthew Moyers and Emad Soroush and Spencer Wallace and K. Simon Krughoff and Jake VanderPlas and Magdalena Balazinska and Andrew J. Connolly\n" +
-    "145,Proceedings of the 6th Alberto Mendelzon International Workshop on Foundations of Data Management, Ouro Preto, Brazil, June 27-30, 2012,Juliana Freire and Dan Suciu\n" +
-    "146,On the tractability of query compilation and bounded treewidth,Abhay Kumar Jha and Dan Suciu\n" +
-    "147,Abstract: Hadoop's Adolescence; A Comparative Workloads Analysis from Three Research Clusters,Kai Ren and Garth Gibson and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
-    "148,VizDeck: a card game metaphor for fast visual data exploration,Bill Howe and Alicia Key and Daniel Perry and Cecilia R. Aragon\n" +
-    "149,Poster: Hadoop's Adolescence; A Comparative Workloads Analysis from Three Research Clusters,Kai Ren and Garth Gibson and YongChul Kwon and Magdalena Balazinska and Bill Howe\n" +
-    "150,Virtual Appliances, Cloud Computing, and Reproducible Research,Bill Howe\n" +
-    "151,Understanding cardinality estimation using entropy maximization,Christopher Re and Dan Suciu\n" +
-    "152,Using program synthesis for social recommendations,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
-    "153,VizDeck: self-organizing dashboards for visual analytics,Bill Howe and Alicia Key and Daniel Perry and Cecilia R. Aragon\n" +
-    "154,A Dataflow Graph Transformation Language and Query Rewriting System for RDF Ontologies,Marianne Shaw and Landon Detwiler and James F. Brinkley and Dan Suciu\n" +
-    "155,SkewTune: mitigating skew in mapreduce applications,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
-    "156,SQL on an encrypted database: technical perspective,Dan Suciu\n" +
-    "157,COVE: A Visual Environment for Multidisciplinary Ocean Science Collaboration,Keith Grochow and Mark Stoermer and James Fogarty and Charlotte Lee and Bill Howe and Edward D. Lazowska\n" +
-    "158,Advancing Declarative Query in the Long Tail of Science,Bill Howe and Daniel Halperin\n" +
-    "159,Probabilistic Databases with MarkoViews,Abhay Kumar Jha and Dan Suciu\n" +
-    "160,The HaLoop approach to large-scale iterative data analysis,Yingyi Bu and Bill Howe and Magdalena Balazinska and Michael D. Ernst\n" +
-    "161,Undefined behavior: what happened to my code?,Xi Wang and Haogang Chen and Alvin Cheung and Zhihao Jia and Nickolai Zeldovich and M. Frans Kaashoek\n" +
-    "162,Optimizing Large-Scale Semi-Naive Datalog Evaluation in Hadoop,Marianne Shaw and Paraschos Koutris and Bill Howe and Dan Suciu\n" +
-    "163,Tiresias: a demonstration of how-to queries,Alexandra Meliou and Yisong Song and Dan Suciu\n" +
-    "164,The dichotomy of probabilistic inference for unions of conjunctive queries,Nilesh N. Dalvi and Dan Suciu\n" +
-    "165,Designing good algorithms for MapReduce and beyond,Foto N. Afrati and Magdalena Balazinska and Anish Das Sarma and Bill Howe and Semih Salihoglu and Jeffrey D. Ullman\n" +
-    "166,SkewTune in Action: Mitigating Skew in MapReduce Applications,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
-    "167,Automatic Partitioning of Database Applications,Alvin Cheung and Owen Arden and Samuel Madden and Andrew C. Myers\n" +
-    "168,How to Price Shared Optimizations in the Cloud,Prasang Upadhyaya and Magdalena Balazinska and Dan Suciu\n" +
-    "169,PerfXplain: Debugging MapReduce Job Performance,Nodira Khoussainova and Magdalena Balazinska and Dan Suciu\n" +
-    "170,Tractability in probabilistic databases,Dan Suciu\n" +
-    "171,Proceedings of the 2011 EDBT/ICDT Workshop on Array Databases, Uppsala, Sweden, March 25, 2011,Peter Baumann and Bill Howe and Kjell Orsborn and Silvia Stefanova\n" +
-    "172,Hybrid merge/overlap execution technique for parallel array processing,Emad Soroush and Magdalena Balazinska\n" +
-    "173,Parallel evaluation of conjunctive queries,Paraschos Koutris and Dan Suciu\n" +
-    "174,Bringing Provenance to Its Full Potential Using Causal Reasoning,Alexandra Meliou and Wolfgang Gatterbauer and Dan Suciu\n" +
-    "175,Parallel visualization on large clusters using MapReduce,Huy T. Vo and Jonathan Bronson and Brian Summa and Joao Luiz Dihl Comba and Juliana Freire and Bill Howe and Valerio Pascucci and Claudio T. Silva\n" +
-    "176,Automatically generating interesting events with LifeJoin,Alvin Cheung and Arvind Thiagarajan and Samuel Madden\n" +
-    "177,Lineage for Markovian stream event queries,Julie Letchner and Magdalena Balazinska\n" +
-    "178,ArrayStore: a storage manager for complex parallel array processing,Emad Soroush and Magdalena Balazinska and Daniel L. Wang\n" +
-    "179,Partial replay of long-running applications,Alvin Cheung and Armando Solar-Lezama and Samuel Madden\n" +
-    "180,Database-as-a-Service for Long-Tail Science,Bill Howe and Garrett Cole and Emad Souroush and Paraschos Koutris and Alicia Key and Nodira Khoussainova and Leilani Battle\n" +
-    "181,vSPARQL: A view definition language for the semantic web,Marianne Shaw and Landon Fridman Detwiler and Natalya Fridman Noy and James F. Brinkley and Dan Suciu\n" +
-    "182,Managing Structured Collections of Community Data,Wolfgang Gatterbauer and Dan Suciu\n" +
-    "183,Default-all is dangerous!,Wolfgang Gatterbauer and Alexandra Meliou and Dan Suciu\n" +
-    "184,Probabilistic Databases,Dan Suciu and Dan Olteanu and Christopher Re and Christoph Koch\n" +
-    "185,Reverse Data Management,Alexandra Meliou and Wolfgang Gatterbauer and Dan Suciu\n" +
-    "186,Towards Efficient and Precise Queries over Ten Million Asteroid Trajectory Models,Yusra AlSayyad and K. Simon Krughoff and Bill Howe and Andrew J. Connolly and Magdalena Balazinska and Lynne Jones\n" +
-    "187,Data Markets in the Cloud: An Opportunity for the Database Community,Magdalena Balazinska and Bill Howe and Dan Suciu\n" +
-    "188,Session-Based Browsing for More Effective Query Reuse,Nodira Khoussainova and YongChul Kwon and Wei-Ting Liao and Magdalena Balazinska and Wolfgang Gatterbauer and Dan Suciu\n" +
-    "189,Bridging the gap between intensional and extensional query evaluation in probabilistic databases,Abhay Kumar Jha and Dan Olteanu and Dan Suciu\n" +
-    "190,Definitions matter: reconciling differential and adversarial privacy: invited talk,Dan Suciu\n" +
-    "191,Computing query probability with incidence algebras,Nilesh N. Dalvi and Karl Schnaitter and Dan Suciu\n" +
-    "192,Skew-resistant parallel processing of feature-extracting scientific user-defined functions,YongChul Kwon and Magdalena Balazinska and Bill Howe and Jerome A. Rolia\n" +
-    "193,Estimating the progress of MapReduce pipelines,Kristi Morton and Abram L. Friesen and Magdalena Balazinska and Dan Grossman\n" +
-    "194,ParaTimer: a progress indicator for MapReduce DAGs,Kristi Morton and Magdalena Balazinska and Dan Grossman\n" +
-    "195,Scalable Clustering Algorithm for N-Body Simulations in a Shared-Nothing Cluster,YongChul Kwon and Dylan Nunley and Jeffrey P. Gardner and Magdalena Balazinska and Bill Howe and Sarah Loebman\n" +
-    "196,HaLoop: Efficient Iterative Data Processing on Large Clusters,Yingyi Bu and Bill Howe and Magdalena Balazinska and Michael D. Ernst\n" +
-    "197,Approximation trade-offs in Markovian stream processing: An empirical study,Julie Letchner and Christopher Re and Magdalena Balazinska and Matthai Philipose\n" +
-    "198,Boosting the Accuracy of Differentially Private Histograms Through Consistency,Michael Hay and Vibhor Rastogi and Gerome Miklau and Dan Suciu\n" +
-    "199,Dissociation and Propagation for Efficient Query Evaluation over Probabilistic Databases,Wolfgang Gatterbauer and Abhay Kumar Jha and Dan Suciu\n" +
-    "200,Data conflict resolution using trust mappings,Wolfgang Gatterbauer and Dan Suciu\n" +
-    "201,Specification and Verification of Complex Location Events with Panoramic,Evan Welbourne and Magdalena Balazinska and Gaetano Borriello and James Fogarty\n" +
-    "202,SnipSuggest: Context-Aware Autocompletion for SQL,Nodira Khoussainova and YongChul Kwon and Magdalena Balazinska and Dan Suciu\n";
+    "0,Active learning in keyword search-based data integration,Zhepeng Yan and Nan Zheng and Zachary G. Ives and Partha Pratim Talukdar and Cong Yu\n" +
+    "1,Orthogonal Security with Cipherbase,Arvind Arasu and Spyros Blanas and Ken Eguro and Raghav Kaushik and Donald Kossmann and Ravishankar Ramamurthy and Ramarathnam Venkatesan\n" +
+    "2,Transactional Middleware Reconsidered,Philip A. Bernstein\n" +
+    "3,Corleone: hands-off crowdsourcing for entity matching,Chaitanya Gokhale and Sanjib Das and AnHai Doan and Jeffrey F. Naughton and Narasimhan Rampalli and Jude W. Shavlik and Xiaojin Zhu\n" +
+    "4,Speeding Up Set Intersections in Graph Algorithms using SIMD Instructions,Shuo Han and Lei Zou and Jeffrey Xu Yu\n" +
+    "5,Graph Indexing for Shortest-Path Finding over Dynamic Sub-Graphs,Mohamed S. Hassan and Walid G. Aref and Ahmed M. Aly\n" +
+    "6,Latch-free Synchronization in Database Systems: Silver Bullet or Fool's Gold?,Jose M. Faleiro and Daniel J. Abadi\n" +
+    "7,Looking at Everything in Context,Zachary G. Ives and Zhepeng Yan and Nan Zheng and Brian Litt and Joost B. Wagenaar\n" +
+    "8,Spreadsheet Property Detection With Rule-assisted Active Learning,Zhe Chen and Sasha Dadiomov and Richard Wesley and Gang Xiao and Daniel Cory and Michael J. Cafarella and Jock Mackinlay\n" +
+    "9,Human-in-the-Loop Challenges for Entity Matching: A Midterm Report,AnHai Doan and Adel Ardalan and Jeffrey R. Ballard and Sanjib Das and Yash Govind and Pradap Konda and Han Li and Sidharth Mudgal and Erik Paulson and Paul Suganthan G. C. and Haojun Zhang\n" +
+    "10,Efficient parsing-based search over structured data,Aditya G. Parameswaran and Raghav Kaushik and Arvind Arasu\n" +
+    "11,Network Synthesis for Database Processing Units,Andrea Lottarini and Stephen A. Edwards and Kenneth A. Ross and Martha A. Kim\n" +
+    "12,Deadlock-free joins in DB-mesh, an asynchronous systolic array accelerator},Bingyi Cao and Kenneth A. Ross and Stephen A. Edwards and Martha A. Kim\n" +
+    "13,Efficient Lightweight Compression Alongside Fast Scans,Orestis Polychroniou and Kenneth A. Ross\n" +
+    "14,SimMeme: Semantic-Based Meme Search,Maya Ekron and Tova Milo and Brit Youngmann\n" +
+    "15,Parallelizing Maximal Clique Enumeration Over Graph Data,Qun Chen and Chao Fang and Zhuo Wang and Bo Suo and Zhanhuai Li and Zachary G. Ives\n" +
+    "16,Temporal group linkage and evolution analysis for census data,Victor Christen and Anika Gross and Jeffrey Fisher and Qing Wang and Peter Christen and Erhard Rahm\n" +
+    "17,PStorM: Profile Storage and Matching for Feedback-Based Tuning of MapReduce Jobs,Mostafa Ead and Herodotos Herodotou and Ashraf Aboulnaga and Shivnath Babu\n" +
+    "18,Extending In-Memory Relational Database Engines with Native Graph Support,Mohamed S. Hassan and Tatiana Kuznetsova and Hyun Chai Jeong and Walid G. Aref and Mohammad Sadoghi\n" +
+    "19,Recent Advances in Recommender Systems: Matrices, Bandits, and Blenders,Georgia Koutrika\n" +
+    "20,GnosisMiner: Reading Order Recommendations over Document Collections,Georgia Koutrika and Alkis Simitsis and Yannis E. Ioannidis\n" +
+    "21,Interactive Rule Refinement for Fraud Detection,Tova Milo and Slava Novgorodov and Wang-Chiew Tan\n" +
+    "22,Towards Interactive Debugging of Rule-based Entity Matching,Fatemah Panahi and Wentao Wu and AnHai Doan and Jeffrey F. Naughton\n" +
+    "23,Modeling and Exploiting Goal and Action Associations for Recommendations,Dimitra Papadimitriou and Yannis Velegrakis and Georgia Koutrika\n" +
+    "24,Interactive Visualization of Large Similarity Graphs and Entity Resolution Clusters,M. Ali Rostami and Alieh Saeedi and Eric Peukert and Erhard Rahm\n" +
+    "25,Challenges and innovations in building a product knowledge graph: extended abstract,Xin Luna Dong\n" +
+    "26,Cypher-based Graph Pattern Matching in Gradoop,Martin Junghanns and Max Kiessling and Alex Averbuch and Andre Petermann and Erhard Rahm\n" +
+    "27,Demonstration of Kite: A Scalable System for Microblogs Data Management,Amr Magdy and Mohamed F. Mokbel\n" +
+    "28,Input selection for fast feature engineering,Michael R. Anderson and Michael J. Cafarella\n" +
+    "29,Transaction processing on confidential data using cipherbase,Arvind Arasu and Ken Eguro and Manas Joglekar and Raghav Kaushik and Donald Kossmann and Ravi Ramamurthy\n" +
+    "30,Querying encrypted data,Arvind Arasu and Ken Eguro and Raghav Kaushik and Ravi Ramamurthy\n" +
+    "31,DANCE: Data Cleaning with Constraints and Experts,Ahmad Assadi and Tova Milo and Slava Novgorodov\n" +
+    "32,Efficient Exploration of Telco Big Data with Compression and Decaying,Constantinos Costa and Georgios Chatzimilioudis and Demetrios Zeinalipour-Yazti and Mohamed F. Mokbel\n" +
+    "33,SPATE: Compacting and Exploring Telco Big Data,Constantinos Costa and Georgios Chatzimilioudis and Demetrios Zeinalipour-Yazti and Mohamed F. Mokbel\n" +
+    "34,Data Science Education: We're Missing the Boat, Again,Bill Howe and Michael J. Franklin and Laura M. Haas and Tim Kraska and Jeffrey D. Ullman\n" +
+    "35,High variety cloud databases,Shrainik Jain and Dominik Moritz and Bill Howe\n" +
+    "36,Scaling up copy detection,Xian Li and Xin Luna Dong and Kenneth B. Lyons and Weiyi Meng and Divesh Srivastava\n" +
+    "37,Execution and optimization of continuous windowed aggregation queries,Harold Lim and Shivnath Babu\n" +
+    "38,Database System Support for Personalized Recommendation Applications,Mohamed Sarwat and Raha Moraffah and Mohamed F. Mokbel and James L. Avery\n" +
+    "39,HAWK: Hardware support for unstructured log processing,Prateek Tandon and Faissal M. Sleiman and Michael J. Cafarella and Thomas F. Wenisch\n" +
+    "40,In-Memory Distributed Matrix Computation Processing and Optimization,Yongyang Yu and MingJie Tang and Walid G. Aref and Qutaibah M. Malluhi and Mostafa M. Abbas and Mourad Ouzzani\n" +
+    "41,Spell: Streaming Parsing of System Event Logs,Min Du and Feifei Li\n" +
+    "42,Holistic Entity Clustering for Linked Data,Markus Nentwig and Anika Gross and Erhard Rahm\n" +
+    "43,Graph Mining for Complex Data Analytics,Andre Petermann and Martin Junghanns and Stephan Kemper and Kevin Gomez and Niklas Teichmann and Erhard Rahm\n" +
+    "44,Mining Summaries for Knowledge Graph Search,Qi Song and Yinghui Wu and Xin Luna Dong\n" +
+    "45,Scalable Privacy-Preserving Linking of Multiple Databases Using Counting Bloom Filters,Dinusha Vatsalan and Peter Christen and Erhard Rahm\n" +
+    "46,Top-k Querying of Unknown Values under Order Constraints,Antoine Amarilli and Yael Amsterdamer and Tova Milo and Pierre Senellart\n" +
+    "47,Oblivious Query Processing,Arvind Arasu and Raghav Kaushik\n" +
+    "48,Expressive Power of Entity-Linking Frameworks,Douglas Burdick and Ronald Fagin and Phokion G. Kolaitis and Lucian Popa and Wang Chiew Tan\n" +
+    "49,The Smart Crowd - Learning from the Ones Who Know (Invited Talk),Tova Milo\n" +
+    "50,m-tables: Representing Missing Data,Bruhathi Sundarmurthy and Paraschos Koutris and Willis Lang and Jeffrey F. Naughton and Val Tannen\n" +
+    "51,Differentially Private Learning of Undirected Graphical Models Using Collective Graphical Models,Garrett Bernstein and Ryan McKenna and Tao Sun and Daniel Sheldon and Michael Hay and Gerome Miklau\n" +
+    "52,Massively-Parallel Lossless Data Decompression,Evangelia A. Sitaridi and Rene Muller and Tim Kaldewey and Guy M. Lohman and Kenneth A. Ross\n" +
+    "53,TimeMachine: Timeline Generation for Knowledge-Base Entities,Tim Althoff and Xin Luna Dong and Kevin Murphy and Safa Alai and Van Dang and Wei Zhang\n" +
+    "54,A Clustering-Based Framework to Control Block Sizes for Entity Resolution,Jeffrey Fisher and Peter Christen and Qing Wang and Erhard Rahm\n" +
+    "55,Scalable Pattern Matching over Compressed Graphs via Dedensification,Antonio Maccioni and Daniel J. Abadi\n" +
+    "56,Compass: Spatio Temporal Sentiment Analysis of {US} Election What Twitter Says!,Debjyoti Paul and Feifei Li and Murali Krishna Teja and Xin Yu and Richie Frost\n" +
+    "57,DQBarge: Improving Data-Quality Tradeoffs in Large-Scale Internet Services,Michael Chow and Kaushik Veeraraghavan and Michael J. Cafarella and Jason Flinn\n" +
+    "58,Fast and Concurrent RDF Queries with RDMA-Based Distributed Graph Exploration,Jiaxin Shi and Youyang Yao and Rong Chen and Haibo Chen and Feifei Li\n" +
+    "59,StreamQRE: modular specification and efficient evaluation of quantitative queries over streaming data,Konstantinos Mamouras and Mukund Raghothaman and Rajeev Alur and Zachary G. Ives and Sanjeev Khanna\n" +
+    "60,High-Level Why-Not Explanations using Ontologies,Balder ten Cate and Cristina Civili and Evgeny Sherkhonov and Wang-Chiew Tan\n" +
+    "61,Active Learning of GAV Schema Mappings,Balder ten Cate and Phokion G. Kolaitis and Kun Qian and Wang-Chiew Tan\n" +
+    "62,Data Citation: A Computational Challenge,Susan B. Davidson and Peter Buneman and Daniel Deutch and Tova Milo and Gianmaria Silvello\n" +
+    "63,Data Integration: After the Teenage Years,Behzad Golshan and Alon Y. Halevy and George A. Mihaila and Wang-Chiew Tan\n" +
+    "64,A Reuse-Based Annotation Approach for Medical Documents,Victor Christen and Anika Gross and Erhard Rahm\n" +
+    "65,A Course on Programming and Problem Solving,Swapneel Sheth and Christian Murphy and Kenneth A. Ross and Dennis E. Shasha\n" +
+    "66,Bolt-on Differential Privacy for Scalable Stochastic Gradient Descent-based Analytics,Xi Wu and Fengan Li and Arun Kumar and Kamalika Chaudhuri and Somesh Jha and Jeffrey F. Naughton\n" +
+    "67,Wander Join: Online Aggregation via Random Walks,Feifei Li and Bin Wu and Ke Yi and Zhuoyue Zhao\n" +
+    "68,Secure database-as-a-service with Cipherbase,Arvind Arasu and Spyros Blanas and Ken Eguro and Manas Joglekar and Raghav Kaushik and Donald Kossmann and Ravishankar Ramamurthy and Prasang Upadhyaya and Ramarathnam Venkatesan\n" +
+    "69,Concerto: A High Concurrency Key-Value Store with Integrity,Arvind Arasu and Ken Eguro and Raghav Kaushik and Donald Kossmann and Pingfan Meng and Vineet Pandey and Ravi Ramamurthy\n" +
+    "70,Querying encrypted data,Arvind Arasu and Ken Eguro and Raghav Kaushik and Ravishankar Ramamurthy\n" +
+    "71,Data generation using declarative constraints,Arvind Arasu and Raghav Kaushik and Jian Li\n" +
+    "72,Query-Oriented Data Cleaning with Oracles,Moria Bergman and Tova Milo and Slava Novgorodov and Wang Chiew Tan\n" +
+    "73,Rethinking eventual consistency,Philip A. Bernstein and Sudipto Das\n" +
+    "74,Optimizing Optimistic Concurrency Control for Tree-Structured, Log-Structured Databases,Philip A. Bernstein and Sudipto Das and Bailu Ding and Markus Pilman\n" +
+    "75,Incremental mapping compilation in an object-to-relational mapping system,Philip A. Bernstein and Marie Jacob and Jorge Perez and Guillem Rull and James F. Terwilliger\n" +
+    "76,Privacy Preserving Subgraph Matching on Large Graphs in Cloud,Zhao Chang and Lei Zou and Feifei Li\n" +
+    "77,Scout: A GPU-Aware System for Interactive Spatio-temporal Data Visualization,Harshada Chavan and Mohamed F. Mokbel\n" +
+    "78,Modeling entity evolution for temporal record matching,Yueh-Hsuan Chiang and AnHai Doan and Jeffrey F. Naughton\n" +
+    "79,Why Big Data Industrial Systems Need Rules and What We Can Do About It,Paul Suganthan G. C. and Chong Sun and Krishna Gayatri K. and Haojun Zhang and Frank Yang and Narasimhan Rampalli and Shishir Prasad and Esteban Arcaute and Ganesh Krishnan and Rohit Deep and Vijay Raghavendra and AnHai Doan\n" +
+    "80,Falcon: Scaling Up Hands-Off Crowdsourced Entity Matching to Build Cloud Services,Sanjib Das and Paul Suganthan G. C. and AnHai Doan and Jeffrey F. Naughton and Ganesh Krishnan and Rohit Deep and Esteban Arcaute and Vijay Raghavendra and Youngchoon Park\n" +
+    "81,Automatic Generation of Normalized Relational Schemas from Nested Key-Value Data,Michael DiScala and Daniel J. Abadi\n" +
+    "82,Human-in-the-Loop Data Analysis: A Personal Perspective,AnHai Doan\n" +
+    "83,SIMD-accelerated regular expression matching,Evangelia A. Sitaridi and Orestis Polychroniou and Kenneth A. Ross\n" +
+    "84,Data Integration and Machine Learning: A Natural Synergy,Xin Luna Dong and Theodoros Rekatsinas\n" +
+    "85,Knowledge Curation and Knowledge Fusion: Challenges, Models and Applications,Xin Luna Dong and Divesh Srivastava\n" +
+    "86,Top-k Sorting Under Partial Order Information,Eyal Dushkin and Tova Milo\n" +
+    "87,IoT-Detective: Analyzing IoT Data Under Differential Privacy,Sameera Ghayyur and Yan Chen and Roberto Yus and Ashwin Machanavajjhala and Michael Hay and Gerome Miklau and Sharad Mehrotra\n" +
+    "88,Indexing in an Actor-Oriented Database,Philip A. Bernstein and Mohammad Dashti and Tim Kiefer and David Maier\n" +
+    "89,A Model for Fine-Grained Data Citation,Susan B. Davidson and Daniel Deutch and Tova Milo and Gianmaria Silvello\n" +
+    "90,What is Our Agenda for Data Science?,AnHai Doan\n" +
+    "91,GRFusion: Graphs as First-Class Citizens in Main-Memory Relational Database Systems,Mohamed S. Hassan and Tatiana Kuznetsova and Hyun Chai Jeong and Walid G. Aref and Mohammad Sadoghi\n" +
+    "92,Principled Evaluation of Differentially Private Algorithms using DPBench,Michael Hay and Ashwin Machanavajjhala and Gerome Miklau and Yan Chen and Dan Zhang\n" +
+    "93,Exploring Privacy-Accuracy Tradeoffs using DPComp,Michael Hay and Ashwin Machanavajjhala and Gerome Miklau and Yan Chen and Dan Zhang and George Bissias\n" +
+    "94,LaraDB: A Minimalist Kernel for Linear and Relational Algebra Computation,Dylan Hutchison and Bill Howe and Dan Suciu\n" +
+    "95,SQLShare: Results from a Multi-Year SQL-as-a-Service Experiment,Shrainik Jain and Dominik Moritz and Daniel Halperin and Bill Howe and Ed Lazowska\n" +
+    "96,Foofah: Transforming Data By Example,Zhongjun Jin and Michael R. Anderson and Michael J. Cafarella and H. V. Jagadish\n" +
+    "97,Foofah: A Programming-By-Example System for Synthesizing Data Transformation Programs,Zhongjun Jin and Michael R. Anderson and Michael J. Cafarella and H. V. Jagadish\n" +
+    "98,Beaver: Towards a Declarative Schema Mapping,Zhongjun Jin and Christopher Baik and Michael J. Cafarella and H. V. Jagadish\n" +
+    "99,Analyzing extended property graphs with Apache Flink,Martin Junghanns and Andre Petermann and Niklas Teichmann and Kevin Gomez and Erhard Rahm\n" +
+    "100,iQCAR: A Demonstration of an Inter-Query Contention Analyzer for Cluster Computing Frameworks,Prajakta Kalmegh and Harrison Lundberg and Frederick Xu and Shivnath Babu and Sudeepa Roy\n" +
+    "101,DIAS: Differentially Private Interactive Algorithm Selection using Pythia,Ios Kotsogiannis and Michael Hay and Ashwin Machanavajjhala and Gerome Miklau and Margaret Orr\n" +
+    "102,Pythia: Data Dependent Differentially Private Algorithm Selection,Ios Kotsogiannis and Ashwin Machanavajjhala and Michael Hay and Gerome Miklau\n" +
+    "103,Modern Recommender Systems: from Computing Matrices to Thinking with Neurons,Georgia Koutrika\n" +
+    "104,To Join or Not to Join?: Thinking Twice about Joins before Feature Selection,Arun Kumar and Jeffrey F. Naughton and Jignesh M. Patel and Xiaojin Zhu\n" +
+    "105,ROBUS: Fair Cache Allocation for Data-parallel Workloads,Mayuresh Kunjir and Brandon Fain and Kamesh Munagala and Shivnath Babu\n" +
+    "106,Operator and Query Progress Estimation in Microsoft SQL Server Live Query Statistics,Kukjin Lee and Arnd Christian Konig and Vivek R. Narasayya and Bolin Ding and Surajit Chaudhuri and Brent Ellwein and Alexey Eksarevskiy and Manbeen Kohli and Jacob Wyant and Praneeta Prakash and Rimma V. Nehme and Jiexing Li and Jeffrey F. Naughton\n" +
+    "107,Linking Temporal Records for Profiling Entities,Furong Li and Mong-Li Lee and Wynne Hsu and Wang-Chiew Tan\n" +
+    "108,Execution and optimization of continuous queries with cyclops,Harold Lim and Shivnath Babu\n" +
+    "109,CourseNavigator: interactive learning path exploration,Zhan Li and Olga Papaemmanouil and Georgia Koutrika\n" +
+    "110,Skyline Community Search in Multi-valued Networks,Rong-Hua Li and Lu Qin and Fanghua Ye and Jeffrey Xu Yu and Xiaokui Xiao and Nong Xiao and Zibin Zheng\n" +
+    "111,Enabling Incremental Query Re-Optimization,Mengmeng Liu and Zachary G. Ives and Boon Thau Loo\n" +
+    "112,Wander Join: Online Aggregation for Joins,Feifei Li and Bin Wu and Ke Yi and Zhuoyue Zhao\n" +
+    "113,SPARTI: Scalable RDF Data Management Using Query-Centric Semantic Partitioning,Amgad Madkour and Walid G. Aref and Ahmed M. Aly\n" +
+    "114,TrueWeb: A Proposal for Scalable Semantically-Guided Data Management and Truth Finding in Heterogeneous Web Sources,Amgad Madkour and Walid G. Aref and Sunil Prabhakar and Mohamed H. Ali and Siarhei Bykau\n" +
+    "115,Query Processing Techniques for Big Spatial-Keyword Data,Ahmed R. Mahmood and Walid G. Aref\n" +
+    "116,Deep Reinforcement-Learning Framework for Exploratory Data Analysis,Tova Milo and Amit Somech\n" +
+    "117,Deep Learning for Entity Matching: A Design Space Exploration,Sidharth Mudgal and Han Li and Theodoros Rekatsinas and AnHai Doan and Youngchoon Park and Ganesh Krishnan and Rohit Deep and Esteban Arcaute and Vijay Raghavendra\n" +
+    "118,Database Learning: Toward a Database that Becomes Smarter Every Time,Yongjoo Park and Ahmad Shahab Tajik and Michael J. Cafarella and Barzan Mozafari\n" +
+    "119,Persistent Bloom Filter: Membership Testing for the Entire History,Yanqing Peng and Jinwei Guo and Feifei Li and Weining Qian and Aoying Zhou\n" +
+    "120,Rethinking SIMD Vectorization for In-Memory Databases,Orestis Polychroniou and Arun Raghavan and Kenneth A. Ross\n" +
+    "121,SourceSight: Enabling Effective Source Selection,Theodoros Rekatsinas and Amol Deshpande and Xin Luna Dong and Lise Getoor and Divesh Srivastava\n" +
+    "122,Low-Overhead Asynchronous Checkpointing in Main-Memory Database Systems,Kun Ren and Thaddeus Diamond and Daniel J. Abadi and Alexander Thomson\n" +
+    "123,Design Principles for Scaling Multi-core OLTP Under High Contention,Kun Ren and Jose M. Faleiro and Daniel J. Abadi\n" +
+    "124,Query containment in entity SQL,Guillem Rull and Philip A. Bernstein and Ivo Garcia dos Santos and Yannis Katsis and Sergey Melnik and Ernest Teniente\n" +
+    "125,A Demonstration of Sya: A Spatial Probabilistic Knowledge Base Construction System,Ibrahim Sabek and Mashaal Musleh and Mohamed F. Mokbel\n" +
+    "126,Graph Analytics Through Fine-Grained Parallelism,Zechao Shang and Feifei Li and Jeffrey Xu Yu and Zhiwei Zhang and Hong Cheng\n" +
+    "127,RushMon: Real-time Isolation Anomalies Monitoring,Zechao Shang and Jeffrey Xu Yu and Aaron J. Elmore\n" +
+    "128,Special Session: A Technical Research Agenda in Data Ethics and Responsible Data Management,Julia Stoyanovich and Bill Howe and H. V. Jagadish\n" +
+    "129,Exploiting Data Partitioning To Provide Approximate Results,Bruhathi Sundarmurthy and Paraschos Koutris and Jeffrey F. Naughton\n" +
+    "130,Data X-Ray: A Diagnostic Tool for Data Errors,Xiaolan Wang and Xin Luna Dong and Alexandra Meliou\n" +
+    "131,Matrix Sketching Over Sliding Windows,Zhewei Wei and Xuancheng Liu and Feifei Li and Shuo Shang and Xiaoyong Du and Ji-Rong Wen\n" +
+    "132,Sampling-Based Query Re-Optimization,Wentao Wu and Jeffrey F. Naughton and Harneet Singh\n" +
+    "133,Simba: Efficient In-Memory Spatial Analytics,Dong Xie and Feifei Li and Bin Yao and Gefei Li and Liang Zhou and Minyi Guo\n" +
+    "134,A Nutritional Label for Rankings,Ke Yang and Julia Stoyanovich and Abolfazl Asudeh and Bill Howe and H. V. Jagadish and Gerome Miklau\n" +
+    "135,Extracting Databases from Dark Data with DeepDive,Ce Zhang and Jaeho Shin and Christopher Re and Michael J. Cafarella and Feng Niu\n" +
+    "136,EKTELO: A Framework for Defining Differentially-Private Computations,Dan Zhang and Ryan McKenna and Ios Kotsogiannis and Michael Hay and Ashwin Machanavajjhala and Gerome Miklau\n" +
+    "137,Random Sampling over Joins Revisited,Zhuoyue Zhao and Robert Christensen and Feifei Li and Xiao Hu and Ke Yi\n" +
+    "138,Deep Mapping of the Visual Literature,Bill Howe and Po-Shen Lee and Maxim Grechkin and Sean T. Yang and Jevin D. West\n" +
+    "139,VizioMetrix: A Platform for Analyzing the Visual Information in Big Scholarly Data,Po-Shen Lee and Jevin D. West and Bill Howe\n" +
+    "140,Concept Expansion Using Web Tables,Chi Wang and Kaushik Chakrabarti and Yeye He and Kris Ganjam and Zhimin Chen and Philip A. Bernstein\n" +
+    "141,Parallelizing maximal clique and k-plex enumeration over graph data,Zhuo Wang and Qun Chen and Boyi Hou and Bo Suo and Zhanhuai Li and Wei Pan and Zachary G. Ives\n" +
+    "142,The Q100 Database Processing Unit,Lisa Wu and Andrea Lottarini and Timothy K. Paine and Martha A. Kim and Kenneth A. Ross\n" +
+    "143,Tutorial: SQL-on-Hadoop Systems,Daniel Abadi and Shivnath Babu and Fatma Ozcan and Ippokratis Pandis\n" +
+    "144,A Demonstration of ST-Hadoop: A MapReduce Framework for Big Spatio-temporal Data,Louai Alarabi and Mohamed F. Mokbel\n" +
+    "145,A Declarative Query Processing System for Nowcasting,Dolan Antenucci and Michael R. Anderson and Michael J. Cafarella\n" +
+    "146,DataSynth: Generating Synthetic Data using Declarative Constraints,Arvind Arasu and Raghav Kaushik and Jian Li\n" +
+    "147,Front Matter,Shivnath Babu\n" +
+    "148,QOCO: A Query Oriented Data Cleaning System with Oracles,Moria Bergman and Tova Milo and Slava Novgorodov and Wang-Chiew Tan\n" +
+    "149,Generic Schema Matching, Ten Years Later,Philip A. Bernstein and Jayant Madhavan and Erhard Rahm\n" +
+    "150,Oblivious RAM: A Dissection and Experimental Evaluation,Zhao Chang and Dong Xie and Feifei Li\n" +
+    "151,Towards Linear Algebra over Normalized Data,Lingjiao Chen and Arun Kumar and Jeffrey F. Naughton and Jignesh M. Patel\n" +
+    "152,Annotating Database Schemas to Help Enterprise Search,Eli Cortez and Philip A. Bernstein and Yeye He and Lev Novik\n" +
+    "153,A Time Machine for Information: Looking Back to Look Forward,Xin Luna Dong and Wang-Chiew Tan\n" +
+    "154,The Era of Big Spatial Data,Ahmed Eldawy and Mohamed F. Mokbel\n" +
+    "155,Rethinking serializable multiversion concurrency control,Jose M. Faleiro and Daniel J. Abadi\n" +
+    "156,High Performance Transactions via Early Write Visibility,Jose M. Faleiro and Daniel Abadi and Joseph M. Hellerstein\n" +
+    "157,LEOPARD: Lightweight Edge-Oriented Partitioning and Replication for Dynamic Graphs,Jiewen Huang and Daniel Abadi\n" +
+    "158,Cumulon: Matrix-Based Data Analytics in the Cloud with Spot Instances,Botong Huang and Nicholas W. D. Jarrett and Shivnath Babu and Sayan Mukherjee and Jun Yang\n" +
+    "159,A Demonstration of Stella: A Crowdsourcing-Based Geotagging Framework,Christopher Jonathan and Mohamed F. Mokbel\n" +
+    "160,Magellan: Toward Building Entity Matching Management Systems,Pradap Konda and Sanjib Das and Paul Suganthan G. C. and AnHai Doan and Adel Ardalan and Jeffrey R. Ballard and Han Li and Fatemah Panahi and Haojun Zhang and Jeffrey F. Naughton and Shishir Prasad and Ganesh Krishnan and Rohit Deep and Vijay Raghavendra\n" +
+    "161,Magellan: Toward Building Entity Matching Management Systems over Data Science Stacks,Pradap Konda and Sanjib Das and Paul Suganthan G. C. and AnHai Doan and Adel Ardalan and Jeffrey R. Ballard and Han Li and Fatemah Panahi and Haojun Zhang and Jeffrey F. Naughton and Shishir Prasad and Ganesh Krishnan and Rohit Deep and Vijay Raghavendra\n" +
+    "162,Thoth in Action: Memory Management in Modern Data Analytics,Mayuresh Kunjir and Shivnath Babu\n" +
+    "163,Thoth: Towards Managing a Multi-System Cluster,Mayuresh Kunjir and Prajakta Kalmegh and Shivnath Babu\n" +
+    "164,Knowledge Verification for LongTail Verticals,Furong Li and Xin Luna Dong and Anno Langen and Yang Li\n" +
+    "165,7 Secrets That My Mother Didn't Tell Me,Tova Milo\n" +
+    "166,Rudolf: Interactive Rule Refinement System for Fraud Detection,Tova Milo and Slava Novgorodov and Wang-Chiew Tan\n" +
+    "167,Location Data Management: A Tale of Two Systems and the Next Destination!,Mohamed F. Mokbel and Chi-Yin Chow and Walid G. Aref\n" +
+    "168,Graph-based Data Integration and Business Intelligence with BIIIG,Andre Petermann and Martin Junghanns and Robert Muller and Erhard Rahm\n" +
+    "169,Tempo: Robust and Self-Tuning Resource Management in Multi-tenant Parallel Databases,Zilong Tan and Shivnath Babu\n" +
+    "170,LocationSpark: A Distributed In-Memory Data Management System for Big Spatial Data,MingJie Tang and Yongyang Yu and Qutaibah M. Malluhi and Mourad Ouzzani and Walid G. Aref\n" +
+    "171,Lifting the Haze off the Cloud: A Consumer-Centric Market for Database Computation in the Cloud,Yue Wang and Alexandra Meliou and Gerome Miklau\n" +
+    "172,RC-Index: Diversifying Answers to Range Queries,Yue Wang and Alexandra Meliou and Gerome Miklau\n" +
+    "173,Distributed Trajectory Similarity Search,Dong Xie and Feifei Li and Jeff M. Phillips\n" +
+    "174,Actively Soliciting Feedback for Query Answers in Keyword Search-Based Data Integration,Zhepeng Yan and Nan Zheng and Zachary G. Ives and Partha Pratim Talukdar and Cong Yu\n" +
+    "175,Wander Join and XDB: Online Aggregation via Random Walks,Feifei Li and Bin Wu and Ke Yi and Zhuoyue Zhao\n" +
+    "176,PeGaSus: Data-Adaptive Differentially Private Stream Processing,Yan Chen and Ashwin Machanavajjhala and Michael Hay and Gerome Miklau\n" +
+    "177,Accelerating reachability query processing based on DAG reduction,Junfeng Zhou and Jeffrey Xu Yu and Na Li and Hao Wei and Ziyang Chen and Xian Tang\n" +
+    "178,Preface to the special issue on big data search and mining,Kai Zheng and Feifei Li and Kyuseok Shim\n" +
+    "179,Report on the Second International Workshop on Exploratory Search in Databases and the Web (ExploreDB 2015),Georgia Koutrika and Laks V. S. Lakshmanan and Mirek Riedewald and Mohamed A. Sharaf and Kostas Stefanidis\n" +
+    "180,Reachability querying: an independent permutation labeling approach,Hao Wei and Jeffrey Xu Yu and Can Lu and Ruoming Jin\n" +
+    "181,Report on the Third International Workshop on Exploratory Search in Databases and the Web (ExploreDB 2016),Senjuti Basu Roy and Kostas Stefanidis and Georgia Koutrika and Laks V. S. Lakshmanan and Mirek Riedewald\n" +
+    "182,Data Quality: The Role of Empiricism,Shazia Wasim Sadiq and Tamraparni Dasu and Xin Luna Dong and Juliana Freire and Ihab F. Ilyas and Sebastian Link and Miller J. Miller and Felix Naumann and Xiaofang Zhou and Divesh Srivastava\n" +
+    "183,Scalable and Efficient Flow-Based Community Detection for Large-Scale Graph Analysis,Seung-Hee Bae and Daniel Halperin and Jevin D. West and Martin Rosvall and Bill Howe\n" +
+    "184,Venus: Scalable Real-Time Spatial Queries on Microblogs with Adaptive Load Shedding,Amr Magdy and Mohamed F. Mokbel and Sameh Elnikety and Suman Nath and Yuxiong He\n" +
+    "185,Mapping XML to a Wide Sparse Table,Liang Jeff Chen and Philip A. Bernstein and Peter Carlin and Dimitrije Filipovic and Michael Rys and Nikita Shamgunov and James F. Terwilliger and Milos Todic and Sasa Tomasevic and Dragan Tomic\n" +
+    "186,Answering Natural Language Questions by Subgraph Matching over Knowledge Graphs,Sen Hu and Lei Zou and Jeffrey Xu Yu and Haixun Wang and Dongyan Zhao\n" +
+    "187,To Meet or Not to Meet: Finding the Shortest Paths in Road Networks,Weihuang Huang and Yikai Zhang and Zechao Shang and Jeffrey Xu Yu\n" +
+    "188,Exploring Triangle-Free Dense Structures,Can Lu and Jeffrey Xu Yu and Hao Wei\n" +
+    "189,Finding Related Forum Posts through Content Similarity over Intention-Based Segmentation,Dimitra Papadimitriou and Georgia Koutrika and Yannis Velegrakis and John Mylopoulos\n" +
+    "190,UniWalk: Unidirectional Random Walk Based Scalable SimRank Computation over Large Graph,Junshuai Song and Xiongcai Luo and Jun Gao and Chang Zhou and Hu Wei and Jeffrey Xu Yu\n" +
+    "191,Similarity Group-by Operators for Multi-Dimensional Relational Data,MingJie Tang and Ruby Y. Tahboub and Walid G. Aref and Mikhail J. Atallah and Qutaibah M. Malluhi and Mourad Ouzzani and Yasin N. Silva\n" +
+    "192,String Similarity Search: A Hash-Based Approach,Hao Wei and Jeffrey Xu Yu and Can Lu\n" +
+    "193,Approximation Algorithms for Schema-Mapping Discovery from Data Examples,Balder ten Cate and Phokion G. Kolaitis and Kun Qian and Wang-Chiew Tan\n" +
+    "194,The Goal Behind the Action: Toward Goal-Aware Systems and Applications,Dimitra Papadimitriou and Georgia Koutrika and John Mylopoulos and Yannis Velegrakis\n" +
+    "195,A Study of Web Print: What People Print in the Digital Era,Georgia Koutrika and Qian Lin\n" +
+    "196,Resource bricolage and resource selection for parallel database systems,Jiexing Li and Jeffrey F. Naughton and Rimma V. Nehme\n" +
+    "197,Exact and approximate flexible aggregate similarity search,Feifei Li and Ke Yi and Yufei Tao and Bin Yao and Yang Li and Dong Xie and Min Wang\n" +
+    "198,VLL: a lock manager redesign for main memory database systems,Kun Ren and Alexander Thomson and Daniel J. Abadi\n" +
+    "199,Exploiting SSDs in operational multiversion databases,Mohammad Sadoghi and Kenneth A. Ross and Mustafa Canim and Bishwaranjan Bhattacharjee\n" +
+    "200,GPU-accelerated string matching for database applications,Evangelia A. Sitaridi and Kenneth A. Ross\n";
 
 var yelp_search_text_AZ = "name,full_address\n" +
     "Grand Canyon University,3300 W Camelback Rd Phoenix, AZ 85017\n" +

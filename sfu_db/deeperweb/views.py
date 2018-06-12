@@ -64,7 +64,7 @@ def smartcrawl(request):
             original_csv.append(row)
 
     if len(original_csv) > 1:
-        result = Deeper_WEB(8, api_msg, original_csv, local_match, hidden_match)
+        result = Deeper_WEB(4, api_msg, original_csv, local_match, hidden_match)
     else:
         result = {}
 

@@ -3,11 +3,9 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 from django.conf import settings
-import time
 from deeperlib.api.dblp.publapi import PublApi
 from deeperlib.api.yelp.searchapi import SearchApi
 from deeperlib.api.google.textsearchapi import TextSearchApi
-from deeperlib.api.google.detailsapi import DetailsApi
 from deeperlib.api.aminer.advanced_publapi import AdvancedPublApi
 from deeperlib.data_processing.sample_data import SampleData
 from local_data import LocalData
@@ -127,6 +125,7 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
     crawldata_csv = Json2csv(hiddendata.getMergeResult()).getCsvdata()
 
     result = {}
+    result['smart_queries'] = hiddendata.getQueryList()
     result['record'] = []
     if 'header' in crawldata_csv:
         result['local_header'] = localdata_csv['header']
@@ -169,6 +168,6 @@ def Deeper_WEB(budget, api_msg, original_csv, local_match, hidden_match):
         parameters = {'key': 'AIzaSyDhBJSPqHfcEkPGQGbH7l3eWyF_PhF10iw'}
         api = TextSearchApi(location='in+' + api_msg[1], top_k=60, delay=5, search_term=search_term, **parameters)
         hiddendata = HiddenData(uniqueid="place_id", matchlist=["name", "formatted_address"])
-    result['naive'] = NaiveCrawl(4, api, localdata, hiddendata, typo_ids)
-
+    result['naive'] = NaiveCrawl(budget, api, localdata, hiddendata, typo_ids)
+    result['naive_queries'] = hiddendata.getQueryList()
     return result

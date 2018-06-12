@@ -39,6 +39,7 @@ $(document).ready(function() {
     gridList_init();
     popup_login_init();
     popup_alert_init();
+    popup_query_init();
     footer_height();
 
     // load functions
@@ -1514,6 +1515,16 @@ function popup_alert_init(){
   });
   $(".alert-popup .cws-button").on("click", function (){
     $(".alert-popup").removeClass("open");
+  });
+}
+
+//Query popup
+function popup_query_init(){
+  $(".query-popup .close-button").on("click", function (){
+    $(".query-popup").removeClass("open");
+  });
+  $(".query-popup .cws-button").on("click", function (){
+    $(".query-popup").removeClass("open");
   });
 }
 
